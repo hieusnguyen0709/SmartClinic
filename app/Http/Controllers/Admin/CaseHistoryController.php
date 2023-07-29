@@ -7,5 +7,8 @@ use Illuminate\Http\Request;
 
 class CaseHistoryController extends BaseController
 {
-    //
+    public function index()
+    {
+        return 'CaseHistory - Admin';
+    }
 }

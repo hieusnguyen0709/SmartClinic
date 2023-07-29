@@ -7,5 +7,8 @@ use Illuminate\Http\Request;
 
 class FrameController extends BaseController
 {
-    //
+    public function index()
+    {
+        return 'Frame - Admin';
+    }
 }

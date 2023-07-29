@@ -1,20 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Frontend\IndexController;
-use App\Http\Controllers\Frontend\UserController;
-use App\Http\Controllers\Frontend\AppointmentController;
-use App\Http\Controllers\Frontend\CaseHistoryController;
-use App\Http\Controllers\Frontend\CategoryController;
-use App\Http\Controllers\Frontend\DepartmentController;
-use App\Http\Controllers\Frontend\FrameController;
-use App\Http\Controllers\Frontend\MedicineController;
-use App\Http\Controllers\Frontend\PrescriptionController;
-use App\Http\Controllers\Frontend\QrCodeController;
-use App\Http\Controllers\Frontend\RoleController;
-use App\Http\Controllers\Frontend\ScheduleController;
-use App\Http\Controllers\Frontend\TestController;
-use App\Http\Controllers\Frontend\TestTypeController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -26,29 +13,25 @@ use App\Http\Controllers\Frontend\TestTypeController;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::namespace('App\Http\Controllers')->group(function () {
+    Route::get('/login', 'Auth\\AuthController@login')->name('auth.login');
+    Route::get('/register', 'Auth\\AuthController@register')->name('auth.register');
 
-Route::get('/', [IndexController::class, 'index'])->name('index');
+    Route::get('/', 'Frontend\\IndexController@index')->name('index');
 
-Route::get('/appointment', [AppointmentController::class, 'index'])->name('appointment.index');
-Route::get('/case-history', [CaseHistoryController::class, 'index'])->name('case_history.index');
-Route::get('/category', [CategoryController::class, 'index'])->name('category.index');
-Route::get('/department', [DepartmentController::class, 'index'])->name('department.index');
-Route::get('/frame', [FrameController::class, 'index'])->name('frame.index');
-Route::get('/medicine', [MedicineController::class, 'index'])->name('medicine.index');
-Route::get('/prescription', [PrescriptionController::class, 'index'])->name('prescription.index');
-Route::get('/qr-code', [QrCodeController::class, 'index'])->name('qr_code.index');
-Route::get('/role', [RoleController::class, 'index'])->name('role.index');
-Route::get('/schedule', [ScheduleController::class, 'index'])->name('schedule.index');
-Route::get('/test', [TestController::class, 'index'])->name('test.index');
-Route::get('/test-type', [TestTypeController::class, 'index'])->name('test_type.index');
-Route::get('/user', [UserController::class, 'index'])->name('user.index');
-
-Route::get('/admin', [IndexController::class, 'index'])->name('dashboard.index');
-
-// Route::group(['namespace' => 'Frontend'], function () {
-//     Route::get('/users', [UserController::class, 'index'])->name('user.index');
-// });
+    Route::get('/admin', 'Admin\\DashboardController@index')->name('dashboard');
+    Route::get('/appointment', 'Admin\\AppointmentController@index')->name('appointment.index');
+    Route::get('/case-history', 'Admin\\CaseHistoryController@index')->name('case_history.index');
+    Route::get('/category', 'Admin\\CategoryController@index')->name('category.index');
+    Route::get('/department', 'Admin\\DepartmentController@index')->name('department.index');
+    Route::get('/frame', 'Admin\\FrameController@index')->name('frame.index');
+    Route::get('/medicine', 'Admin\\MedicineController@index')->name('medicine.index');
+    Route::get('/prescription', 'Admin\\PrescriptionController@index')->name('prescription.index');
+    Route::get('/qr-code', 'Admin\\QrCodeController@index')->name('qr_code.index');
+    Route::get('/role', 'Admin\\RoleController@index')->name('role.index');
+    Route::get('/schedule', 'Admin\\ScheduleController@index')->name('schedule.index');
+    Route::get('/test', 'Admin\\TestController@index')->name('test.index');
+    Route::get('/test-type', 'Admin\\TestTypeController@index')->name('test_type.index');
+    Route::get('/user', 'Admin\\UserController@index')->name('user.index');
+});
 

@@ -7,5 +7,8 @@ use Illuminate\Http\Request;
 
 class DepartmentController extends BaseController
 {
-    //
+    public function index()
+    {
+        return 'Department - Admin';
+    }
 }

@@ -7,5 +7,8 @@ use Illuminate\Http\Request;
 
 class TestController extends BaseController
 {
-    //
+    public function index()
+    {
+        return 'Test - Admin';
+    }
 }

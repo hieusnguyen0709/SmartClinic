@@ -7,5 +7,8 @@ use Illuminate\Http\Request;
 
 class PrescriptionController extends BaseController
 {
-    //
+    public function index()
+    {
+        return 'Prescription - Admin';
+    }
 }

@@ -7,5 +7,8 @@ use Illuminate\Http\Request;
 
 class ScheduleController extends BaseController
 {
-    //
+    public function index()
+    {
+        return 'Schedule - Admin';
+    }
 }

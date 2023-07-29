@@ -17,6 +17,6 @@ class AppointmentController extends BaseController
 
     public function index()
     {
-        return view('welcome');
+        return 'Appointment - Admin';
     }
 }

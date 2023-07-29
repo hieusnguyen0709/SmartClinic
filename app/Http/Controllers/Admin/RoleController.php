@@ -10,7 +10,6 @@ class RoleController extends BaseController
 {
     public function index()
     {
-        $users = Role::all();
-        return view('welcome',compact('users'));
+        return 'Role - Admin';
     }
 }
