@@ -1,0 +1,4 @@
+#sign-up-btn:disabled {
+    background: #ADACA9 !important;
+    pointer-events: none;
+}

@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Cviebrock\EloquentSluggable\Sluggable;
 
 class User extends Model
 {
     use HasFactory;
+    use sluggable;
     /**
      * The table associated with the model.
      *
@@ -30,6 +32,7 @@ class User extends Model
     protected $fillable = [
         'role_id', 
         'email',
+        'password',
         'name',
         'gender',
         'phone',
@@ -41,14 +44,24 @@ class User extends Model
         'is_delete',
     ];
 
-    protected $hidden = [
-        'password', 
-    ];
-
     /**
      * The attributes that should be mutated to dates.
      *
      * @var array
      */
-    protected $dates = ['deleted_at', 'created_at', 'updated_at'];   
+    protected $dates = ['deleted_at', 'created_at', 'updated_at']; 
+    
+    /**
+     * Return the sluggable configuration array for this model.
+     *
+     * @return array
+     */
+    public function sluggable(): array
+    {
+        return [
+            'slug' => [
+                'source' => 'name'
+            ]
+        ];
+    }
 }

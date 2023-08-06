@@ -15,7 +15,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::namespace('App\Http\Controllers')->group(function () {
     Route::get('/login', 'Auth\\AuthController@login')->name('auth.login');
+    Route::post('/sign-in', 'Auth\\AuthController@signIn')->name('auth.sign_in');
     Route::get('/register', 'Auth\\AuthController@register')->name('auth.register');
+    Route::post('/sign-up', 'Auth\\AuthController@signUp')->name('auth.sign_up');
 
     Route::get('/', 'Frontend\\IndexController@index')->name('index');
 

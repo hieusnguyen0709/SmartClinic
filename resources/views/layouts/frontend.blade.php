@@ -29,6 +29,7 @@
 
         <!-- Template Stylesheet -->
         <link href="{{ asset('/assets/frontend/css/style.css') }}" rel="stylesheet">
+        <link href="{{ asset('/assets/frontend/css/custom.css') }}" rel="stylesheet">
     </head>
 
     <body>
@@ -46,4 +47,5 @@
 
     <!-- Template Javascript -->
     <script src="{{ asset('/assets/frontend/js/main.js') }}"></script>
+    <script src="{{ asset('/assets/frontend/js/custom.js') }}"></script>
 </html>
