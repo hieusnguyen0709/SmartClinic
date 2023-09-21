@@ -15,12 +15,9 @@ class CreateCaseHistoriesTable extends Migration
     {
         Schema::create('case_histories', function (Blueprint $table) {
             $table->increments('id');
-            $table->foreignId('appointment_id')->constrained('appointments')
-            ->onUpdate('cascade')->onDelete('set null');
-            $table->foreignId('test_id')->nullable()->constrained('tests')
-            ->onUpdate('cascade')->onDelete('set null');
-            $table->foreignId('prescription_id')->nullable()->constrained('prescriptions')
-            ->onUpdate('cascade')->onDelete('set null');
+            $table->integer('appointment_id');
+            $table->integer('test_id');
+            $table->integer('prescription_id');
             $table->string('code');
             $table->string('slug');
             $table->boolean('is_delete')->default(0);

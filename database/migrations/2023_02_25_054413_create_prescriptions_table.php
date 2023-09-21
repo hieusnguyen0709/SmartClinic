@@ -15,10 +15,8 @@ class CreatePrescriptionsTable extends Migration
     {
         Schema::create('prescriptions', function (Blueprint $table) {
             $table->increments('id');
-            $table->foreignId('appointment_id')->constrained('appointments')
-            ->onUpdate('cascade')->onDelete('set null');
-            $table->foreignId('medicine_id')->constrained('medicines')
-            ->onUpdate('cascade')->onDelete('set null');
+            $table->integer('appointment_id');
+            $table->integer('medicine_id');
             $table->string('code');
             $table->string('symptom')->nullable();
             $table->string('diagnosis')->nullable();

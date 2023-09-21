@@ -15,10 +15,8 @@ class CreateTestsTable extends Migration
     {
         Schema::create('tests', function (Blueprint $table) {
             $table->increments('id');
-            $table->foreignId('appointment_id')->constrained('appointments')
-                ->onUpdate('cascade')->onDelete('set null');
-            $table->foreignId('test_type_id')->constrained('test_types')
-                ->onUpdate('cascade')->onDelete('set null');
+            $table->integer('appointment_id');
+            $table->integer('test_type_id');
             $table->string('note')->nullable();
             $table->string('result');
             $table->boolean('status')->default(1);

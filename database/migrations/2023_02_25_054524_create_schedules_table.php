@@ -15,10 +15,8 @@ class CreateSchedulesTable extends Migration
     {
         Schema::create('schedules', function (Blueprint $table) {
             $table->increments('id');
-            $table->foreignId('doctor_id')->constrained('users')
-                ->onUpdate('cascade')->onDelete('set null');
-            $table->foreignId('frame_id')->constrained('frames')
-                ->onUpdate('cascade')->onDelete('set null');
+            $table->integer('doctor_id');
+            $table->integer('frame_id');
             $table->date('date');
             $table->string('slug');
             $table->boolean('is_delete')->default(0);

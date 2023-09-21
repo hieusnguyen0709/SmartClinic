@@ -15,8 +15,7 @@ class CreateMedicinesTable extends Migration
     {
         Schema::create('medicines', function (Blueprint $table) {
             $table->increments('id');
-            $table->foreignId('category_id')->constrained('categories')
-            ->onUpdate('cascade')->onDelete('set null');
+            $table->integer('category_id');
             $table->string('name');
             $table->string('instruction')->nullable();
             $table->string('unit');

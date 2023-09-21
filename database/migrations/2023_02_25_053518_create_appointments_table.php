@@ -15,12 +15,9 @@ class CreateAppointmentsTable extends Migration
     {
         Schema::create('appointments', function (Blueprint $table) {
             $table->increments('id');
-            $table->foreignId('patient_id')->constrained('users')
-                ->onUpdate('cascade')->onDelete('set null');
-            $table->foreignId('doctor_id')->constrained('users')
-                ->onUpdate('cascade')->onDelete('set null');
-            $table->foreignId('qr_id')->constrained('qr_codes')
-                ->onUpdate('cascade')->onDelete('set null');
+            $table->integer('patient_id');
+            $table->integer('doctor_id');
+            $table->integer('qr_id');
             $table->string('code');
             $table->date('date');
             $table->datetime('time');
