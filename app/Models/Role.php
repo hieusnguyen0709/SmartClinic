@@ -31,7 +31,6 @@ class Role extends Model
         'name',
         'permission',
         'description',
-        'slug',
         'is_delete',
     ];
 
