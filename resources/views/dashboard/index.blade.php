@@ -1,1 +1,0 @@
-<h1>This page is Index page for Admin</h1>
