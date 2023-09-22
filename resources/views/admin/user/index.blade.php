@@ -57,10 +57,10 @@
                                             }
                                         @endphp
                                         <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-20 ps-4"><i class="fas fa-solid fa-image"></i> </th>
-                                        <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-20 ps-2">Name<i class="fas fa-solid {{ $classSortName }}" aria-hidden="true" id="but-sort-name"></i></th>
-                                        <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-20 ps-2">Email<i class="fas fa-solid {{ $classSortEmail }}" aria-hidden="true" id="but-sort-email"></i></th>
-                                        <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-20 ps-2">Role<i class="fas fa-solid {{ $classSortRole }}" aria-hidden="true" id="but-sort-role"></i></th>
-                                        <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-20 ps-2">Status<i class="fas fa-solid {{ $classSortStatus }}" aria-hidden="true" id="but-sort-status"></i></th>
+                                        <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-20 ps-2">Name<i class="fas fa-solid {{ $classSortName }} cursor-pointer" aria-hidden="true" id="but-sort-name"></i></th>
+                                        <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-20 ps-2">Email<i class="fas fa-solid {{ $classSortEmail }} cursor-pointer" aria-hidden="true" id="but-sort-email"></i></th>
+                                        <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-20 ps-2">Role<i class="fas fa-solid {{ $classSortRole }} cursor-pointer" aria-hidden="true" id="but-sort-role"></i></th>
+                                        <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-20 ps-2">Status<i class="fas fa-solid {{ $classSortStatus }} cursor-pointer" aria-hidden="true" id="but-sort-status"></i></th>
                                         <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-20 ps-2">Actions</th>
                                     </tr>
                                 </thead>
