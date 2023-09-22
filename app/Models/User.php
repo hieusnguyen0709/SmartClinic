@@ -64,4 +64,21 @@ class User extends Model
             ]
         ];
     }
+
+    public function role()
+    {
+        return $this->belongsTo('App\Models\Role');
+    }
+
+    public function viewStatus()
+    {
+        $return = '';
+        if($this->status == 0) {
+            $return = 'Active';
+        }
+        if($this->status == 1) {
+            $return = 'Block';
+        }
+        return $return;
+    }
 }

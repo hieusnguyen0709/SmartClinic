@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::namespace('App\Http\Controllers')->group(function () {
-    Route::get('/', 'Frontend\\IndexController@index')->name('index');
+    Route::get('/', 'Frontend\\IndexController@index')->name('frontend.index');
     Route::get('/login', 'Auth\\AuthController@login')->name('auth.login');
     Route::post('/sign-in', 'Auth\\AuthController@signIn')->name('auth.sign_in');
     Route::get('/register', 'Auth\\AuthController@register')->name('auth.register');
@@ -22,7 +22,7 @@ Route::namespace('App\Http\Controllers')->group(function () {
 });
 
 Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function () {
-    Route::get('/', 'DashboardController@index')->name('dashboard');
+    Route::get('/', 'DashboardController@index')->name('dashboard.index');
     Route::get('/appointment', 'AppointmentController@index')->name('appointment.index');
     Route::get('/case-history', 'CaseHistoryController@index')->name('case_history.index');
     Route::get('/category', 'CategoryController@index')->name('category.index');
@@ -35,5 +35,11 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function 
     Route::get('/schedule', 'ScheduleController@index')->name('schedule.index');
     Route::get('/test', 'TestController@index')->name('test.index');
     Route::get('/test-type', 'TestTypeController@index')->name('test_type.index');
-    Route::get('/user', 'UserController@index')->name('user.index');
+
+    Route::prefix('user')->group(function () {
+        Route::get('/', 'UserController@index')->name('user.index');
+        Route::post('/store', 'UserController@index')->name('user.store');
+        Route::get('/edit/{id}', 'UserController@index')->name('user.edit');
+        Route::post('/delete/{id}', 'UserController@index')->name('user.delete');
+    });
 });
