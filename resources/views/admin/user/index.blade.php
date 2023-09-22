@@ -8,6 +8,9 @@
                         <div class="card-header">
                             <h5>Users</h5>
                         </div>
+                        <!-- <div class="col-6 text-end">
+                            <a class="btn bg-gradient-dark mb-0" href="javascript:;"><i class="fas fa-plus"></i>&nbsp;&nbsp;Add</a>
+                        </div> -->
                         <div class="ms-md-auto pe-md-3 d-flex align-items-center">
                             <div class="input-group">
                                 <form action="{{ route('user.index') }}" method="get" id="frm-search">
@@ -84,10 +87,10 @@
                                             <p class="badge badge-sm bg-gradient-{{ $item->viewStatus() == 'Active' ? 'success' : 'danger' }}">{{ $item->viewStatus() }}</p>
                                         </td>
                                         <td class="align-middle">
-                                            <i class="fas fa-solid fa-eye ms-auto text-primary cursor-pointer view-user" data-bs-toggle="tooltip" data-bs-placement="top" data-toggle="modal" data-target="#modal-user" data-id="{{ $item->id }}" title="View"></i>
-                                            <i class="fas fa-pencil-alt ms-auto text-dark cursor-pointer edit-user" data-bs-toggle="tooltip" data-bs-placement="top" data-toggle="modal" data-target="#modal-user" data-id="{{ $item->id }}" title="Edit" ></i>
-                                            <i class="fas fa-trash-alt ms-auto text-danger cursor-pointer delete-user" data-bs-toggle="tooltip" data-bs-placement="top" data-toggle="modal" data-target="#modal-delete" data-id="{{ $item->id }}" title="Delete"></i>
-                                            <i class="fas fa-solid fa-{{ $item->viewStatus() == 'Active' ? 'lock' : 'unlock' }} ms-auto text-default cursor-pointer update-status-user" data-bs-toggle="tooltip" data-bs-placement="top" data-toggle="modal" data-target="#modal-update-status" data-id="{{ $item->id }}" title="{{ $item->viewStatus() == 'Active' ? 'Lock' : 'Unlock' }}"></i>
+                                            <i class="fas fa-solid fa-eye ms-auto text-primary cursor-pointer view-user" data-bs-placement="top" data-bs-toggle="modal" data-bs-target="#modal-user" data-id="{{ $item->id }}" title="View"></i>
+                                            <i class="fas fa-pencil-alt ms-auto text-dark cursor-pointer edit-user" data-bs-placement="top" data-bs-toggle="modal" data-bs-target="#modal-user" data-id="{{ $item->id }}" title="Edit" ></i>
+                                            <i class="fas fa-trash-alt ms-auto text-danger cursor-pointer delete-user" data-bs-placement="top" data-bs-toggle="modal" data-bs-target="#modal-delete" data-id="{{ $item->id }}" title="Delete"></i>
+                                            <i class="fas fa-solid fa-{{ $item->viewStatus() == 'Active' ? 'lock' : 'unlock' }} ms-auto text-default cursor-pointer update-status-user" data-bs-placement="top" data-bs-toggle="modal" data-bs-target="#modal-update-status" data-id="{{ $item->id }}" title="{{ $item->viewStatus() == 'Active' ? 'Lock' : 'Unlock' }}"></i>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -102,6 +105,9 @@
             </div>
         </div>
     </div>
+@include('admin.includes.modals.modal-user')
+@include('admin.includes.modals.modal-delete')
+@include('admin.includes.modals.modal-update-status')
 @endsection
 @section('scripts')
     <script>
