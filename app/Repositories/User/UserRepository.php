@@ -10,5 +10,5 @@ use App\Repositories\RepositoryInterface;
  */
 interface UserRepository extends RepositoryInterface
 {
-    public function getAll();
+    public function getUsers($search, $numPerPage, $sortColumn, $sortType);
 }

@@ -11,6 +11,7 @@
         <!-- Nucleo Icons -->
         <link href="{{ asset('/assets/admin/css/nucleo-icons.css') }}" rel="stylesheet" />
         <link href="{{ asset('/assets/admin/css/nucleo-svg.css') }}" rel="stylesheet" />
+        <link href="{{ asset('/assets/admin/css/custom.css') }}" rel="stylesheet" />
         <!-- Font Awesome Icons -->
         <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
         <link href="{{ asset('/assets/admin/css/nucleo-svg.css') }}" rel="stylesheet" />
@@ -31,11 +32,13 @@
     </body>
     
     <!-- Core JS Files -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.2/jquery.min.js" integrity="sha512-tWHlutFnuG0C6nQRlpvrEhE4QpkG1nn2MOUMWmUeRePl4e3Aki0VB6W1v3oLjFtd0hVOtRQ9PHpSfN6u6/QXkQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="{{ asset('/assets/admin/js/core/popper.min.js') }}"></script>
     <script src="{{ asset('/assets/admin/js/core/bootstrap.min.js') }}"></script>
     <script src="{{ asset('/assets/admin/js/plugins/perfect-scrollbar.min.js') }}"></script>
     <script src="{{ asset('/assets/admin/js/plugins/smooth-scrollbar.min.js') }}"></script>
     <script src="{{ asset('/assets/admin/js/plugins/chartjs.min.js') }}"></script>
+    <script src="{{ asset('/assets/admin/js/custom.js') }}"></script>
     <script>
         var ctx1 = document.getElementById("chart-line").getContext("2d");
 
@@ -130,4 +133,5 @@
     </script>
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <script src="{{ asset('/assets/admin/js/argon-dashboard.min.js?v=2.0.4') }}"></script>
+    @yield('scripts')
 </html>

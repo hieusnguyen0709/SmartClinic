@@ -23,9 +23,20 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
         return \App\Models\User::class;
     }
 
-    public function getAll()
+    public function getUsers($search = null, $numPerPage = null, $sortColumn = null, $sortType = null)
     {
-        $model = $this->model->get();
-        return $model;
+        return $this->model->join('roles', 'roles.id', '=', 'users.role_id')
+        ->selectRaw('users.*, roles.name as role')
+        ->where('users.is_delete', 0)
+        ->where('roles.is_delete', 0)
+        ->when(!empty($search), function ($query1) use ($search) {
+            $query1->where(function ($query1)  use ($search) {
+                $query1->where('users.email', 'like', '%' . $search . '%')
+                ->orWhere('users.name', 'like', '%' . $search . '%')
+                ->orWhere('roles.name', 'like', '%' . $search . '%');
+            });
+        })
+        ->orderBy($sortColumn, $sortType)
+        ->paginate($numPerPage);
     }
 }
