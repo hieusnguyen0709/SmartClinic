@@ -7,12 +7,16 @@
                     <div class="table-header">
                         <div class="card-header">
                             <h5>Users</h5>
+                            <button class="btn bg-gradient-success mb-0" id="create-user"  data-bs-toggle="modal" data-bs-target="#modal-user"><i class="fas fa-plus"></i></button>
                         </div>
-                        <!-- <div class="col-6 text-end">
-                            <a class="btn bg-gradient-dark mb-0" href="javascript:;"><i class="fas fa-plus"></i>&nbsp;&nbsp;Add</a>
-                        </div> -->
-                        <div class="ms-md-auto pe-md-3 d-flex align-items-center">
+                        <div class="ms-md-auto pe-md-4 d-flex align-items-center">
                             <div class="input-group">
+                                <!-- <label>Filter</label>
+                                <select class="form-control pe-md-4" id="role-id" name="role_id">
+                                    <option>Roles</option>
+                                    <option>Admin</option>
+                                    <option>User</option>
+                                </select> -->
                                 <form action="{{ route('user.index') }}" method="get" id="frm-search">
                                     <!-- <span class="input-group-text"><i class="fas fa-search" aria-hidden="true"></i></span> -->
                                     <input type="text" class="form-control" placeholder="Search here..." name="search" id="search" value="{{ $search }}">
@@ -70,7 +74,7 @@
                                         <td>
                                             <div class="d-flex px-2 py-1">
                                                 <div>
-                                                    <img src="{{ asset('assets/admin/img/default-avatar.png') }}" class="avatar avatar-sm me-3">
+                                                    <img src="{{ $item->avatar ? asset('/storage/user/'. $item->avatar) : asset('assets/admin/img/default-avatar.png') }}" class="avatar avatar-sm me-3">
                                                 </div>
                                             </div>
                                         </td>
@@ -90,7 +94,7 @@
                                             <i class="fas fa-solid fa-eye ms-auto text-primary cursor-pointer view-user" data-bs-placement="top" data-bs-toggle="modal" data-bs-target="#modal-user" data-id="{{ $item->id }}" title="View"></i>
                                             <i class="fas fa-pencil-alt ms-auto text-dark cursor-pointer edit-user" data-bs-placement="top" data-bs-toggle="modal" data-bs-target="#modal-user" data-id="{{ $item->id }}" title="Edit" ></i>
                                             <i class="fas fa-trash-alt ms-auto text-danger cursor-pointer delete-user" data-bs-placement="top" data-bs-toggle="modal" data-bs-target="#modal-delete" data-id="{{ $item->id }}" title="Delete"></i>
-                                            <i class="fas fa-solid fa-{{ $item->viewStatus() == 'Active' ? 'lock' : 'unlock' }} ms-auto text-default cursor-pointer update-status-user" data-bs-placement="top" data-bs-toggle="modal" data-bs-target="#modal-update-status" data-id="{{ $item->id }}" title="{{ $item->viewStatus() == 'Active' ? 'Lock' : 'Unlock' }}"></i>
+                                            <i class="fas fa-solid fa-{{ $item->viewStatus() == 'Active' ? 'lock' : 'unlock' }} ms-auto text-default cursor-pointer update-status-user" data-bs-placement="top" data-bs-toggle="modal" data-bs-target="#modal-update-status" data-id="{{ $item->id }}" data-status="{{ $item->status }}" title="{{ $item->viewStatus() == 'Active' ? 'Lock' : 'Unlock' }}"></i>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -166,5 +170,149 @@
             }
             $('#frm-search').submit();
         });
+        $('#create-user').on('click', function() {
+            $('.modal-title').html('New User');
+            $.ajax({
+                type: 'GET',
+                url: '{{ route('user.get.edit') }}',
+                data: {
+                    'id': ''
+                },
+                success: function(result) {
+                    $('#role-id').html(result.roleList);
+                }
+            });
+            resetErrors();
+            $('#but-create-user').css('display', 'inline-block');
+            $("#frm-user input, select").prop("disabled", false);
+            $('#name').val('');
+            $('#email').val('');
+            $('#password').val('');
+            $('#confirm-password').val('');
+            $('#gender').val('0');
+            $('#phone').val('');
+            $('#age').val('');
+            $('#address').val('');
+            $('#avatar').val('');
+            $('#modal-user').show();
+        });
+        $('.edit-user').on('click', function() {
+            $('.modal-title').html('Edit User');
+            let _this = $(this);
+            let id = _this.data('id');
+            $.ajax({
+                type: 'GET',
+                url: '{{ route('user.get.edit') }}',
+                data: {
+                    'id': id
+                },
+                success: function(result) {
+                    $('#role-id').html(result.roleList);
+                    $('#name').val(result.user.name);
+                    $('#email').val(result.user.email);
+                    $('#gender').val(result.user.gender);
+                    $('#phone').val(result.user.phone);
+                    $('#age').val(result.user.age);
+                    $('#address').val(result.user.address);
+                    $('#avatar').val(result.user.avatar);
+                    $('#id').val(id);
+                }
+            });
+            resetErrors();
+            $('#but-create-user').css('display', 'inline-block');
+            $("#frm-user input, select").prop("disabled", false);
+            $('#modal-user').show();
+        });
+        $('.view-user').on('click', function() {
+            $('.modal-title').html('View User');
+            let _this = $(this);
+            let id = _this.data('id');
+            $.ajax({
+                type: 'GET',
+                url: '{{ route('user.get.edit') }}',
+                data: {
+                    'id': id
+                },
+                success: function(result) {
+                    $('#role-id').html(result.roleList);
+                    $('#name').val(result.user.name);
+                    $('#email').val(result.user.email);
+                    $('#gender').val(result.user.gender);
+                    $('#phone').val(result.user.phone);
+                    $('#age').val(result.user.age);
+                    $('#address').val(result.user.address);
+                    $('#avatar').val(result.user.avatar);
+                    $('#id').val(id);
+                }
+            });
+            resetErrors();
+            $('#but-create-user').css('display', 'none');
+            $("#frm-user input, select").prop("disabled", true);
+            $('#modal-user').show();
+        });
+        $('#but-create-user').on('click', function() {
+            $('#but-create-user').text('SAVING ...');
+            $('#but-create-user').prop('disabled', true);
+            let form = $('#frm-user')[0];
+            let data = new FormData(form);
+            $.ajax({
+                type: "POST",
+                enctype: 'multipart/form-data',
+                url:'{{ route("user.store") }}',
+                data: data,
+                processData: false,
+                contentType: false,
+                cache: false,
+                success: function(result){
+                    if (result.code == 422) {
+                        resetErrors();
+                        $('#but-create-user').text('SAVE');
+                        $('#but-create-user').prop('disabled', false);
+                        $('#err-role-id').text(result.errors.role_id);
+                        $('#err-name').text(result.errors.name);
+                        $('#err-email').text(result.errors.email);
+                        $('#err-password').html(result.errors.password);
+                        $('#err-confirm-password').html(result.errors.confirm_password);
+                        $('#err-avatar').text(result.errors.avatar);
+                        for (let key in result.errors) {
+                            $('input[name='+ key +'], select[name='+ key +']').addClass("is-invalid");
+                        }
+                    } else {
+                        $('#modal-user').hide(); 
+                        location.reload();
+                    }
+                }
+            })
+        });
+        $('.update-status-user').on('click', function() {
+            $('#frm-update-status').attr('action', '{{ route('user.update.status') }}');
+            let _this = $(this);
+            let id = _this.data('id');
+            let status = _this.data('status');
+            $('#id-update-status').val(id);
+            $('#status').val(status);
+            $('#modal-update-status').show();
+        });
+        $('.delete-user').on('click', function() {
+            $('#frm-delete').attr('action', '{{ route('user.delete') }}');
+            let _this = $(this);
+            let id = _this.data('id');
+            $('#id-delete').val(id);
+            $('#modal-delete').show();
+        });
+        function resetErrors() {
+            $('#err-role-id').text('');
+            $('#err-name').text('');
+            $('#err-email').text('');
+            $('#err-password').text('');
+            $('#err-confirm-password').text('');
+            $('#err-avatar').text('');
+            $("#role-id").removeClass("is-invalid");
+            $("#name").removeClass("is-invalid");
+            $("#email").removeClass("is-invalid");
+            $("#password").removeClass("is-invalid");
+            $("#confirm-password").removeClass("is-invalid");
+            $("#avatar").removeClass("is-invalid");
+        }
     </script>
 @endsection

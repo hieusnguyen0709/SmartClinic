@@ -1,13 +1,14 @@
 <?php
 
 namespace App\Repositories\Role;
+use App\Repositories\RepositoryInterface;
 
 /**
  * Interface RoleRepository.
  *
  * @package namespace App\Repositories;
  */
-interface RoleRepository
+interface RoleRepository extends RepositoryInterface
 {
-    public function getAll();
+
 }
