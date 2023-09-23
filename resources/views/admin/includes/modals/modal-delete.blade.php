@@ -5,7 +5,7 @@
                 <div class="modal-body p-0">
                     <div class="card card-plain">
                         <div class="card-header pb-0 text-center text-uppercase">
-                            <h2 class="font-weight-bolder text-primary text-gradient modal-title">Warning</h2>
+                            <h2 class="font-weight-bolder text-primary text-gradient">Warning</h2>
                             <p class="mb-5">Would you like to delete?</p>
                         </div>
                         <div class="card-body pb-3">

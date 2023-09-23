@@ -5,34 +5,36 @@
                 <div class="modal-body p-0">
                     <div class="card card-plain">
                         <div class="card-header pb-0 text-left">
-                            <h3 class="font-weight-bolder text-primary text-gradient modal-title">Add user</h3>
+                            <h3 class="font-weight-bolder text-primary text-gradient modal-title"></h3>
                         </div>
                         <div class="card-body pb-3">
-                            <form role="form text-left" action="{{ route('user.store') }}" method="post" id="frm-user">
+                            <form role="form text-left" action="{{ route('user.store') }}" id="frm-user" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="form-group">
                                     <label>Role</label>
                                     <select class="form-control" id="role-id" name="role_id">
-                                        <option>----</option>
-                                        <option>Admin</option>
-                                        <option>User</option>
                                     </select>
+                                    <div class="text-danger text-xs font-weight-bold mt-2" id="err-role-id"></div>
                                 </div>
-                                <label>Name</label>
-                                <div class="input-group mb-3">
+                                <div class="form-group">
+                                    <label>Name</label>
                                     <input type="text" class="form-control" placeholder="Name" name="name" id="name">
+                                    <div class="text-danger text-xs font-weight-bold mt-2" id="err-name"></div>
                                 </div>
-                                <label>Email</label>
-                                <div class="input-group mb-3">
+                                <div class="form-group">
+                                    <label>Email</label>
                                     <input type="email" class="form-control" placeholder="Email" name="email" id="email">
+                                    <div class="text-danger text-xs font-weight-bold mt-2" id="err-email"></div>
                                 </div>
-                                <label>Password</label>
-                                <div class="input-group mb-3">
+                                <div class="form-group">
+                                    <label>Password</label>
                                     <input type="password" class="form-control" placeholder="Password" name="password" id="password">
+                                    <div class="text-danger text-xs font-weight-bold mt-2" id="err-password"></div>
                                 </div>
-                                <label>Confirm Password</label>
-                                <div class="input-group mb-3">
+                                <div class="form-group">
+                                    <label>Confirm Password</label>
                                     <input type="password" class="form-control" placeholder="Confirm Password" name="confirm_password" id="confirm-password">
+                                    <div class="text-danger text-xs font-weight-bold mt-2" id="err-confirm-password"></div>
                                 </div>
                                 <div class="form-group">
                                     <label>Gender</label>
@@ -41,22 +43,27 @@
                                         <option value="0">Male</option>
                                         <option value="1">Female</option>
                                     </select>
+                                    <div class="text-danger text-xs font-weight-bold mt-2" id="err-gender"></div>
                                 </div>
-                                <label>Phone</label>
-                                <div class="input-group mb-3">
+                                <div class="form-group">
+                                    <label>Phone</label>
                                     <input type="text" class="form-control" placeholder="Phone" name="phone" id="phone">
+                                    <div class="text-danger text-xs font-weight-bold mt-2" id="err-phone"></div>
                                 </div>
-                                <label>Age</label>
-                                <div class="input-group mb-3">
-                                    <input type="text" class="form-control" placeholder="Name" name="age" id="age">
-                                </div>
-                                <label>Address</label>
-                                <div class="input-group mb-3">
-                                    <input type="text" class="form-control" placeholder="Name" name="address" id="address">
-                                </div>
-                                <label>Avatar</label>
-                                <div class="input-group mb-3">
-                                    <input type="file" class="form-control" placeholder="Name" name="avatar" id="avatar">
+                                <div class="form-group">
+                                    <label>Age</label>
+                                    <input type="text" class="form-control" placeholder="Age" name="age" id="age">
+                                    <div class="text-danger text-xs font-weight-bold mt-2" id="err-age"></div>
+                                </div>           
+                                <div class="form-group">
+                                    <label>Address</label>
+                                    <input type="text" class="form-control" placeholder="Address" name="address" id="address">
+                                    <div class="text-danger text-xs font-weight-bold mt-2" id="err-address"></div>
+                                </div>                               
+                                <div class="form-group">
+                                    <label>Avatar</label>
+                                    <input type="file" class="form-control" placeholder="Avatar" name="avatar" id="avatar">
+                                    <div class="text-danger text-xs font-weight-bold mt-2" id="err-avatar"></div>
                                 </div>
                                 <input type="hidden" name="id" id="id" value="">
                                 <div class="text-center">

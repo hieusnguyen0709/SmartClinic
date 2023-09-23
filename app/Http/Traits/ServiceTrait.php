@@ -4,12 +4,11 @@ namespace App\Http\Traits;
 
 use Auth;
 use Illuminate\Support\Facades\Storage;
-use SoareCostin\FileVault\Facades\FileVault;
 
 trait ServiceTrait {
     private function getListSelect($list, $id = '')
     {
-        $response = "<option value=''>Select</option>";
+        $response = "<option value=''>----</option>";
         
         foreach ($list as $item) {
             if (!empty($id) && $id == $item['id']) {
@@ -37,16 +36,12 @@ trait ServiceTrait {
 
     public function uploadFile($file, $path, $isCrypt = false)
     {
-        $fileName = Auth::user()->id . time() . '_' . $file->getClientOriginalName();
+        $fileName = time() . '_' . $file->getClientOriginalName();
         Storage::disk('local')->putFileAs(
             $path,
             $file,
             $fileName
         );
-        if ($isCrypt) {
-            FileVault::encrypt($path . $fileName);
-            return $fileName . '.enc';
-        }
         return $fileName;
     }
 

@@ -3,25 +3,17 @@
 namespace App\Repositories\Role;
 
 use App\Models\Role;
+use App\Repositories\BaseRepository;
 
 /**
  * Class RoleRepositoryEloquent.
  *
  * @package App\Repositories\Role;
  */
-class RoleRepositoryEloquent implements RoleRepository
+class RoleRepositoryEloquent extends BaseRepository implements RoleRepository
 {
-    protected $model;
-
-    public function __construct(Role $model)
+    public function getModel()
     {
-      $this->model = $model;
+        return \App\Models\Role::class;
     }
-
-    public function getAll()
-    {
-        $model = $this->model->get();
-        return $model;
-    }
-
 }

@@ -38,8 +38,10 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function 
 
     Route::prefix('user')->group(function () {
         Route::get('/', 'UserController@index')->name('user.index');
-        Route::post('/store', 'UserController@index')->name('user.store');
-        Route::get('/edit/{id}', 'UserController@index')->name('user.edit');
-        Route::post('/delete/{id}', 'UserController@index')->name('user.delete');
+        Route::get('/get-edit', 'UserController@getEdit')->name('user.get.edit');
+        Route::post('/store', 'UserController@store')->name('user.store');
+        Route::get('/edit', 'UserController@edit')->name('user.edit');
+        Route::post('/delete', 'UserController@delete')->name('user.delete');
+        Route::post('/update-status', 'UserController@updateStatus')->name('user.update.status');
     });
 });
