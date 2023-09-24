@@ -7,7 +7,8 @@
                     <div class="table-header">
                         <div class="card-header">
                             <h5>Users</h5>
-                            <button class="btn bg-gradient-success mb-0" id="create-user"  data-bs-toggle="modal" data-bs-target="#modal-user"><i class="fas fa-plus"></i></button>
+                            <button class="text-uppercase btn bg-gradient-success mb-0" id="create-user"  data-bs-toggle="modal" data-bs-target="#modal-user">Add&nbsp;&nbsp;<i class="fas fa-plus"></i></button>
+                            <button class="text-uppercase btn bg-gradient-danger mb-0" id="bulk-delete-user"  data-bs-toggle="modal" data-bs-target="#modal-delete">Bulk Delete&nbsp;&nbsp;<i class="fas fa-trash"></i></button>
                         </div>
                         <div class="ms-md-auto pe-md-4 d-flex align-items-center">
                             <div class="input-group">
@@ -23,6 +24,7 @@
                                     <input type="hidden" name="num_per_page" id="num-per-page" value="{{ $numPerPage }}">
                                     <input type="hidden" name="sort_column" id="sort-column" value="{{ $sortColumn }}">
                                     <input type="hidden" name="sort_type" id="sort-type" value="{{ $sortType }}">
+                                    <!-- <input type="hidden" name="role_id" id="role-id" value="{{ $roleId ?? NULL }}"> -->
                                 </form>
                             </div>
                         </div>
@@ -32,6 +34,11 @@
                             <table class="table align-items-center mb-0">
                                 <thead>
                                     <tr>
+                                        <th>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="check-all">
+                                            </div>
+                                        </th>
                                         @php
                                             $classSortName = $classSortEmail = $classSortStatus = $classSortRole = 'fa-sort';
                                             if ($sortColumn == 'name') {
@@ -60,7 +67,7 @@
                                                 }
                                             }
                                         @endphp
-                                        <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-20 ps-4"><i class="fas fa-solid fa-image"></i> </th>
+                                        <th class="text-uppercase text-secondary text-base font-weight-bolder opacity-20 ps-4"><i class="fas fa-solid fa-image"></i> </th>
                                         <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-20 ps-2">Name<i class="fas fa-solid {{ $classSortName }} cursor-pointer" aria-hidden="true" id="but-sort-name"></i></th>
                                         <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-20 ps-2">Email<i class="fas fa-solid {{ $classSortEmail }} cursor-pointer" aria-hidden="true" id="but-sort-email"></i></th>
                                         <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-20 ps-2">Role<i class="fas fa-solid {{ $classSortRole }} cursor-pointer" aria-hidden="true" id="but-sort-role"></i></th>
@@ -71,6 +78,11 @@
                                 <tbody>
                                     @foreach ($users as $key => $item)
                                     <tr>
+                                        <td class="ps-4">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name='user_ids[]' value="{{ $item->id }}">
+                                            </div>
+                                        </td>
                                         <td>
                                             <div class="d-flex px-2 py-1">
                                                 <div>
@@ -298,6 +310,18 @@
             let _this = $(this);
             let id = _this.data('id');
             $('#id-delete').val(id);
+            $('#modal-delete').show();
+        });
+        $('#bulk-delete-user').on('click', function(e) {
+            $('#frm-delete').attr('action', '{{ route('user.delete') }}');
+            let ids = [];
+            $("tbody input:checked").each(function() {
+                ids.push($(this).val());
+            });
+            if (ids.length == 0) {
+                return false;
+            }
+            $('#id-delete').val(ids.toString());
             $('#modal-delete').show();
         });
         function resetErrors() {
