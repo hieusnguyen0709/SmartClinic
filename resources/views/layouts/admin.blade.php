@@ -17,6 +17,8 @@
         <link href="{{ asset('/assets/admin/css/nucleo-svg.css') }}" rel="stylesheet" />
         <!-- CSS Files -->
         <link id="pagestyle" href="{{ asset('/assets/admin/css/argon-dashboard.css?v=2.0.4') }}" rel="stylesheet" />
+        <!-- Toastr -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
     </head>
 
     <body class="g-sidenav-show bg-gray-100">
@@ -33,6 +35,7 @@
     
     <!-- Core JS Files -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.2/jquery.min.js" integrity="sha512-tWHlutFnuG0C6nQRlpvrEhE4QpkG1nn2MOUMWmUeRePl4e3Aki0VB6W1v3oLjFtd0hVOtRQ9PHpSfN6u6/QXkQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <script src="{{ asset('/assets/admin/js/core/popper.min.js') }}"></script>
     <script src="{{ asset('/assets/admin/js/core/bootstrap.min.js') }}"></script>
     <script src="{{ asset('/assets/admin/js/plugins/perfect-scrollbar.min.js') }}"></script>
