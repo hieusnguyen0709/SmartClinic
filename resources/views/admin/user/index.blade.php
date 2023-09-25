@@ -202,6 +202,7 @@
                     'id': ''
                 },
                 success: function(result) {
+                    $('#id').val('');
                     $('#role-id').html(result.roleList);
                     $('#name').val('');
                     $('#email').val('');
@@ -212,7 +213,6 @@
                     $('#age').val('');
                     $('#address').val('');
                     $('#avatar').val('');
-                    $('#id').val('');
                 }
             });
             resetErrors();
@@ -231,6 +231,7 @@
                     'id': id
                 },
                 success: function(result) {
+                    $('#id').val(id);
                     $('#role-id').html(result.roleList);
                     $('#name').val(result.user.name);
                     $('#email').val(result.user.email);
@@ -239,7 +240,6 @@
                     $('#age').val(result.user.age);
                     $('#address').val(result.user.address);
                     $('#avatar').val(result.user.avatar);
-                    $('#id').val(id);
                 }
             });
             resetErrors();
@@ -258,6 +258,7 @@
                     'id': id
                 },
                 success: function(result) {
+                    $('#id').val(id);
                     $('#role-id').html(result.roleList);
                     $('#name').val(result.user.name);
                     $('#email').val(result.user.email);
@@ -266,7 +267,6 @@
                     $('#age').val(result.user.age);
                     $('#address').val(result.user.address);
                     $('#avatar').val(result.user.avatar);
-                    $('#id').val(id);
                 }
             });
             resetErrors();
