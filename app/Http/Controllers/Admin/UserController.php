@@ -53,9 +53,11 @@ class UserController extends BaseController
         if (!empty($this->request->input('sort_type'))) {
             $sortType = $this->request->input('sort_type');
         }
-        $users = $this->userRepo->getUsers($search, $numPerPage, $sortColumn, $sortType);
+        $roleId = $this->request->input('select_role');
+        $users = $this->userRepo->getUsers($search, $numPerPage, $sortColumn, $sortType, $roleId);
+        $roles = $this->roleRepo->getAllRecordActive();
         
-        return view('admin.user.index', compact('users', 'search', 'numPerPage', 'sortColumn', 'sortType'));
+        return view('admin.user.index', compact('users', 'search', 'numPerPage', 'sortColumn', 'sortType', 'roles', 'roleId'));
     }
 
     public function getEdit()

@@ -5,27 +5,34 @@
             <div class="col-12">
                 <div class="card mb-4">
                     <div class="table-header">
-                        <div class="card-header">
-                            <h5>Users</h5>
-                            <button class="text-uppercase btn bg-gradient-success mb-0" id="create-user"  data-bs-toggle="modal" data-bs-target="#modal-user">Add&nbsp;&nbsp;<i class="fas fa-plus"></i></button>
-                            <button class="text-uppercase btn bg-gradient-danger mb-0" id="bulk-delete-user"  data-bs-toggle="modal" data-bs-target="#modal-delete">Bulk Delete&nbsp;&nbsp;<i class="fas fa-trash"></i></button>
-                        </div>
-                        <div class="ms-md-auto pe-md-4 d-flex align-items-center">
-                            <div class="input-group">
-                                <!-- <label>Filter</label>
-                                <select class="form-control pe-md-4" id="role-id" name="role_id">
-                                    <option>Roles</option>
-                                    <option>Admin</option>
-                                    <option>User</option>
-                                </select> -->
-                                <form action="{{ route('user.index') }}" method="get" id="frm-search">
-                                    <!-- <span class="input-group-text"><i class="fas fa-search" aria-hidden="true"></i></span> -->
-                                    <input type="text" class="form-control" placeholder="Search here..." name="search" id="search" value="{{ $search }}">
-                                    <input type="hidden" name="num_per_page" id="num-per-page" value="{{ $numPerPage }}">
-                                    <input type="hidden" name="sort_column" id="sort-column" value="{{ $sortColumn }}">
-                                    <input type="hidden" name="sort_type" id="sort-type" value="{{ $sortType }}">
-                                    <!-- <input type="hidden" name="role_id" id="role-id" value="{{ $roleId ?? NULL }}"> -->
-                                </form>
+                        <div class="card-header d-flex w-100 mb-0">
+                            <div class="w-50">
+                                <h5>Users</h5>
+                                <button class="text-uppercase btn bg-gradient-success" id="create-user"  data-bs-toggle="modal" data-bs-target="#modal-user">Add&nbsp;&nbsp;<i class="fas fa-plus"></i></button>
+                                <button class="text-uppercase btn bg-gradient-danger" id="bulk-delete-user"  data-bs-toggle="modal" data-bs-target="#modal-delete">Bulk Delete&nbsp;&nbsp;<i class="fas fa-trash"></i></button>
+                            </div>
+                            <div class="w-50">
+                                <div class="float-end">
+                                    <h5>&nbsp;</h5>
+                                    <button class="text-uppercase btn bg-gradient-warning" onclick="window.location.href='{{ route('user.index') }}'">Clear&nbsp;&nbsp;<i class="fas fa-broom"></i></button>
+                                    <button class="text-uppercase btn bg-gradient-primary"><i class="fas fa-filter"></i></button>
+                                    <div class="d-flex float-end mx-1">
+                                        <select class="form-control pe-md-4 w-100 mx-1" id="list-role">
+                                            <option value="">Roles</option>
+                                            @foreach ($roles as $key => $item)
+                                                <option value="{{ $item->id }}" {{ $item->id == app('request')->input('select_role') ? 'selected' : '' }}>{{ $item->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        <form action="{{ route('user.index') }}" method="get" id="frm-search" class="w-100 mx-1 d-flex">
+                                            <input type="text" class="form-control" placeholder="Search here..." name="search" id="search" value="{{ $search }}">
+                                            <!-- <i class="fas fa-search" aria-hidden="true"></i> -->
+                                            <input type="hidden" name="num_per_page" id="num-per-page" value="{{ $numPerPage }}">
+                                            <input type="hidden" name="sort_column" id="sort-column" value="{{ $sortColumn }}">
+                                            <input type="hidden" name="sort_type" id="sort-type" value="{{ $sortType }}">
+                                            <input type="hidden" name="select_role" id="select-role" value="{{ $roleId }}">
+                                        </form>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -134,6 +141,10 @@
                 $('#frm-search').submit();
             }
         });
+        $('#list-role').change(function() {
+            $('#select-role').val($(this).val());
+            $('#frm-search').submit();
+        });
         $('#sel-num-per-page').change(function() {
             $('#num-per-page').val($(this).val());
             $('#frm-search').submit();
@@ -192,20 +203,21 @@
                 },
                 success: function(result) {
                     $('#role-id').html(result.roleList);
+                    $('#name').val('');
+                    $('#email').val('');
+                    $('#password').val('');
+                    $('#confirm-password').val('');
+                    $('#gender').val('0');
+                    $('#phone').val('');
+                    $('#age').val('');
+                    $('#address').val('');
+                    $('#avatar').val('');
+                    $('#id').val('');
                 }
             });
             resetErrors();
             $('#but-create-user').css('display', 'inline-block');
             $("#frm-user input, select").prop("disabled", false);
-            $('#name').val('');
-            $('#email').val('');
-            $('#password').val('');
-            $('#confirm-password').val('');
-            $('#gender').val('0');
-            $('#phone').val('');
-            $('#age').val('');
-            $('#address').val('');
-            $('#avatar').val('');
             $('#modal-user').show();
         });
         $('.edit-user').on('click', function() {

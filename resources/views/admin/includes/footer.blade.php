@@ -54,7 +54,9 @@
             <input class="form-check-input mt-1 ms-auto" type="checkbox" id="dark-version" onclick="darkMode(this)">
           </div>
         </div>
-        <a class="btn bg-gradient-dark w-100" href="https://www.creative-tim.com/learning-lab/bootstrap/license/argon-dashboard">Documentation</a>
+        <a class="btn bg-gradient-dark w-100" href="https://www.creative-tim.com/learning-lab/bootstrap/license/argon-dashboard">Creative Tim - Docs</a>
+        <a class="btn bg-gradient-dark w-100" href="https://fontawesome.com/search">Fontawesome - Docs</a>
+        <a class="btn bg-gradient-dark w-100" href="https://tailwindcss.com/docs/font-size?fbclid=IwAR01VKWCmFq-8tkwrv2K5Q6i_XBB5VzXf341g7a-UXJ3vb-hFB4_NCsV6Cg">Tailwindcss - Docs</a>
       </div>
     </div>
 </div>

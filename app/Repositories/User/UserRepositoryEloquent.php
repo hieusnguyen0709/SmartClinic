@@ -23,7 +23,7 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
         return \App\Models\User::class;
     }
 
-    public function getUsers($search = null, $numPerPage = null, $sortColumn = null, $sortType = null)
+    public function getUsers($search = null, $numPerPage = null, $sortColumn = null, $sortType = null, $roleId = null)
     {
         return $this->model->join('roles', 'roles.id', '=', 'users.role_id')
         ->selectRaw('users.*, roles.name as role')
@@ -35,6 +35,9 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
                 ->orWhere('users.name', 'like', '%' . $search . '%')
                 ->orWhere('roles.name', 'like', '%' . $search . '%');
             });
+        })
+        ->when(!empty($roleId), function ($query) use ($roleId) {
+            return $query->where('role_id', $roleId);
         })
         ->orderBy($sortColumn, $sortType)
         ->paginate($numPerPage);
