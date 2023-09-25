@@ -135,8 +135,7 @@
 @section('scripts')
     <script>
         $('#search').keyup(function(event) {
-            if (event.which === 13 || isEmpty($(this).val()))
-            {
+            if (event.which === 13 || $(this).val() == '') {
                 event.preventDefault();
                 $('#frm-search').submit();
             }
@@ -304,6 +303,11 @@
                     } else {
                         $('#modal-user').hide(); 
                         location.reload();
+                        // toastr.success('Successfully save', 'Message');
+                        // $('#modal-user').hide(); 
+                        // setTimeout(function() {
+                        //     location.reload();
+                        // }, 1000); 
                     }
                 }
             })
@@ -324,7 +328,7 @@
             $('#id-delete').val(id);
             $('#modal-delete').show();
         });
-        $('#bulk-delete-user').on('click', function(e) {
+        $('#bulk-delete-user').on('click', function() {
             $('#frm-delete').attr('action', '{{ route('user.delete') }}');
             let ids = [];
             $("tbody input:checked").each(function() {
