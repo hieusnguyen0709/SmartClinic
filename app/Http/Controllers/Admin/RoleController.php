@@ -51,17 +51,13 @@ class RoleController extends BaseController
     public function create()
     {
         $menus = \Config::get('permission.menu');
-        $categories = \Config::get('permission.cate');
         $permissions = \Config::get('permission.permission');
-        $cateByMenu = $permissionByCate = [];
-        foreach ($categories as $category) {
-            $cateByMenu[$category['menu_id']][] = $category;
-        }
+        $permissionByMenu= [];
         foreach ($permissions as $permission) {
-            $permissionByCate[$permission['cate_id']][] = $permission;
+            $permissionByMenu[$permission['menu_id']][] = $permission;
         }
 
-        return view('admin.role.create', compact('menus', 'cateByMenu', 'permissionByCate'));
+        return view('admin.role.create', compact('menus', 'permissionByMenu'));
     }
 
     public function store()
