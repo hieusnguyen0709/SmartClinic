@@ -14,7 +14,7 @@
                             <div class="w-50">
                                 <div class="float-end">
                                     <h5>&nbsp;</h5>
-                                    <button class="text-uppercase btn bg-gradient-warning" onclick="window.location.href='{{ route('user.index') }}'">Clear&nbsp;&nbsp;<i class="fas fa-broom"></i></button>
+                                    <button class="text-uppercase btn bg-gradient-warning" onclick="location.href='{{ route('user.index') }}'">Clear&nbsp;&nbsp;<i class="fas fa-broom"></i></button>
                                     <button class="text-uppercase btn bg-gradient-primary"><i class="fas fa-filter"></i></button>
                                     <div class="d-flex float-end mx-1">
                                         <select class="form-control pe-md-4 w-100 mx-1" id="list-role">
