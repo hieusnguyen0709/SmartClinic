@@ -32,110 +32,38 @@
                             </div>
                         </div>
                         <hr class="horizontal dark">
-                        <p class="text-bold text-uppercase text-base">Permission</p>
-                        
-                        <!-- Dashboard -->
-                        <div class="row mt-4">
-                            <div class="col-md-12">
-                                <div class="d-flex">
-                                    <div class="w-50">
-                                        <p class="text-uppercase text-sm">Dashboard</p>
-                                    </div>
-                                    <div class="w-50">
-                                        <div class="float-end">                                    
-                                            <button type="button" class="text-uppercase btn bg-gradient-success mx-1 check-all-per"><i class="fas fa-check-double"></i></button>                                 
-                                            <button type="button" class="text-uppercase btn bg-gradient-secondary mx-1 uncheck-all-per"><i class="fas fa-ban"></i></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-check">
-                                    <label class="custom-control-label">View</label>
-                                    <input class="form-check-input" type="checkbox" value="">
-                                </div>
-                            </div>
-                        </div>
-                        <hr class="horizontal dark">
-                        <!-- Dashboard -->
 
-                        <!-- Users -->
+                        <!-- Permission -->
+                        <p class="text-bold text-uppercase text-base">Permission</p>                       
+                        @foreach ($menus as $menu)
                         <div class="row mt-4">
                             <div class="col-md-12">
-                                <div class="d-flex">
+                                <div class="d-flex check-item">
                                     <div class="w-50">
-                                        <p class="text-uppercase text-sm">Users</p>
+                                        <p class="text-uppercase text-sm">{{ $menu['name'] }}</p>
                                     </div>
                                     <div class="w-50">
                                         <div class="float-end">                                    
-                                            <button type="button" class="text-uppercase btn bg-gradient-success mx-1 check-all-per"><i class="fas fa-check-double"></i></button>                                 
-                                            <button type="button" class="text-uppercase btn bg-gradient-secondary mx-1 uncheck-all-per"><i class="fas fa-ban"></i></button>
+                                            <button type="button" class="text-uppercase btn bg-gradient-success mx-1 check-all-permission"><i class="fas fa-check-double"></i></button>                                 
+                                            <button type="button" class="text-uppercase btn bg-gradient-secondary mx-1 uncheck-all-permission"><i class="fas fa-ban"></i></button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-12">
-                                <div class="form-check">
-                                    <label class="custom-control-label">View</label>
-                                    <input class="form-check-input" type="checkbox" value="">
-                                </div>
-                                <div class="form-check">
-                                    <label class="custom-control-label">Create</label>
-                                    <input class="form-check-input" type="checkbox" value="">
-                                </div>
-                                <div class="form-check">
-                                    <label class="custom-control-label">Edit</label>
-                                    <input class="form-check-input" type="checkbox" value="">
-                                </div>
-                                <div class="form-check">
-                                    <label class="custom-control-label">Delete</label>
-                                    <input class="form-check-input" type="checkbox" value="">
-                                </div>
-                                <div class="form-check">
-                                    <label class="custom-control-label">Lock/Unlock</label>
-                                    <input class="form-check-input" type="checkbox" value="">
-                                </div>
+                                @if (isset($permissionByMenu[$menu['id']]))
+                                    @foreach ($permissionByMenu[$menu['id']] as $permission)
+                                    <div class="form-check">
+                                        <label class="custom-control-label">{{ $permission['name'] }}</label>
+                                        <input class="form-check-input" type="checkbox" name='permission_ids[]' value="{{ $permission['id'] }}">
+                                    </div>
+                                    @endforeach
+                                @endif
                             </div>
                         </div>
                         <hr class="horizontal dark">
-                        <!-- Users -->
-
-                        <!-- Roles -->
-                        <div class="row mt-4">
-                            <div class="col-md-12">
-                                <div class="d-flex">
-                                    <div class="w-50">
-                                        <p class="text-uppercase text-sm">Roles</p>
-                                    </div>
-                                    <div class="w-50">
-                                        <div class="float-end">                                    
-                                            <button type="button" class="text-uppercase btn bg-gradient-success mx-1 check-all-per"><i class="fas fa-check-double"></i></button>                                 
-                                            <button type="button" class="text-uppercase btn bg-gradient-secondary mx-1 uncheck-all-per"><i class="fas fa-ban"></i></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-check">
-                                    <label class="custom-control-label">View</label>
-                                    <input class="form-check-input" type="checkbox" value="">
-                                </div>
-                                <div class="form-check">
-                                    <label class="custom-control-label">Create</label>
-                                    <input class="form-check-input" type="checkbox" value="">
-                                </div>
-                                <div class="form-check">
-                                    <label class="custom-control-label">Edit</label>
-                                    <input class="form-check-input" type="checkbox" value="">
-                                </div>
-                                <div class="form-check">
-                                    <label class="custom-control-label">Delete</label>
-                                    <input class="form-check-input" type="checkbox" value="">
-                                </div>
-                            </div>
-                        </div>
-                        <hr class="horizontal dark">
-                        <!-- Roles -->
+                        @endforeach
+                        <!-- Permission -->
 
                         <div class="row">
                             <div class="text-center d-flex">

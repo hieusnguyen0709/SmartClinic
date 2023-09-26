@@ -10,7 +10,7 @@ return [
         'CREATE_USER' => 101,
         'EDIT_USER' => 102,
         'DELETE_USER' => 103,
-        'BLOCK_USER' => 104,
+        'LOCK_USER' => 104,
 
         'VIEW_ROLE' => 150,
         'CREATE_ROLE' => 151,
