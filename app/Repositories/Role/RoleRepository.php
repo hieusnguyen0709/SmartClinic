@@ -10,5 +10,5 @@ use App\Repositories\RepositoryInterface;
  */
 interface RoleRepository extends RepositoryInterface
 {
-
+    public function getRoles($search, $numPerPage, $sortColumn, $sortType);
 }
