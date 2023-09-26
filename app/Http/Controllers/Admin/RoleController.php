@@ -48,115 +48,58 @@ class RoleController extends BaseController
         return view('admin.role.index', compact('roles', 'search', 'numPerPage', 'sortColumn', 'sortType'));
     }
 
-    public function getEdit()
+    public function create()
     {
-        // $input = $this->request->all();
-        // $user = $roleId = '';
-        // if (!empty($input['id'])) {
-        //     $user = $this->userRepo->find($input['id']);
-        //     $roleId = $user['role_id'];
-        // }
-        // $roles = $this->roleRepo->getAllRecordActive();
-        // $roleList = $this->getListSelect($roles, $roleId);
-        
-        // return response()->json([
-        //     'user' => $user,
-        //     'roleList' => $roleList
-        // ]);
+        $menus = \Config::get('permission.menu');
+        $categories = \Config::get('permission.cate');
+        $permissions = \Config::get('permission.permission');
+        $cateByMenu = $permissionByCate = [];
+        foreach ($categories as $category) {
+            $cateByMenu[$category['menu_id']][] = $category;
+        }
+        foreach ($permissions as $permission) {
+            $permissionByCate[$permission['cate_id']][] = $permission;
+        }
+
+        return view('admin.role.create', compact('menus', 'cateByMenu', 'permissionByCate'));
     }
 
     public function store()
     {
-        // $input = $this->request->all();
-        // if (!empty($input['id'])) {
-        //     $rules = [
-        //         'role_id' => 'required',
-        //         'name' => 'required',
-        //         'email' => ['required', 'email', Rule::unique('users')->where(function ($query) use ($input) {
-        //             return $query->where('is_delete', 0)->where('id', '<>', $input['id']);
-        //         })],
-        //         'password' => 'nullable|regex:/^(?=.*[A-Z])(?=.*\d).{10,}$/',
-        //         'confirm_password' => 'nullable|same:password',
-        //         'gender' => 'nullable',
-        //         'phone' => 'nullable',
-        //         'age' => 'nullable',
-        //         'address' => 'nullable',
-        //         'avatar' => 'nullable|mimes:jpeg,jpg,png,gif|max:2048',
-        //     ];
-        // } else {
-        //     $rules = [
-        //         'role_id' => 'required',
-        //         'name' => 'required',
-        //         'email' => ['required', 'email', Rule::unique('users')->where(function ($query) {
-        //             return $query->where('is_delete', 0);
-        //         })],
-        //         'password' => 'required|regex:/^(?=.*[A-Z])(?=.*\d).{10,}$/',
-        //         'confirm_password' => 'required|same:password',
-        //         'gender' => 'nullable',
-        //         'phone' => 'nullable',
-        //         'age' => 'nullable',
-        //         'address' => 'nullable',
-        //         'avatar' => 'nullable|mimes:jpeg,jpg,png,gif|max:2048',
-        //     ];
-        // }
-        
-        // $message = [
-        //     'role_id.required' => 'Please fill out this field.',
-        //     'name.required' => 'Please fill out this field.',
-        //     'email.required' => 'Please fill out this field.',
-        //     'email.email' => '*The email address must be a valid email address.',
-        //     'password.required' => 'Please fill out this field.',
-        //     'password.regex' => 'The password must contain at least <strong>10 characters</strong> including <strong>capital letter</strong> and <strong>a number<strong>.',
-        //     'confirm_password.same' => '<strong>Password</strong> and <strong>confirm password</strong> fields must match.',
-        //     'confirm_password.required' => 'Please fill out this field.',
-        //     'avatar.required' => 'Please fill out this field.',
-        //     'avatar.mimes' => 'Only accepts format jpeg,jpg,png,gif',
-        //     'avatar.max' => 'Please upload file less than 2MB.'
-        // ];
-        // $validator = Validator::make($input, $rules, $message);
-        // if ($validator->fails()) {
-        //     $response = [
-        //         'code' => '422',
-        //         'errors' => $validator->messages()->toArray()
-        //     ];
-        //     return response()->json($response);
-        // }
-        
-        // $data = [
-        //     'role_id' => $input['role_id'],
-        //     'name' => $input['name'],
-        //     'email' => $input['email'],
-        //     'password' => Hash::make($input['password']),
-        //     'gender' => $input['gender'],
-        //     'phone' => $input['phone'],
-        //     'age' => $input['age'],
-        //     'address' => $input['address'],
-        // ];
-        // $avatarName = '';
-        // if ($this->request->has('avatar')) {
-        //     $avatarName = $this->uploadFile($this->request->file('avatar'), Config::get('constants.IMG_USER_PATH'));
-        // }
-        // $data['avatar'] = $avatarName;
-        
-        // if (!empty($input['id'])) {
-        //     $user = $this->userRepo->find($input['id']);
-        //     if (empty($input['password'])) {
-        //         $data['password'] = $user['password'];
-        //     }
-        //     if (empty($input['avatar'])) {
-        //         $data['avatar'] = $user['avatar'];
-        //     }
-        // }
+        $input = $this->request->all();
+        $rules = [
+            'name' => 'required',
+        ];     
+        $message = [
+            'name.required' => 'Please fill out this field.',
+        ];
+        $validator = Validator::make($input, $rules, $message);
+        if ($validator->fails()) {
+            $response = [
+                'code' => '422',
+                'errors' => $validator->messages()->toArray()
+            ];
+            return response()->json($response);
+        }
+        $permission = "";
+        if (isset($input['permission_ids'])) {
+            $permission = implode(',', $input['permission_ids']);
+        }
+        $data = [
+            'name' => $input['name'],
+            'description' => $input['description'],
+            'permission' => $permission
+        ];
 
-        // if (!empty($input['id'])) {
-        //     $this->userRepo->update($input['id'], $data);
-        // } else {
-        //     $this->userRepo->create($data);
-        // }
+        if (!empty($input['id'])) {
+            $this->roleRepo->update($input['id'], $data);
+        } else {
+            $this->roleRepo->create($data);
+        }
 
-        // return response()->json([
-        //     'code' => '200'
-        // ]);
+        return response()->json([
+            'code' => '200'
+        ]);
     }
 
     public function delete()

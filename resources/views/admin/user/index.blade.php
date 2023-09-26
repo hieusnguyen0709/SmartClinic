@@ -8,7 +8,7 @@
                         <div class="card-header d-flex w-100 mb-0">
                             <div class="w-50">
                                 <h5>Users</h5>
-                                <button class="text-uppercase btn bg-gradient-success" id="create-user"  data-bs-toggle="modal" data-bs-target="#modal-user">Add&nbsp;&nbsp;<i class="fas fa-plus"></i></button>
+                                <button class="text-uppercase btn bg-gradient-success" id="create-user"  data-bs-toggle="modal" data-bs-target="#modal-user">Create&nbsp;&nbsp;<i class="fas fa-plus"></i></button>
                                 <button class="text-uppercase btn bg-gradient-danger" id="bulk-delete-user"  data-bs-toggle="modal" data-bs-target="#modal-delete">Bulk Delete&nbsp;&nbsp;<i class="fas fa-trash"></i></button>
                             </div>
                             <div class="w-50">
