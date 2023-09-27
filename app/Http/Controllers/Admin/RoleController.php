@@ -60,6 +60,24 @@ class RoleController extends BaseController
         return view('admin.role.create', compact('menus', 'permissionByMenu'));
     }
 
+    public function edit($slug)
+    {
+        $role = $this->roleRepo->findBySlugOrFail($slug);
+        $menus = \Config::get('permission.menu');
+        $permissions = \Config::get('permission.permission');
+        $permissionByMenu= [];
+        foreach ($permissions as $permission) {
+            $permissionByMenu[$permission['menu_id']][] = $permission;
+        }
+
+        return view('admin.role.edit', compact('role', 'menus', 'permissionByMenu'));
+    }
+
+    public function view($slug)
+    {
+        return 'view';
+    }
+
     public function store()
     {
         $input = $this->request->all();
