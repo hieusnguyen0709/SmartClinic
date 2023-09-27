@@ -47,7 +47,7 @@
                         @foreach ($menus as $menu)
                         <div class="row mt-4">
                             <div class="col-md-12">
-                                <div class="d-flex check-item">
+                                <div class="header-permission d-flex">
                                     <div class="w-50">
                                         <p class="text-uppercase text-sm">{{ $menu['name'] }}</p>
                                     </div>
@@ -60,9 +60,8 @@
                                     </div>
                                     @endif
                                 </div>
-                            </div>
-                            <div class="col-md-12">
                                 @if (isset($permissionByMenu[$menu['id']]))
+                                <div class="body-permission">
                                     @foreach ($permissionByMenu[$menu['id']] as $permission)
                                     @php 
                                         $checked = '';
@@ -75,6 +74,7 @@
                                         <input class="form-check-input" type="checkbox" name='permission_ids[]' value="{{ $permission['id'] }}" {{ $checked }} {{ $disabled }}>
                                     </div>
                                     @endforeach
+                                </div>
                                 @endif
                             </div>
                         </div>
@@ -85,10 +85,10 @@
                         <input type="hidden" name="id" id="id" value="{{ $role->id }}">
 
                         @if (empty($disabled))
-                        <div class="row">
-                            <div class="text-center d-flex">
-                                <button type="button" class="btn bg-gradient-primary btn-lg btn-rounded w-15 mt-4 mb-0" onclick="location.href='{{ route('role.index') }}'">Cancel</button>
-                                <button type="button" class="btn bg-gradient-primary btn-lg btn-rounded w-15 mt-4 mb-0" id="but-create-role">Save</button>
+                        <div class="container m-auto row justify-content-md-center pb-5">
+                            <div class="col-md-3 d-flex">
+                                <button type="button" class="btn bg-gradient-primary btn-lg btn-rounded w-60 mx-1" onclick="location.href='{{ route('role.index') }}'">Cancel</button>
+                                <button type="button" class="btn bg-gradient-primary btn-lg btn-rounded w-60 mx-1" id="but-create-role">Save</button>
                             </div>
                         </div>
                         @endif
@@ -104,7 +104,7 @@
         $('#but-create-role').on('click', function() {
             $('#err-name').text('');
             $('#err-permission').text('');
-            $('#but-create-role').text('SAVING ...');
+            $('#but-create-role').text('Save');
             $('#but-create-role').prop('disabled', true);
             let form = $('#frm-role')[0];
             let data = new FormData(form);
@@ -118,7 +118,7 @@
                 cache: false,
                 success: function(result){
                     if (result.code == 422) {
-                        $('#but-create-role').text('SAVE');
+                        $('#but-create-role').text('Save');
                         $('#but-create-role').prop('disabled', false);
                         $("input[name='name']").addClass("is-invalid");
                         $('#err-name').text(result.errors.name);

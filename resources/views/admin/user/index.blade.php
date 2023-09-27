@@ -274,7 +274,7 @@
             $('#modal-user').show();
         });
         $('#but-create-user').on('click', function() {
-            $('#but-create-user').text('SAVING ...');
+            $('#but-create-user').text('Saving ...');
             $('#but-create-user').prop('disabled', true);
             let form = $('#frm-user')[0];
             let data = new FormData(form);
@@ -289,7 +289,7 @@
                 success: function(result){
                     if (result.code == 422) {
                         resetErrors();
-                        $('#but-create-user').text('SAVE');
+                        $('#but-create-user').text('Save');
                         $('#but-create-user').prop('disabled', false);
                         $('#err-role-id').text(result.errors.role_id);
                         $('#err-name').text(result.errors.name);
