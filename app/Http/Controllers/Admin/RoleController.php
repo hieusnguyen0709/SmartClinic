@@ -73,11 +73,6 @@ class RoleController extends BaseController
         return view('admin.role.edit', compact('role', 'menus', 'permissionByMenu'));
     }
 
-    public function view($slug)
-    {
-        return 'view';
-    }
-
     public function store()
     {
         $input = $this->request->all();

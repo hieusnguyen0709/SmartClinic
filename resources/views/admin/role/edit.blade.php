@@ -1,5 +1,11 @@
 @extends('layouts.admin')
 @section('content')
+    @php 
+        $disabled = '';
+        if (request()->route('is_view')) {
+            $disabled = 'disabled';
+        }
+    @endphp
     <form action="{{ route('role.store') }}" id="frm-role" method="POST" enctype="multipart/form-data">
     @csrf
     <div class="container-fluid py-4">
@@ -9,7 +15,7 @@
                     <div class="table-header">
                         <div class="card-header d-flex w-100 mb-0">
                             <div class="w-50">
-                                <h5>Roles / Edit / {{ $role->name }}</h5>
+                                <h5>Roles / {{ empty($disabled) ? 'Edit' : 'View' }} / {{ $role->name }}</h5>
                             </div>
                         </div>
                     </div>
@@ -18,7 +24,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="example-text-input" class="form-control-label">Name</label>
-                                    <input class="form-control" type="text" name="name" value="{{ $role->name }}">
+                                    <input class="form-control" type="text" name="name" value="{{ $role->name }}" {{ $disabled }}>
                                     <div class="text-danger text-xs font-weight-bold mt-2" id="err-name"></div>
                                 </div>
                             </div>
@@ -27,7 +33,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="form-control-label">Description</label>
-                                    <textarea class="form-control" type="text" name="description" rows="10">{{ $role->description }}</textarea>
+                                    <textarea class="form-control" type="text" name="description" rows="10" {{ $disabled }}>{{ $role->description }}</textarea>
                                 </div>
                             </div>
                         </div>
@@ -45,12 +51,14 @@
                                     <div class="w-50">
                                         <p class="text-uppercase text-sm">{{ $menu['name'] }}</p>
                                     </div>
+                                    @if (empty($disabled))
                                     <div class="w-50">
                                         <div class="float-end">                                    
                                             <button type="button" class="text-uppercase btn bg-gradient-success mx-1 check-all-permission"><i class="fas fa-check-double"></i></button>                                 
                                             <button type="button" class="text-uppercase btn bg-gradient-secondary mx-1 uncheck-all-permission"><i class="fas fa-ban"></i></button>
                                         </div>
                                     </div>
+                                    @endif
                                 </div>
                             </div>
                             <div class="col-md-12">
@@ -64,7 +72,7 @@
                                     @endphp
                                     <div class="form-check">
                                         <label class="custom-control-label">{{ $permission['name'] }}</label>
-                                        <input class="form-check-input" type="checkbox" name='permission_ids[]' value="{{ $permission['id'] }}" {{ $checked }}>
+                                        <input class="form-check-input" type="checkbox" name='permission_ids[]' value="{{ $permission['id'] }}" {{ $checked }} {{ $disabled }}>
                                     </div>
                                     @endforeach
                                 @endif
@@ -76,12 +84,14 @@
 
                         <input type="hidden" name="id" id="id" value="{{ $role->id }}">
 
+                        @if (empty($disabled))
                         <div class="row">
                             <div class="text-center d-flex">
                                 <button type="button" class="btn bg-gradient-primary btn-lg btn-rounded w-15 mt-4 mb-0" onclick="location.href='{{ route('role.index') }}'">Cancel</button>
                                 <button type="button" class="btn bg-gradient-primary btn-lg btn-rounded w-15 mt-4 mb-0" id="but-create-role">Save</button>
                             </div>
                         </div>
+                        @endif
                     </div>
                 </div>
             </div>
