@@ -47,8 +47,7 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function 
     Route::prefix('role')->group(function () {
         Route::get('/', 'RoleController@index')->name('role.index');
         Route::get('/create', 'RoleController@create')->name('role.create');
-        Route::get('/edit/{slug}', 'RoleController@edit')->name('role.edit');
-        Route::get('/view/{slug}', 'RoleController@view')->name('role.view');
+        Route::get('/edit/{slug}/{is_view?}', 'RoleController@edit')->name('role.edit');
         Route::post('/store', 'RoleController@store')->name('role.store');
         Route::post('/delete', 'RoleController@delete')->name('role.delete');
     });

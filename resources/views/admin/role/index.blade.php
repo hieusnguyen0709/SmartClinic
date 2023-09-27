@@ -74,8 +74,8 @@
                                             <p class="text-xs font-weight-bold mb-0">{{ $item->description }}</p>
                                         </td>
                                         <td class="align-middle">
-                                            <i class="fas fa-solid fa-eye ms-auto text-primary cursor-pointer" onclick="location.href='{{ route('role.view', $item->slug) }}'" data-bs-placement="top" data-id="{{ $item->id }}" title="View"></i>
-                                            <i class="fas fa-pencil-alt ms-auto text-dark cursor-pointer" onclick="location.href='{{ route('role.edit', $item->slug) }}'" data-bs-placement="top" data-id="{{ $item->id }}" title="Edit" ></i>
+                                            <i class="fas fa-solid fa-eye ms-auto text-primary cursor-pointer" onclick="location.href='{{ route('role.edit', [$item->slug, true]) }}'" data-bs-placement="top" data-id="{{ $item->id }}" title="View"></i>
+                                            <i class="fas fa-pencil-alt ms-auto text-dark cursor-pointer" onclick="location.href='{{ route('role.edit', [$item->slug, false]) }}'" data-bs-placement="top" data-id="{{ $item->id }}" title="Edit" ></i>
                                             <i class="fas fa-trash-alt ms-auto text-danger cursor-pointer delete-role" data-bs-placement="top" data-bs-toggle="modal" data-bs-target="#modal-delete" data-id="{{ $item->id }}" title="Delete"></i>
                                         </td>
                                     </tr>
