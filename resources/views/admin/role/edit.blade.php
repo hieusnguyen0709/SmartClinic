@@ -9,7 +9,7 @@
                     <div class="table-header">
                         <div class="card-header d-flex w-100 mb-0">
                             <div class="w-50">
-                                <h5>Roles / Create</h5>
+                                <h5>Roles / Edit / {{ $role->name }}</h5>
                             </div>
                         </div>
                     </div>
@@ -18,7 +18,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="example-text-input" class="form-control-label">Name</label>
-                                    <input class="form-control" type="text" name="name">
+                                    <input class="form-control" type="text" name="name" value="{{ $role->name }}">
                                     <div class="text-danger text-xs font-weight-bold mt-2" id="err-name"></div>
                                 </div>
                             </div>
@@ -27,13 +27,16 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="form-control-label">Description</label>
-                                    <textarea class="form-control" type="text" name="description" rows="10"></textarea>
+                                    <textarea class="form-control" type="text" name="description" rows="10">{{ $role->description }}</textarea>
                                 </div>
                             </div>
                         </div>
                         <hr class="horizontal dark">
 
                         <!-- Permission -->
+                        @php
+                            $rolePermission = explode(',', $role->permission);
+                        @endphp
                         <p class="text-bold text-uppercase text-base">Permission</p>                       
                         @foreach ($menus as $menu)
                         <div class="row mt-4">
@@ -53,9 +56,15 @@
                             <div class="col-md-12">
                                 @if (isset($permissionByMenu[$menu['id']]))
                                     @foreach ($permissionByMenu[$menu['id']] as $permission)
+                                    @php 
+                                        $checked = '';
+                                        if (in_array($permission['id'], $rolePermission)) {
+                                            $checked = 'checked';
+                                        }
+                                    @endphp
                                     <div class="form-check">
                                         <label class="custom-control-label">{{ $permission['name'] }}</label>
-                                        <input class="form-check-input" type="checkbox" name='permission_ids[]' value="{{ $permission['id'] }}">
+                                        <input class="form-check-input" type="checkbox" name='permission_ids[]' value="{{ $permission['id'] }}" {{ $checked }}>
                                     </div>
                                     @endforeach
                                 @endif
@@ -64,6 +73,8 @@
                         <hr class="horizontal dark">
                         @endforeach
                         <!-- Permission -->
+
+                        <input type="hidden" name="id" id="id" value="{{ $role->id }}">
 
                         <div class="row">
                             <div class="text-center d-flex">
