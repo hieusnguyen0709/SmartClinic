@@ -243,7 +243,7 @@
             let id = _this.data('id');
             $.ajax({
                 type: 'GET',
-                url: '{{ route('user.get.edit') }}',
+                url: '{{ route('medicine.get.edit') }}',
                 data: {
                     'id': id
                 },

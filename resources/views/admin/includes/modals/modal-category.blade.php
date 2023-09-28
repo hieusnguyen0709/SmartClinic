@@ -16,16 +16,16 @@
                                     <div class="text-danger text-xs font-weight-bold mt-2" id="err-name"></div>
                                 </div>
                                 <div class="form-group">
-                                    <label>Description</label>
-                                    <textarea class="form-control" type="text" placeholder="Description" name="description" id="description" rows="10"></textarea>
-                                    <div class="text-danger text-xs font-weight-bold mt-2" id="err-description"></div>
-                                </div>
-                                <div class="form-group">
                                     <label>Parent Category</label>
                                     <select class="form-control" id="parent-id" name="parent_id">
                                         <option value="0">0</option>
                                     </select>
                                     <div class="text-danger text-xs font-weight-bold mt-2" id="err-parent-id"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Description</label>
+                                    <textarea class="form-control" type="text" placeholder="Description" name="description" id="description" rows="10"></textarea>
+                                    <div class="text-danger text-xs font-weight-bold mt-2" id="err-description"></div>
                                 </div>
                                 <input type="hidden" name="id" id="id" value="">
                                 <div class="text-center">
