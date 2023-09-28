@@ -1,13 +1,14 @@
 <?php
 
 namespace App\Repositories\Medicine;
+use App\Repositories\RepositoryInterface;
 
 /**
  * Interface MedicineRepository.
  *
  * @package namespace App\Repositories;
  */
-interface MedicineRepository
+interface MedicineRepository extends RepositoryInterface
 {
-    public function getAll();
+    public function getMedicines($search, $numPerPage, $sortColumn, $sortType);
 }

@@ -4,10 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Cviebrock\EloquentSluggable\Sluggable;
+use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 
 class Medicine extends Model
 {
     use HasFactory;
+    use Sluggable;
+    use SluggableScopeHelpers;
     /**
      * The table associated with the model.
      *
@@ -43,4 +47,18 @@ class Medicine extends Model
      * @var array
      */
     protected $dates = ['deleted_at', 'created_at', 'updated_at'];    
+
+    /**
+     * Return the sluggable configuration array for this model.
+     *
+     * @return array
+     */
+    public function sluggable(): array
+    {
+        return [
+            'slug' => [
+                'source' => 'name'
+            ]
+        ];
+    }
 }
