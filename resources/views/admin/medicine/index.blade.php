@@ -238,7 +238,7 @@
             $('#modal-medicine').show();
         });
         $('.view-medicine').on('click', function() {
-            $('.modal-title').html('View User');
+            $('.modal-title').html('View Medicine');
             let _this = $(this);
             let id = _this.data('id');
             $.ajax({

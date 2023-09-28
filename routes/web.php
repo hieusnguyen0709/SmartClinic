@@ -25,7 +25,6 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function 
     Route::get('/', 'DashboardController@index')->name('dashboard.index');
     Route::get('/appointment', 'AppointmentController@index')->name('appointment.index');
     Route::get('/case-history', 'CaseHistoryController@index')->name('case_history.index');
-    Route::get('/category', 'CategoryController@index')->name('category.index');
     Route::get('/department', 'DepartmentController@index')->name('department.index');
     Route::get('/frame', 'FrameController@index')->name('frame.index');
     Route::get('/prescription', 'PrescriptionController@index')->name('prescription.index');
@@ -49,6 +48,14 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function 
         Route::get('/edit/{slug}/{is_view?}', 'RoleController@edit')->name('role.edit');
         Route::post('/store', 'RoleController@store')->name('role.store');
         Route::post('/delete', 'RoleController@delete')->name('role.delete');
+    });
+
+    Route::prefix('category')->group(function () {
+        Route::get('/', 'CategoryController@index')->name('category.index');
+        Route::get('/get-edit', 'CategoryController@getEdit')->name('category.get.edit');
+        Route::post('/store', 'CategoryController@store')->name('category.store');
+        Route::get('/edit', 'CategoryController@edit')->name('category.edit');
+        Route::post('/delete', 'CategoryController@delete')->name('category.delete');
     });
 
     Route::prefix('medicine')->group(function () {

@@ -1,13 +1,14 @@
 <?php
 
 namespace App\Repositories\Category;
+use App\Repositories\RepositoryInterface;
 
 /**
  * Interface CategoryRepository.
  *
  * @package namespace App\Repositories;
  */
-interface CategoryRepository
+interface CategoryRepository extends RepositoryInterface
 {
-    public function getAll();
+    public function getCategories($search, $numPerPage, $sortColumn, $sortType);
 }

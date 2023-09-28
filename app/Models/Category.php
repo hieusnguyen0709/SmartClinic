@@ -4,10 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Cviebrock\EloquentSluggable\Sluggable;
+use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 
 class Category extends Model
 {
     use HasFactory;
+    use Sluggable;
+    use SluggableScopeHelpers;
     /**
      * The table associated with the model.
      *
@@ -30,6 +34,9 @@ class Category extends Model
     protected $fillable = [
         'name',
         'slug',
+        'description',
+        'parent_id',
+        'user_id',
         'is_delete',
     ];
 
@@ -39,4 +46,33 @@ class Category extends Model
      * @var array
      */
     protected $dates = ['deleted_at', 'created_at', 'updated_at']; 
+
+    /**
+     * Return the sluggable configuration array for this model.
+     *
+     * @return array
+     */
+    public function sluggable(): array
+    {
+        return [
+            'slug' => [
+                'source' => 'name'
+            ]
+        ];
+    }
+
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User');
+    }
+
+    public function parent()
+    {
+        return $this->belongsTo('App\Models\Category', 'parent_id');
+    }
+
+    public function children()
+    {
+        return $this->hasMany('App\Models\Category', 'parent_id')->where('is_delete', 0);
+    }
 }
