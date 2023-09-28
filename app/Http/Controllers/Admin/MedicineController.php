@@ -9,6 +9,6 @@ class MedicineController extends BaseController
 {
     public function index()
     {
-        return 'Medicine - Admin';
+        return view('admin.medicine.index');
     }
 }

@@ -28,7 +28,6 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function 
     Route::get('/category', 'CategoryController@index')->name('category.index');
     Route::get('/department', 'DepartmentController@index')->name('department.index');
     Route::get('/frame', 'FrameController@index')->name('frame.index');
-    Route::get('/medicine', 'MedicineController@index')->name('medicine.index');
     Route::get('/prescription', 'PrescriptionController@index')->name('prescription.index');
     Route::get('/qr-code', 'QrCodeController@index')->name('qr_code.index');
     Route::get('/schedule', 'ScheduleController@index')->name('schedule.index');
@@ -50,5 +49,13 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function 
         Route::get('/edit/{slug}/{is_view?}', 'RoleController@edit')->name('role.edit');
         Route::post('/store', 'RoleController@store')->name('role.store');
         Route::post('/delete', 'RoleController@delete')->name('role.delete');
+    });
+
+    Route::prefix('medicine')->group(function () {
+        Route::get('/', 'MedicineController@index')->name('medicine.index');
+        Route::get('/get-edit', 'MedicineController@getEdit')->name('medicine.get.edit');
+        Route::post('/store', 'MedicineController@store')->name('medicine.store');
+        Route::get('/edit', 'MedicineController@edit')->name('medicine.edit');
+        Route::post('/delete', 'MedicineController@delete')->name('medicine.delete');
     });
 });
