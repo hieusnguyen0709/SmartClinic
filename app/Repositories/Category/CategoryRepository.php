@@ -11,4 +11,5 @@ use App\Repositories\RepositoryInterface;
 interface CategoryRepository extends RepositoryInterface
 {
     public function getCategories($search, $numPerPage, $sortColumn, $sortType);
+    public function getCategoryParent();
 }

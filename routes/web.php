@@ -53,6 +53,7 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function 
     Route::prefix('category')->group(function () {
         Route::get('/', 'CategoryController@index')->name('category.index');
         Route::get('/get-edit', 'CategoryController@getEdit')->name('category.get.edit');
+        Route::get('/get-view', 'CategoryController@getView')->name('category.get.view');
         Route::post('/store', 'CategoryController@store')->name('category.store');
         Route::get('/edit', 'CategoryController@edit')->name('category.edit');
         Route::post('/delete', 'CategoryController@delete')->name('category.delete');

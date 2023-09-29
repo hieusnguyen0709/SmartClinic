@@ -82,7 +82,7 @@
                                             <p class="text-xs font-weight-bold mb-0">{{ $item->description }}</p>
                                         </td>
                                         <td>
-                                            <p class="text-xs font-weight-bold mb-0">{{ $item->parent->name }}</p>
+                                            <p class="text-xs font-weight-bold mb-0">@if ($item->parent) {{ $item->parent->name }} @endif </p>
                                         </td>
                                         <td>
                                             <p class="text-xs font-weight-bold mb-0">{{ $item->user }}</p>
@@ -153,5 +153,130 @@
             }
             $('#frm-search').submit();
         });
+        $('.select-category-tree').on('click', '.dropdown-item', function(event) {
+            $('.select-category-tree .btn-select').html($(event.target).text());
+            $('#parent-id').val($(event.target).attr('value'));
+        })
+        $('#create-category').on('click', function() {
+            $('.modal-title').html('New Category');
+            $.ajax({
+                type: 'GET',
+                url: '{{ route('category.get.edit') }}',
+                data: {
+                    'id': ''
+                },
+                success: function(result) {
+                    $('#id').val('');
+                    $('#name').val('');
+                    $('#parent-id').val(result.parentId);
+                    $('#dropdown-parent-category').html(result.parentList);
+                    $('#description').val('');
+                }
+            });
+            resetErrors();
+            $('#but-create-create').css('display', 'inline-block');
+            $("#frm-create input, textarea").prop("disabled", false);
+            $('#modal-create').show();
+        });
+        $('.edit-category').on('click', function() {
+            $('.modal-title').html('Edit Category');
+            let _this = $(this);
+            let id = _this.data('id');
+            $.ajax({
+                type: 'GET',
+                url: '{{ route('category.get.edit') }}',
+                data: {
+                    'id': id
+                },
+                success: function(result) {
+                    $('#id').val(id);
+                    $('#name').val(result.category.name);
+                    $('#parent-id').val(result.parentId);
+                    $('#dropdown-parent-category').html(result.parentList);
+                    $('#description').val(result.category.description);
+                }
+            });
+            resetErrors();
+            $('#but-create-category').css('display', 'inline-block');
+            $("#frm-category input, textarea").prop("disabled", false);
+            $('#modal-category').show();
+        });
+        $('.view-category').on('click', function() {
+            $('.modal-title').html('View Category');
+            let _this = $(this);
+            let id = _this.data('id');
+            $.ajax({
+                type: 'GET',
+                url: '{{ route('category.get.view') }}',
+                data: {
+                    'id': id
+                },
+                success: function(result) {
+                    $('#id').val(id);
+                    $('#name').val(result.category.name);
+                    $('#parent-id').val(result.parentId);
+                    $('#dropdown-parent-category').html(result.parentList);
+                    $('#description').val(result.category.description);
+                }
+            });
+            resetErrors();
+            $('#but-create-category').css('display', 'none');
+            $("#frm-category input, textarea").prop("disabled", true);
+            $('#modal-category').show();
+        });
+        $('#but-create-category').on('click', function() {
+            $('#but-create-category').text('Saving ...');
+            $('#but-create-category').prop('disabled', true);
+            let form = $('#frm-category')[0];
+            let data = new FormData(form);
+            $.ajax({
+                type: "POST",
+                enctype: 'multipart/form-data',
+                url:'{{ route("category.store") }}',
+                data: data,
+                processData: false,
+                contentType: false,
+                cache: false,
+                success: function(result){
+                    if (result.code == 422) {
+                        resetErrors();
+                        $('#but-create-category').text('Save');
+                        $('#but-create-category').prop('disabled', false);
+                        $('#err-name').text(result.errors.name);
+                        $('#err-parent-id').text(result.errors.parent_id);     
+                        $('#err-description').text(result.errors.description);
+                    } else {
+                        $('#modal-category').hide(); 
+                        location.reload();
+                    }
+                }
+            })
+        });
+        $('.delete-category').on('click', function() {
+            $('#frm-delete').attr('action', '{{ route('category.delete') }}');
+            let _this = $(this);
+            let id = _this.data('id');
+            $('#id-delete').val(id);
+            $('#modal-delete').show();
+        });
+        $('#bulk-delete-category').on('click', function() {
+            $('#frm-delete').attr('action', '{{ route('category.delete') }}');
+            let ids = [];
+            $("tbody input:checked").each(function() {
+                ids.push($(this).val());
+            });
+            if (ids.length == 0) {
+                return false;
+            }
+            $('#id-delete').val(ids.toString());
+            $('#modal-delete').show();
+        });
+        function resetErrors() {
+            $('#err-parent-id').text('');
+            $('#err-name').text('');
+            $('#err-description').text('');
+            $("#name").removeClass("is-invalid");
+            $("#description").removeClass("is-invalid");
+        }
     </script>
 @endsection
