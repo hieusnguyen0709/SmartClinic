@@ -39,7 +39,7 @@
                                             </div>
                                         </th>
                                         @php
-                                            $classSortName = $classSortDescription = $classSortUser = 'fa-sort';
+                                            $classSortName = $classSortDescription = 'fa-sort';
                                             if ($sortColumn == 'name') {
                                                 if ($sortType == 'asc') {
                                                     $classSortName = 'fa-sort-up';
@@ -52,18 +52,12 @@
                                                 } else {
                                                     $classSortDescription = 'fa-sort-down';
                                                 }
-                                            } elseif ($sortColumn == 'user') {
-                                                if ($sortType == 'asc') {
-                                                    $classSortUser = 'fa-sort-up';
-                                                } else {
-                                                    $classSortUser = 'fa-sort-down';
-                                                }
                                             }
                                         @endphp
                                         <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-20 ps-2">Name<i class="fas fa-solid {{ $classSortName }} cursor-pointer" aria-hidden="true" id="but-sort-name"></i></th>
                                         <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-20 ps-2">Description<i class="fas fa-solid {{ $classSortDescription }} cursor-pointer" aria-hidden="true" id="but-sort-description"></i></th>
                                         <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-20 ps-2">Parent Category</th>
-                                        <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-20 ps-2">User<i class="fas fa-solid {{ $classSortUser }} cursor-pointer" aria-hidden="true" id="but-sort-user"></i></th>
+                                        <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-20 ps-2">User</th>
                                         <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-20 ps-2">Actions</th>
                                     </tr>
                                 </thead>
@@ -85,7 +79,7 @@
                                             <p class="text-xs font-weight-bold mb-0">@if ($item->parent) {{ $item->parent->name }} @endif </p>
                                         </td>
                                         <td>
-                                            <p class="text-xs font-weight-bold mb-0">{{ $item->user }}</p>
+                                            <p class="text-xs font-weight-bold mb-0">{{ $item->user->name }}</p>
                                         </td>
                                         <td class="align-middle">
                                             <i class="fas fa-solid fa-eye ms-auto text-primary cursor-pointer view-category" data-bs-placement="top" data-bs-toggle="modal" data-bs-target="#modal-category" data-id="{{ $item->id }}" title="View"></i>
@@ -142,17 +136,6 @@
             }
             $('#frm-search').submit();
         });
-        $('#but-sort-user').click(function() {
-            $('#sort-column').val('user');
-            let sortType = $('#sort-type').val();
-            
-            if (sortType == 'desc') {
-                $('#sort-type').val('asc');
-            } else {
-                $('#sort-type').val('desc');
-            }
-            $('#frm-search').submit();
-        });
         $('.select-category-tree').on('click', '.dropdown-item', function(event) {
             $('.select-category-tree .btn-select').html($(event.target).text());
             $('#parent-id').val($(event.target).attr('value'));
@@ -174,8 +157,8 @@
                 }
             });
             resetErrors();
-            $('#but-create-create').css('display', 'inline-block');
-            $("#frm-create input, textarea").prop("disabled", false);
+            $('#but-create-category').css('display', 'inline-block');
+            $("#frm-category input, textarea").prop("disabled", false);
             $('#modal-create').show();
         });
         $('.edit-category').on('click', function() {

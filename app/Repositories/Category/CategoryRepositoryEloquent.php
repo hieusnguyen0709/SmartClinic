@@ -17,14 +17,13 @@ class CategoryRepositoryEloquent extends BaseRepository implements CategoryRepos
 
   public function getCategories($search = null, $numPerPage = null, $sortColumn = null, $sortType = null)
   {
-    return $this->model->join('users', 'users.id', '=', 'categories.user_id')
-    ->selectRaw('categories.*, users.name as user')
-    ->where('categories.is_delete', 0)
-    ->where('users.is_delete', 0)
+    return $this->model->where('is_delete', 0)
     ->when(!empty($search), function ($query1) use ($search) {
         $query1->where(function ($query1)  use ($search) {
-            $query1->where('categories.name', 'like', '%' . $search . '%')
-            ->orWhere('users.name', 'like', '%' . $search . '%');
+            $query1->where('name', 'like', '%' . $search . '%')
+            ->orwhereHas('user', function($query2) use ($search) {
+              $query2->where('name', 'like', '%' . $search . '%');
+          });
         });
     })
     ->orderBy($sortColumn, $sortType)
