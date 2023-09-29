@@ -30,4 +30,9 @@ class CategoryRepositoryEloquent extends BaseRepository implements CategoryRepos
     ->orderBy($sortColumn, $sortType)
     ->paginate($numPerPage);
   }
+
+  public function getCategoryParent()
+  {
+    return $this->model->where('is_delete', 0)->where('parent_id', 0)->get();
+  }
 }
