@@ -92,7 +92,7 @@
                                             <p class="text-xs font-weight-bold mb-0">{{ $item->name }}</p>
                                         </td>
                                         <td>
-                                            <p class="text-xs font-weight-bold mb-0">{{ $item->category_id }}</p>
+                                            <p class="text-xs font-weight-bold mb-0">{{ $item->category->name }}</p>
                                         </td>
                                         <td>
                                             <p class="text-xs font-weight-bold mb-0">{{ $item->instruction }}</p>
@@ -191,6 +191,10 @@
             }
             $('#frm-search').submit();
         });
+        $('.select-category-tree').on('click', '.dropdown-item', function(event) {
+            $('.select-category-tree .btn-select').html($(event.target).text());
+            $('#category-id').val($(event.target).attr('value'));
+        })
         $('#create-medicine').on('click', function() {
             $('.modal-title').html('New Medicine');
             $.ajax({
@@ -202,9 +206,10 @@
                 success: function(result) {
                     $('#id').val('');
                     $('#name').val('');
-                    // $('#category-id').val('');
+                    $('#category-id').val(result.categoryId);
+                    $('#dropdown-parent-category').html(result.categoryList);
                     $('#instruction').val('');
-                    $('#unit').val('');
+                    $('#unit').val('0');
                     $('#quantity').val('');
                 }
             });
@@ -225,7 +230,8 @@
                 },
                 success: function(result) {
                     $('#id').val(id);
-                    $('#category-id').val(result.medicine.category_id);
+                    $('#category-id').val(result.categoryId);
+                    $('#dropdown-parent-category').html(result.categoryList);
                     $('#name').val(result.medicine.name);
                     $('#instruction').val(result.medicine.instruction);
                     $('#unit').val(result.medicine.unit);
@@ -243,13 +249,14 @@
             let id = _this.data('id');
             $.ajax({
                 type: 'GET',
-                url: '{{ route('medicine.get.edit') }}',
+                url: '{{ route('medicine.get.view') }}',
                 data: {
                     'id': id
                 },
                 success: function(result) {
                     $('#id').val(id);
-                    $('#category-id').val(result.medicine.category_id);
+                    $('#category-id').val(result.categoryId);
+                    $('#dropdown-parent-category').html(result.categoryList);
                     $('#name').val(result.medicine.name);
                     $('#instruction').val(result.medicine.instruction);
                     $('#unit').val(result.medicine.unit);
@@ -290,11 +297,6 @@
                     } else {
                         $('#modal-medicine').hide(); 
                         location.reload();
-                        // toastr.success('Successfully save', 'Message');
-                        // $('#modal-user').hide(); 
-                        // setTimeout(function() {
-                        //     location.reload();
-                        // }, 1000); 
                     }
                 }
             })

@@ -62,6 +62,7 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function 
     Route::prefix('medicine')->group(function () {
         Route::get('/', 'MedicineController@index')->name('medicine.index');
         Route::get('/get-edit', 'MedicineController@getEdit')->name('medicine.get.edit');
+        Route::get('/get-view', 'MedicineController@getView')->name('medicine.get.view');
         Route::post('/store', 'MedicineController@store')->name('medicine.store');
         Route::get('/edit', 'MedicineController@edit')->name('medicine.edit');
         Route::post('/delete', 'MedicineController@delete')->name('medicine.delete');

@@ -15,11 +15,11 @@
                                     <input type="text" class="form-control" placeholder="Name" name="name" id="name">
                                     <div class="text-danger text-xs font-weight-bold mt-2" id="err-name"></div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group select-category-tree">
                                     <label>Category</label>
-                                    <select class="form-control" id="category-id" name="category_id">
-                                        <option value="0">0</option>
-                                    </select>
+                                    <input type="hidden" name="category_id" id="category-id" value="">
+                                    <div class="dropdown" id="dropdown-parent-category">
+                                    </div>
                                     <div class="text-danger text-xs font-weight-bold mt-2" id="err-category-id"></div>
                                 </div>
                                 <div class="form-group">
