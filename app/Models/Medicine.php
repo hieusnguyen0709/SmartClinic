@@ -38,6 +38,7 @@ class Medicine extends Model
         'unit',
         'quantity',
         'slug',
+        'user_id',
         'is_delete',
     ];
 
@@ -60,6 +61,11 @@ class Medicine extends Model
                 'source' => 'name'
             ]
         ];
+    }
+
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User');
     }
 
     public function category()

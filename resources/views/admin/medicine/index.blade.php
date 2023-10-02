@@ -77,6 +77,7 @@
                                         <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-20 ps-2">Instruction<i class="fas fa-solid {{ $classSortInstruction }} cursor-pointer" aria-hidden="true" id="but-sort-instruction"></i></th>
                                         <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-20 ps-2">Unit<i class="fas fa-solid {{ $classSortUnit }} cursor-pointer" aria-hidden="true" id="but-sort-unit"></i></th>
                                         <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-20 ps-2">Quantity<i class="fas fa-solid {{ $classSortQuantity }} cursor-pointer" aria-hidden="true" id="but-sort-quantity"></i></th>
+                                        <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-20 ps-2">User</th>
                                         <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-20 ps-2">Actions</th>
                                     </tr>
                                 </thead>
@@ -102,6 +103,9 @@
                                         </td>
                                         <td>
                                             <p class="text-xs font-weight-bold mb-0">{{ $item->quantity }}</p>
+                                        </td>
+                                        <td>
+                                            <p class="text-xs font-weight-bold mb-0">{{ $item->user->name }}</p>
                                         </td>
                                         <td class="align-middle">
                                             <i class="fas fa-solid fa-eye ms-auto text-primary cursor-pointer view-medicine" data-bs-placement="top" data-bs-toggle="modal" data-bs-target="#modal-medicine" data-id="{{ $item->id }}" title="View"></i>
@@ -215,7 +219,7 @@
             });
             resetErrors();
             $('#but-create-medicine').css('display', 'inline-block');
-            $("#frm-medicine input, select").prop("disabled", false);
+            $("#frm-medicine input, select, textarea").prop("disabled", false);
             $('#modal-medicine').show();
         });
         $('.edit-medicine').on('click', function() {
@@ -240,7 +244,7 @@
             });
             resetErrors();
             $('#but-create-medicine').css('display', 'inline-block');
-            $("#frm-medicine input, select").prop("disabled", false);
+            $("#frm-medicine input, select, textarea").prop("disabled", false);
             $('#modal-medicine').show();
         });
         $('.view-medicine').on('click', function() {
@@ -265,7 +269,7 @@
             });
             resetErrors();
             $('#but-create-medicine').css('display', 'none');
-            $("#frm-medicine input, select").prop("disabled", true);
+            $("#frm-medicine input, select, textarea").prop("disabled", true);
             $('#modal-medicine').show();
         });
         $('#but-create-medicine').on('click', function() {

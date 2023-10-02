@@ -24,7 +24,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Instruction</label>
-                                    <input type="text" class="form-control" placeholder="Instruction" name="instruction" id="instruction">
+                                    <textarea type="text" class="form-control" placeholder="Instruction" name="instruction" id="instruction" rows="10"></textarea>
                                     <div class="text-danger text-xs font-weight-bold mt-2" id="err-instruction"></div>
                                 </div>
                                 <div class="form-group">

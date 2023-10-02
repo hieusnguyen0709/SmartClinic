@@ -153,6 +153,7 @@ class MedicineController extends BaseController
             'instruction' => $input['instruction'],
             'unit' => $input['unit'],
             'quantity' => $input['quantity'],
+            'user_id' => 1,
         ];
 
         if (!empty($input['id'])) {
