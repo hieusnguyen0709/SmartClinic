@@ -30,8 +30,6 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function 
     Route::get('/prescription', 'PrescriptionController@index')->name('prescription.index');
     Route::get('/qr-code', 'QrCodeController@index')->name('qr_code.index');
     Route::get('/schedule', 'ScheduleController@index')->name('schedule.index');
-    Route::get('/test', 'TestController@index')->name('test.index');
-    Route::get('/test-type', 'TestTypeController@index')->name('test_type.index');
 
     Route::prefix('user')->group(function () {
         Route::get('/', 'UserController@index')->name('user.index');
