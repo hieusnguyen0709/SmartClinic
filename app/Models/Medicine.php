@@ -72,4 +72,19 @@ class Medicine extends Model
     {
         return $this->belongsTo('App\Models\Category');
     }
+
+    public function viewUnit()
+    {
+        $return = '';
+        if($this->unit == 0) {
+            $return = 'Bottle';
+        }
+        if($this->unit == 1) {
+            $return = 'Tube';
+        }
+        if($this->unit == 1) {
+            $return = 'Pill';
+        }
+        return $return;
+    }
 }

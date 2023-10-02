@@ -31,9 +31,9 @@
                                     <label>Unit</label>
                                     <select class="form-control" id="unit" name="unit">
                                         <option>----</option>
-                                        <option value="0">Pill</option>
+                                        <option value="0">Bottle</option>
                                         <option value="1">Tube</option>
-                                        <option value="2">Bottle</option>
+                                        <option value="2">Pill</option>
                                     </select>
                                     <div class="text-danger text-xs font-weight-bold mt-2" id="err-unit"></div>
                                 </div>

@@ -1,27 +1,30 @@
 <?php
 
 namespace App\Repositories\Prescription;
-
-use App\Models\Prescription;
+use App\Repositories\BaseRepository;
 
 /**
  * Class PrescriptionRepositoryEloquent.
  *
  * @package App\Repositories\Prescription;
  */
-class PrescriptionRepositoryEloquent implements PrescriptionRepository
+class PrescriptionRepositoryEloquent extends BaseRepository implements PrescriptionRepository
 {
-    protected $model;
+  public function getModel()
+  {
+      return \App\Models\Prescription::class;
+  }
 
-    public function __construct(Prescription $model)
-    {
-      $this->model = $model;
-    }
-
-    public function getAll()
-    {
-        $model = $this->model->get();
-        return $model;
-    }
-
+  public function getPrescriptions($search = null, $numPerPage = null, $sortColumn = null, $sortType = null)
+  {
+    return $this->model->where('is_delete', 0)
+    ->when(!empty($search), function ($query) use ($search) {
+        $query->where(function ($query)  use ($search) {
+            $query->where('name', 'like', '%' . $search . '%')
+            ->orWhere('code', 'like', '%' . $search . '%');
+        });
+    })
+    ->orderBy($sortColumn, $sortType)
+    ->paginate($numPerPage);
+   }
 }

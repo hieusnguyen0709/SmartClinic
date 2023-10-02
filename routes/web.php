@@ -27,7 +27,6 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function 
     Route::get('/case-history', 'CaseHistoryController@index')->name('case_history.index');
     Route::get('/department', 'DepartmentController@index')->name('department.index');
     Route::get('/frame', 'FrameController@index')->name('frame.index');
-    Route::get('/prescription', 'PrescriptionController@index')->name('prescription.index');
     Route::get('/qr-code', 'QrCodeController@index')->name('qr_code.index');
     Route::get('/schedule', 'ScheduleController@index')->name('schedule.index');
 
@@ -35,7 +34,6 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function 
         Route::get('/', 'UserController@index')->name('user.index');
         Route::get('/get-edit', 'UserController@getEdit')->name('user.get.edit');
         Route::post('/store', 'UserController@store')->name('user.store');
-        Route::get('/edit', 'UserController@edit')->name('user.edit');
         Route::post('/delete', 'UserController@delete')->name('user.delete');
         Route::post('/update-status', 'UserController@updateStatus')->name('user.update.status');
     });
@@ -53,7 +51,6 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function 
         Route::get('/get-edit', 'CategoryController@getEdit')->name('category.get.edit');
         Route::get('/get-view', 'CategoryController@getView')->name('category.get.view');
         Route::post('/store', 'CategoryController@store')->name('category.store');
-        Route::get('/edit', 'CategoryController@edit')->name('category.edit');
         Route::post('/delete', 'CategoryController@delete')->name('category.delete');
     });
 
@@ -62,7 +59,13 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function 
         Route::get('/get-edit', 'MedicineController@getEdit')->name('medicine.get.edit');
         Route::get('/get-view', 'MedicineController@getView')->name('medicine.get.view');
         Route::post('/store', 'MedicineController@store')->name('medicine.store');
-        Route::get('/edit', 'MedicineController@edit')->name('medicine.edit');
         Route::post('/delete', 'MedicineController@delete')->name('medicine.delete');
+    });
+
+    Route::prefix('prescription')->group(function () {
+        Route::get('/', 'PrescriptionController@index')->name('prescription.index');
+        Route::get('/get-edit', 'PrescriptionController@getEdit')->name('prescription.get.edit');
+        Route::post('/store', 'PrescriptionController@store')->name('prescription.store');
+        Route::post('/delete', 'PrescriptionController@delete')->name('prescription.delete');
     });
 });

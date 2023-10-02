@@ -99,7 +99,7 @@
                                             <p class="text-xs font-weight-bold mb-0">{{ $item->instruction }}</p>
                                         </td>
                                         <td>
-                                            <p class="text-xs font-weight-bold mb-0">{{ $item->unit }}</p>
+                                            <p class="text-xs font-weight-bold mb-0">{{ $item->viewUnit() }}</p>
                                         </td>
                                         <td>
                                             <p class="text-xs font-weight-bold mb-0">{{ $item->quantity }}</p>

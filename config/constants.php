@@ -26,5 +26,33 @@ return [
         'CREATE_MEDICINE' => 401,
         'EDIT_MEDICINE' => 402,
         'DELETE_MEDICINE' => 403,
+
+        'VIEW_PRESCRIPTION' => 500,
+        'CREATE_PRESCRIPTION' => 501,
+        'EDIT_PRESCRIPTION' => 502,
+        'DELETE_PRESCRIPTION' => 503,
+
+        'VIEW_SCHEDULE' => 600,
+        'CREATE_SCHEDULE' => 601,
+        'EDIT_SCHEDULE' => 602,
+        'DELETE_SCHEDULE' => 603,
+
+        'VIEW_FRAME' => 700,
+        'CREATE_FRAME' => 701,
+        'EDIT_FRAME' => 702,
+        'DELETE_FRAME' => 703,
+
+        'VIEW_APPOINTMENT' => 800,
+        'CREATE_APPOINTMENT' => 801,
+        'EDIT_APPOINTMENT' => 802,
+        'DELETE_APPOINTMENT' => 803,
     ],
+
+    'ROLE' => [
+        'ADMIN' => 1,
+        'USER' => 2,
+        'DOCTOR' => 3,
+        'RECEPTIONIST' => 4,
+        'PHAMARCIST' => 5,
+    ]
 ];

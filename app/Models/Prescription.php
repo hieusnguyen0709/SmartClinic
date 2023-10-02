@@ -4,10 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Cviebrock\EloquentSluggable\Sluggable;
+use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 
 class Prescription extends Model
 {
     use HasFactory;
+    use Sluggable;
+    use SluggableScopeHelpers;
     /**
      * The table associated with the model.
      *
@@ -28,19 +32,13 @@ class Prescription extends Model
      * @var array
      */
     protected $fillable = [
+        'name',
+        'patient_id',
+        'doctor_id',
         'appointment_id',
         'medicine_id',
         'code',
-        'symptom',
-        'diagnosis',
-        'advice',
-        'usage',
-        'recheck',
-        'total_days',
-        'morning',
-        'noon',
-        'afternoon',
-        'night',
+        'detail',
         'slug',
         'is_delete',
     ];
@@ -50,5 +48,19 @@ class Prescription extends Model
      *
      * @var array
      */
-    protected $dates = ['date','deleted_at', 'created_at', 'updated_at'];   
+    protected $dates = ['deleted_at', 'created_at', 'updated_at'];   
+
+    /**
+     * Return the sluggable configuration array for this model.
+     *
+     * @return array
+     */
+    public function sluggable(): array
+    {
+        return [
+            'slug' => [
+                'source' => 'name'
+            ]
+        ];
+    }
 }
