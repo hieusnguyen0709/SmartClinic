@@ -59,24 +59,7 @@
         <li class="nav-item">
           <a class="nav-link" href="">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="ni ni-single-copy-04 text-primary text-sm opacity-10"></i>
-            </div>
-            <span class="nav-link-text ms-1">Tests</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="">
-            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="ni ni-collection text-primary text-sm opacity-10"></i>
-            </div>
-            <span class="nav-link-text ms-1">Test Types</span>
-          </a>
-        </li>
-        <hr class="horizontal dark mt-0">
-        <li class="nav-item">
-          <a class="nav-link" href="">
-            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="ni ni-calendar-grid-58 text-secondary text-sm opacity-10"></i>
+              <i class="ni ni-calendar-grid-58 text-primary text-sm opacity-10"></i>
             </div>
             <span class="nav-link-text ms-1">Schedules</span>
           </a>
@@ -84,7 +67,7 @@
         <li class="nav-item">
           <a class="nav-link" href="">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="ni ni-time-alarm text-secondary text-sm opacity-10"></i>
+              <i class="ni ni-time-alarm text-primary text-sm opacity-10"></i>
             </div>
             <span class="nav-link-text ms-1">Frames</span>
           </a>
@@ -92,7 +75,7 @@
         <li class="nav-item">
           <a class="nav-link" href="">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="ni ni-book-bookmark text-secondary text-sm opacity-10"></i>
+              <i class="ni ni-book-bookmark text-primary text-sm opacity-10"></i>
             </div>
             <span class="nav-link-text ms-1">Appointments</span>
           </a>
