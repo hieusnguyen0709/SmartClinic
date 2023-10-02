@@ -33,7 +33,7 @@ class PrescriptionController extends BaseController
         $search = $this->request->input('search');
         $numPerPage = $this->request->input('num_per_page');
         if (empty($numPerPage)) {
-            $numPerPage = \Config::get('constants.NUM_PER_PAGE');;
+            $numPerPage = \Config::get('constants.NUM_PER_PAGE');
         }
         $sortColumn = 'id';
         $sortType = 'desc';

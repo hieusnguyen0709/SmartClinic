@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
+use Illuminate\Support\Facades\Config;
 
 class Prescription extends Model
 {
@@ -62,5 +63,27 @@ class Prescription extends Model
                 'source' => 'name'
             ]
         ];
+    }
+
+    public function patient()
+    {
+        return $this->belongsTo('App\Models\User', 'patient_id')
+        ->where('is_delete', 0)
+        ->where(function ($query) {
+            $query->whereHas('role', function ($roleQuery) {
+                $roleQuery->where('permission', Config::get('constants.PERMISSION_BY_ROLE.PATIENT'));
+            });
+        });
+    }
+
+    public function doctor()
+    {
+        return $this->belongsTo('App\Models\User', 'doctor_id')
+        ->where('is_delete', 0)
+        ->where(function ($query) {
+            $query->whereHas('role', function ($roleQuery) {
+                $roleQuery->where('permission', Config::get('constants.PERMISSION_BY_ROLE.DOCTOR'));
+            });
+        });
     }
 }

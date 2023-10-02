@@ -39,41 +39,37 @@
                                             </div>
                                         </th>
                                         @php
-                                            $classSortName = $classSortCategory = $classSortInstruction = $classSortUnit = $classSortQuantity = 'fa-sort';
+                                            $classSortName = $classSortCode = $classSortPatient = $classSortDoctor = 'fa-sort';
                                             if ($sortColumn == 'name') {
                                                 if ($sortType == 'asc') {
                                                     $classSortName = 'fa-sort-up';
                                                 } else {
                                                     $classSortName = 'fa-sort-down';
                                                 }
-                                            } elseif ($sortColumn == 'category_id') {
+                                            } elseif ($classSortCode == 'code') {
                                                 if ($sortType == 'asc') {
-                                                    $classSortCategory = 'fa-sort-up';
+                                                    $classSortCode = 'fa-sort-up';
                                                 } else {
-                                                    $classSortCategory = 'fa-sort-down';
+                                                    $classSortCode = 'fa-sort-down';
                                                 }
-                                            } elseif ($sortColumn == 'instruction') {
+                                            } elseif ($sortColumn == 'patient') {
                                                 if ($sortType == 'asc') {
-                                                    $classSortInstruction = 'fa-sort-up';
+                                                    $classSortPatient = 'fa-sort-up';
                                                 } else {
-                                                    $classSortInstruction = 'fa-sort-down';
+                                                    $classSortPatient = 'fa-sort-down';
                                                 }
-                                            } elseif ($sortColumn == 'unit') {
+                                            } elseif ($sortColumn == 'doctor') {
                                                 if ($sortType == 'asc') {
-                                                    $classSortUnit = 'fa-sort-up';
+                                                    $classSortDoctor = 'fa-sort-up';
                                                 } else {
-                                                    $classSortUnit = 'fa-sort-down';
-                                                }
-                                            } elseif ($sortColumn == 'quantity') {
-                                                if ($sortType == 'asc') {
-                                                    $classSortQuantity = 'fa-sort-up';
-                                                } else {
-                                                    $classSortQuantity = 'fa-sort-down';
+                                                    $classSortDoctor = 'fa-sort-down';
                                                 }
                                             }
                                         @endphp
                                         <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-20 ps-2">Name<i class="fas fa-solid {{ $classSortName }} cursor-pointer" aria-hidden="true" id="but-sort-name"></i></th>
-                                        <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-20 ps-2">Code<i class="fas fa-solid {{ $classSortCategory }} cursor-pointer" aria-hidden="true" id="but-sort-category"></i></th>
+                                        <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-20 ps-2">Code<i class="fas fa-solid {{ $classSortCode }} cursor-pointer" aria-hidden="true" id="but-sort-code"></i></th>
+                                        <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-20 ps-2">Patient<i class="fas fa-solid {{ $classSortPatient }} cursor-pointer" aria-hidden="true" id="but-sort-patient"></i></th>
+                                        <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-20 ps-2">Doctor<i class="fas fa-solid {{ $classSortDoctor }} cursor-pointer" aria-hidden="true" id="but-sort-doctor"></i></th>
                                         <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-20 ps-2">Actions</th>
                                     </tr>
                                 </thead>
@@ -90,6 +86,12 @@
                                         </td>
                                         <td>
                                             <p class="text-xs font-weight-bold mb-0">{{ $item->code }}</p>
+                                        </td>
+                                        <td>
+                                            <p class="text-xs font-weight-bold mb-0">@if ($item->patient) {{ $item->patient->name }} @endif </p>
+                                        </td>
+                                        <td>
+                                            <p class="text-xs font-weight-bold mb-0">@if ($item->doctor) {{ $item->doctor->name }} @endif </p>
                                         </td>
                                         <td class="align-middle">
                                             <i class="fas fa-solid fa-eye ms-auto text-primary cursor-pointer view-prescription" data-bs-placement="top" data-bs-toggle="modal" data-bs-target="#modal-prescription" data-id="{{ $item->id }}" title="View"></i>
@@ -135,8 +137,8 @@
             }
             $('#frm-search').submit();
         });
-        $('#but-sort-category').click(function() {
-            $('#sort-column').val('category_id');
+        $('#but-sort-code').click(function() {
+            $('#sort-column').val('code');
             let sortType = $('#sort-type').val();
             
             if (sortType == 'desc') {
@@ -146,8 +148,8 @@
             }
             $('#frm-search').submit();
         });
-        $('#but-sort-instruction').click(function() {
-            $('#sort-column').val('instruction');
+        $('#but-sort-patient').click(function() {
+            $('#sort-column').val('patient');
             let sortType = $('#sort-type').val();
             
             if (sortType == 'desc') {
@@ -157,8 +159,8 @@
             }
             $('#frm-search').submit();
         });
-        $('#but-sort-unit').click(function() {
-            $('#sort-column').val('unit');
+        $('#but-sort-doctor').click(function() {
+            $('#sort-column').val('doctor');
             let sortType = $('#sort-type').val();
             
             if (sortType == 'desc') {
@@ -168,16 +170,5 @@
             }
             $('#frm-search').submit();
         });
-        $('#but-sort-quantity').click(function() {
-            $('#sort-column').val('quantity');
-            let sortType = $('#sort-type').val();
-            
-            if (sortType == 'desc') {
-                $('#sort-type').val('asc');
-            } else {
-                $('#sort-type').val('desc');
-            }
-            $('#frm-search').submit();
-        }); 
     </script>
 @endsection
