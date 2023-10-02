@@ -14,6 +14,14 @@ return [
             'id' => 3,
             'name' => 'Roles'
         ],
+        [
+            'id' => 4,
+            'name' => 'Categories'
+        ],
+        [
+            'id' => 5,
+            'name' => 'Medicines'
+        ],
     ],
     'permission' => [
         [
@@ -68,7 +76,7 @@ return [
         [
             'id' => config('constants.PERMISSION.CREATE_ROLE'),
             'menu_id' => 3,
-            'name' => 'Add role',
+            'name' => 'Create role',
             'action' => 'role.create',
             'is_view' => false
         ],
@@ -84,6 +92,62 @@ return [
             'menu_id' => 3,
             'name' => 'Delete role',
             'action' => 'role.delete',
+            'is_view' => false
+        ],
+        [
+            'id' => config('constants.PERMISSION.VIEW_CATEGORY'),
+            'menu_id' => 4,
+            'name' => 'View category',
+            'action' => 'category.index',
+            'is_view' => true
+        ],
+        [
+            'id' => config('constants.PERMISSION.CREATE_CATEGORY'),
+            'menu_id' => 4,
+            'name' => 'Create category',
+            'action' => 'category.create',
+            'is_view' => false
+        ],
+        [
+            'id' => config('constants.PERMISSION.EDIT_CATEGORY'),
+            'menu_id' => 4,
+            'name' => 'Edit category',
+            'action' => 'category.edit',
+            'is_view' => false
+        ],
+        [
+            'id' => config('constants.PERMISSION.DELETE_CATEGORY'),
+            'menu_id' => 4,
+            'name' => 'Delete category',
+            'action' => 'category.delete',
+            'is_view' => false
+        ],
+        [
+            'id' => config('constants.PERMISSION.VIEW_MEDICINE'),
+            'menu_id' => 5,
+            'name' => 'View medicine',
+            'action' => 'medicine.index',
+            'is_view' => true
+        ],
+        [
+            'id' => config('constants.PERMISSION.CREATE_MEDICINE'),
+            'menu_id' => 5,
+            'name' => 'Create medicine',
+            'action' => 'medicine.create',
+            'is_view' => false
+        ],
+        [
+            'id' => config('constants.PERMISSION.EDIT_MEDICINE'),
+            'menu_id' => 5,
+            'name' => 'Edit medicine',
+            'action' => 'medicine.edit',
+            'is_view' => false
+        ],
+        [
+            'id' => config('constants.PERMISSION.DELETE_MEDICINE'),
+            'menu_id' => 5,
+            'name' => 'Delete medicine',
+            'action' => 'medicine.delete',
             'is_view' => false
         ],
     ],
