@@ -39,7 +39,7 @@ class User extends Model
         'gender',
         'phone',
         'age',
-        'adress',
+        'address',
         'avatar',
         'status',
         'slug',

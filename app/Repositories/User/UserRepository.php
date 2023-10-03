@@ -11,4 +11,7 @@ use App\Repositories\RepositoryInterface;
 interface UserRepository extends RepositoryInterface
 {
     public function getUsers($search, $numPerPage, $sortColumn, $sortType, $roleId);
+    public function getPatients();
+    public function getPatientById($patientId);
+    public function getDoctors();
 }

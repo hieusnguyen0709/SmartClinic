@@ -2,6 +2,7 @@
 
 namespace App\Repositories\User;
 use App\Repositories\BaseRepository;
+use Illuminate\Support\Facades\Config;
 
 /**
  * Class UserRepositoryEloquent.
@@ -33,5 +34,41 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
         })
         ->orderBy($sortColumn, $sortType)
         ->paginate($numPerPage);
+    }
+
+    public function getPatients()
+    {
+        return $this->model->where('is_delete', 0)
+        ->where(function ($query) {
+            $query->whereHas('role', function ($roleQuery) {
+                $roleQuery->where('permission', Config::get('constants.PERMISSION_BY_ROLE.PATIENT'));
+            });
+        })
+        ->get();
+    }
+
+    public function getPatientById($patientId)
+    {
+        return $this->model->where('is_delete', 0)
+        ->where(function ($query) {
+            $query->whereHas('role', function ($roleQuery) {
+                $roleQuery->where('permission', Config::get('constants.PERMISSION_BY_ROLE.PATIENT'));
+            });
+        })
+        ->when(!empty($patientId), function ($query) use ($patientId) {
+            return $query->where('id', $patientId);
+        })
+        ->get();
+    }
+
+    public function getDoctors()
+    {
+        return $this->model->where('is_delete', 0)
+        ->where(function ($query) {
+            $query->whereHas('role', function ($roleQuery) {
+                $roleQuery->where('permission', Config::get('constants.PERMISSION_BY_ROLE.DOCTOR'));
+            });
+        })
+        ->get();
     }
 }

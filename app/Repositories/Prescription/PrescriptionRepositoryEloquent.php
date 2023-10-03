@@ -17,11 +17,18 @@ class PrescriptionRepositoryEloquent extends BaseRepository implements Prescript
 
   public function getPrescriptions($search = null, $numPerPage = null, $sortColumn = null, $sortType = null)
   {
-    return $this->model->where('is_delete', 0)
+    return $this->model->join('users as patients', 'patients.id', '=', 'prescriptions.patient_id')
+    ->join('users as doctors', 'doctors.id', '=', 'prescriptions.doctor_id')
+    ->selectRaw('prescriptions.*, patients.name as patient, doctors.name as doctor')
+    ->where('prescriptions.is_delete', 0)
+    ->where('patients.is_delete', 0)
+    ->where('doctors.is_delete', 0)
     ->when(!empty($search), function ($query) use ($search) {
         $query->where(function ($query)  use ($search) {
-            $query->where('name', 'like', '%' . $search . '%')
-            ->orWhere('code', 'like', '%' . $search . '%');
+            $query->where('prescriptions.name', 'like', '%' . $search . '%')
+            ->orWhere('prescriptions.code', 'like', '%' . $search . '%')
+            ->orWhere('patients.name', 'like', '%' . $search . '%')
+            ->orWhere('doctors.name', 'like', '%' . $search . '%');
         });
     })
     ->orderBy($sortColumn, $sortType)

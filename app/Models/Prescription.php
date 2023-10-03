@@ -86,4 +86,14 @@ class Prescription extends Model
             });
         });
     }
+
+    public function appointment()
+    {
+        return $this->belongsTo('App\Models\Appointment', 'appointment_id');
+    }
+
+    public function medicine()
+    {
+        return $this->hasMany('App\Models\Medicine', 'medicine_id');
+    }
 }

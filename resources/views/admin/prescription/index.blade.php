@@ -8,7 +8,7 @@
                         <div class="card-header d-flex w-100 mb-0">
                             <div class="w-50">
                                 <h5>Prescriptions</h5>
-                                <button class="text-uppercase btn bg-gradient-success" id="create-prescription"  data-bs-toggle="modal" data-bs-target="#modal-prescription">Create&nbsp;&nbsp;<i class="fas fa-plus"></i></button>
+                                <button class="text-uppercase btn bg-gradient-success" onclick="location.href='{{ route('prescription.create') }}'">Create&nbsp;&nbsp;<i class="fas fa-plus"></i></button>
                                 <button class="text-uppercase btn bg-gradient-danger" id="bulk-delete-prescription"  data-bs-toggle="modal" data-bs-target="#modal-delete">Bulk Delete&nbsp;&nbsp;<i class="fas fa-trash"></i></button>
                             </div>
                             <div class="w-50">
@@ -88,14 +88,14 @@
                                             <p class="text-xs font-weight-bold mb-0">{{ $item->code }}</p>
                                         </td>
                                         <td>
-                                            <p class="text-xs font-weight-bold mb-0">@if ($item->patient) {{ $item->patient->name }} @endif </p>
+                                            <p class="text-xs font-weight-bold mb-0">@if ($item->patient) {{ $item->patient }} @endif </p>
                                         </td>
                                         <td>
-                                            <p class="text-xs font-weight-bold mb-0">@if ($item->doctor) {{ $item->doctor->name }} @endif </p>
+                                            <p class="text-xs font-weight-bold mb-0">@if ($item->doctor) {{ $item->doctor }} @endif </p>
                                         </td>
                                         <td class="align-middle">
-                                            <i class="fas fa-solid fa-eye ms-auto text-primary cursor-pointer view-prescription" data-bs-placement="top" data-bs-toggle="modal" data-bs-target="#modal-prescription" data-id="{{ $item->id }}" title="View"></i>
-                                            <i class="fas fa-pencil-alt ms-auto text-dark cursor-pointer edit-prescription" data-bs-placement="top" data-bs-toggle="modal" data-bs-target="#modal-prescription" data-id="{{ $item->id }}" title="Edit" ></i>
+                                            <i class="fas fa-solid fa-eye ms-auto text-primary cursor-pointer" onclick="location.href='{{ route('prescription.edit', [$item->slug, true]) }}'" data-bs-placement="top" data-id="{{ $item->id }}" title="View"></i>
+                                            <i class="fas fa-pencil-alt ms-auto text-dark cursor-pointer" onclick="location.href='{{ route('prescription.edit', [$item->slug, false]) }}'" data-bs-placement="top" data-id="{{ $item->id }}" title="Edit" ></i>
                                             <i class="fas fa-trash-alt ms-auto text-danger cursor-pointer delete-prescription" data-bs-placement="top" data-bs-toggle="modal" data-bs-target="#modal-delete" data-id="{{ $item->id }}" title="Delete"></i>
                                         </td>
                                     </tr>
@@ -111,7 +111,6 @@
             </div>
         </div>
     </div>
-@include('admin.includes.modals.modal-medicine')
 @include('admin.includes.modals.modal-delete')
 @endsection
 @section('scripts')
@@ -169,6 +168,25 @@
                 $('#sort-type').val('desc');
             }
             $('#frm-search').submit();
+        });
+        $('.delete-prescription').on('click', function() {
+            $('#frm-delete').attr('action', '{{ route('prescription.delete') }}');
+            let _this = $(this);
+            let id = _this.data('id');
+            $('#id-delete').val(id);
+            $('#modal-delete').show();
+        });
+        $('#bulk-delete-prescription').on('click', function() {
+            $('#frm-delete').attr('action', '{{ route('prescription.delete') }}');
+            let ids = [];
+            $("tbody input:checked").each(function() {
+                ids.push($(this).val());
+            });
+            if (ids.length == 0) {
+                return false;
+            }
+            $('#id-delete').val(ids.toString());
+            $('#modal-delete').show();
         });
     </script>
 @endsection

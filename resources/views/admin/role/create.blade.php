@@ -9,7 +9,7 @@
                     <div class="table-header">
                         <div class="card-header d-flex w-100 mb-0">
                             <div class="w-50">
-                                <h5>Roles / Create</h5>
+                                <h5>Role / Create</h5>
                             </div>
                         </div>
                     </div>
@@ -18,7 +18,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="example-text-input" class="form-control-label">Name</label>
-                                    <input class="form-control" type="text" name="name">
+                                    <input class="form-control" type="text" name="name" id="name" placeholder="Name">
                                     <div class="text-danger text-xs font-weight-bold mt-2" id="err-name"></div>
                                 </div>
                             </div>
@@ -27,7 +27,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="form-control-label">Description</label>
-                                    <textarea class="form-control" type="text" name="description" rows="10"></textarea>
+                                    <textarea class="form-control" type="text" name="description" rows="10" id="description" placeholder="Description"></textarea>
                                 </div>
                             </div>
                         </div>

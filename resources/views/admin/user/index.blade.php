@@ -303,11 +303,6 @@
                     } else {
                         $('#modal-user').hide(); 
                         location.reload();
-                        // toastr.success('Successfully save', 'Message');
-                        // $('#modal-user').hide(); 
-                        // setTimeout(function() {
-                        //     location.reload();
-                        // }, 1000); 
                     }
                 }
             })

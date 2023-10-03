@@ -64,8 +64,10 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function 
 
     Route::prefix('prescription')->group(function () {
         Route::get('/', 'PrescriptionController@index')->name('prescription.index');
-        Route::get('/get-edit', 'PrescriptionController@getEdit')->name('prescription.get.edit');
+        Route::get('/create', 'PrescriptionController@create')->name('prescription.create');
+        Route::get('/edit/{slug}/{is_view?}', 'PrescriptionController@edit')->name('prescription.edit');
         Route::post('/store', 'PrescriptionController@store')->name('prescription.store');
         Route::post('/delete', 'PrescriptionController@delete')->name('prescription.delete');
+        Route::get('/change-patient', 'PrescriptionController@changePatient')->name('prescription.change.patient');
     });
 });
