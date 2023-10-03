@@ -58,7 +58,7 @@ return [
 
     'ROLE' => [
         'ADMIN' => 1,
-        'USER' => 2,
+        'PATIENT' => 2,
         'DOCTOR' => 3,
         'RECEPTIONIST' => 4,
         'PHAMARCIST' => 5,

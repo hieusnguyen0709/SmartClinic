@@ -30,9 +30,9 @@ class UsersTableSeeder extends Seeder
                 'slug'           => 'admin',
             ],
             [
-                'name'           => 'User',
-                'email'          => 'user@gmail.com',
-                'password'       => bcrypt('123@user'),
+                'name'           => 'Patient',
+                'email'          => 'patient@gmail.com',
+                'password'       => bcrypt('123@patient'),
                 'remember_token' => Str::random(60),
                 'role_id'        => 2,
                 'gender'         => 1,
@@ -40,7 +40,7 @@ class UsersTableSeeder extends Seeder
                 'age'            => rand(20, 50),
                 'address'        => '',
                 'avatar'         => '',
-                'slug'           => 'user',
+                'slug'           => 'patient',
             ],
             [
                 'name'           => 'Doctor',

@@ -48,9 +48,4 @@ class Appointment extends Model
      */
     protected $dates = ['date','deleted_at', 'created_at', 'updated_at'];
 
-
-    public function patient(): Belongsto
-    {
-        return $this->belongsTo(User::class);
-    }
 }

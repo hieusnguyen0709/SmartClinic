@@ -69,7 +69,7 @@ class User extends Model
 
     public function role()
     {
-        return $this->belongsTo('App\Models\Role');
+        return $this->belongsTo('App\Models\Role', 'role_id');
     }
 
     public function viewStatus()
