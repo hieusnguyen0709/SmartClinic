@@ -87,14 +87,12 @@ class PrescriptionController extends BaseController
             'patient_id' => 'required',
             'doctor_id' => 'required',
             'medicine_id' => 'nullable',
-            'detail' => 'nullable',
         ];
         $message = [
             'name.required' => 'Please fill out this field.',
             'patient_id.required' => 'Please fill out this field.',
             'doctor_id.required' => 'Please fill out this field.',
-            'medicine_id.required' => 'Please fill out this field.',
-            'detail.required' => 'Please fill out this field.',
+            'medicine_id.required' => 'Please fill out this field.'
         ];
         $validator = Validator::make($input, $rules, $message);
         if ($validator->fails()) {
@@ -111,9 +109,18 @@ class PrescriptionController extends BaseController
             'doctor_id' => $input['doctor_id'],
             'appointment_id' => $input['appointment_id'] ?? 0,
             'medicine_id' => $input['medicine_id'] ?? 0,
-            'code' => 'PRES-'.str_pad(mt_rand(1, 1000), 4, '0', STR_PAD_LEFT),
-            'detail' => $input['detail'] ?? 0
         ];
+
+        $code = 'PRES-'.str_pad(mt_rand(1, 1000), 4, '0', STR_PAD_LEFT);
+        $data['code'] = $code;
+
+        $detail = [
+            'symptom' => $input['symptom'] ?? '',
+            'diagnosis' => $input['diagnosis'] ?? '',
+            'advice' => $input['advice'] ?? '',
+            'usage' => $input['usage'] ?? '',
+        ];
+        $data['detail'] = json_encode($detail);
 
         if (!empty($input['id'])) {
             $this->prescriptionRepo->update($input['id'], $data);

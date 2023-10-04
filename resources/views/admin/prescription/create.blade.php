@@ -37,7 +37,7 @@
                                 </div>
                             </div>
                         </div>
-                        <hr class="horizontal dark">
+                        <hr class="horizontal dark mt-5">
                         <!-- Information -->
 
                         <!-- Patient -->
@@ -100,12 +100,13 @@
                                 </div>
                             </div>
                         </div>
-                        <hr class="horizontal dark">
+                        <hr class="horizontal dark mt-5">
                         <!-- Patient -->
 
                         <!-- Medicine -->     
                         <div class="row mt-4">
                             <p class="text-bold text-uppercase text-base">Medicine</p>   
+                            <div class="text-danger text-xs font-weight-bold mt-2" id="err-medicine-id"></div>
                             <div class="col-md-12">
                                 <div class="table-responsive p-0">
                                     <table class="table align-items-center mb-0">
@@ -116,7 +117,7 @@
                                                 <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-20 ps-2">Quantity</th>
                                                 <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-20 ps-2">Unit</th>
                                                 <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-20 ps-2">Note</th>
-                                                <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-20 ps-2"></th>
+                                                <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-20 ps-2"><button type="button" class="text-uppercase btn bg-gradient-success mt-2 add-medicine"><i class="fas fa-plus"></i></button></th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -127,21 +128,15 @@
                                                 <td>Pill</td>
                                                 <td>Drink with water</td>
                                                 <td>
-                                                    <button type="button" class="text-uppercase btn bg-gradient-danger"><i class="fas fa-trash"></i></button>
+                                                    <button type="button" class="text-uppercase btn bg-gradient-danger mt-2 delete-medicine"><i class="fas fa-trash"></i></button>
                                                 </td>
                                             </tr>
-                                            <tr>
-                                                <td>
-                                                    <button type="button" class="text-uppercase btn bg-gradient-success"><i class="fas fa-plus"></i></button>
-                                                </td>
-                                            </tr>
-                                            <div class="text-danger text-xs font-weight-bold mt-2" id="err-medicine-id"></div>
                                         </tbody>
-                                    </table>
+                                    </table>                                                              
                                 </div>
                             </div>
                         </div>
-                        <hr class="horizontal dark">
+                        <hr class="horizontal dark mt-5">
                         <!-- Medicine -->
 
                         <!-- Detail -->
@@ -174,6 +169,7 @@
                                 </div>
                             </div>
                         </div>
+                        <hr class="horizontal dark mt-5">
                         <!-- Detail -->
 
                         <div class="container m-auto row justify-content-md-center pb-5">
@@ -191,6 +187,32 @@
 @endsection
 @section('scripts')
     <script>
+        $(document).ready(function () {
+            function updateCountAndTable() {
+                $('tbody').find('tr').each(function(index) {
+                    $(this).find('td:first').text(index + 1);
+                });
+            }
+            updateCountAndTable();
+
+            $('.add-medicine').on('click', function () {
+                let count = $('tbody').find('tr').length + 1;
+                let html = '<tr>';
+                html += '<td>'+ count +'</td>';
+                html += '<td>Medicine A</td>';
+                html += '<td>10</td>';
+                html += '<td>Pill</td>';
+                html += '<td>Drink</td>';
+                html += '<td><button type="button" class="text-uppercase btn bg-gradient-danger mt-2 delete-medicine"><i class="fas fa-trash"></i></button></td>';
+                html += '</tr>';
+                $('tbody').append(html);
+                updateCountAndTable();
+            });
+            $(document).on('click', '.delete-medicine', function () {
+                $(this).parent().parent().remove();
+                updateCountAndTable();
+            });
+        });
         $('#but-create-prescription').on('click', function() {
             $('#but-create-prescription').text('Save');
             $('#but-create-prescription').prop('disabled', true);
