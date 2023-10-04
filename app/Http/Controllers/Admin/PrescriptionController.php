@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller as BaseController;
 use Illuminate\Http\Request;
 use App\Repositories\Prescription\PrescriptionRepository;
 use App\Repositories\User\UserRepository;
+use App\Repositories\Medicine\MedicineRepository;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Config;
 use App\Http\Traits\ServiceTrait;
@@ -17,6 +18,7 @@ class PrescriptionController extends BaseController
     protected $request;
     protected $prescriptionRepo;
     protected $userRepo;
+    protected $medicineRepo;
 
     /**
      * Constructor
@@ -25,11 +27,13 @@ class PrescriptionController extends BaseController
         Request $request,
         PrescriptionRepository $prescriptionRepo,
         UserRepository $userRepo,
+        MedicineRepository $medicineRepo,
     )
     {
         $this->request = $request;
         $this->prescriptionRepo = $prescriptionRepo;
         $this->userRepo = $userRepo;
+        $this->medicineRepo = $medicineRepo;
     }
 
     public function index()
@@ -66,8 +70,9 @@ class PrescriptionController extends BaseController
     {
         $patients = $this->userRepo->getPatients();
         $doctors = $this->userRepo->getDoctors();
-        
-        return view('admin.prescription.create', compact('patients', 'doctors'));
+        $medicines = $this->medicineRepo->getAllRecordActive();
+
+        return view('admin.prescription.create', compact('patients', 'doctors', 'medicines'));
     }
 
     public function edit($slug)

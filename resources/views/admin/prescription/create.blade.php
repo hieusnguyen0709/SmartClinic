@@ -122,11 +122,29 @@
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td>1</td>
-                                                <td>Medicine A</td>
-                                                <td>10</td>
-                                                <td>Pill</td>
-                                                <td>Drink with water</td>
+                                                <td></td>
+                                                <td>
+                                                    <select class="form-control" name="medicine_id[]">
+                                                        <option value="">----</option>
+                                                        @foreach ($medicines as $key => $item)
+                                                            <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" type="text" name="medicine_quantity[]" value="">
+                                                </td>
+                                                <td>
+                                                    <select class="form-control" name="medicine_unit[]">
+                                                        <option>----</option>
+                                                        <option value="0">Bottle</option>
+                                                        <option value="1">Tube</option>
+                                                        <option value="2">Pill</option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <textarea class="form-control" name="medicine_note[]" rows="4" cols="4"></textarea>
+                                                </td>
                                                 <td>
                                                     <button type="button" class="text-uppercase btn bg-gradient-danger mt-2 delete-medicine"><i class="fas fa-trash"></i></button>
                                                 </td>
