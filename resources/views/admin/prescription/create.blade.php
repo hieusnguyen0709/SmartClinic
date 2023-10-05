@@ -112,11 +112,11 @@
                                     <table class="table align-items-center mb-0">
                                         <thead>
                                             <tr>
-                                                <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-20 ps-2">Order</th>
+                                                <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-20 ps-2 w-10">Order</th>
                                                 <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-20 ps-2">Medicine</th>
-                                                <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-20 ps-2">Quantity</th>
+                                                <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-20 ps-2 w-10">Quantity</th>
                                                 <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-20 ps-2">Unit</th>
-                                                <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-20 ps-2">Note</th>
+                                                <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-20 ps-2 w-40">Note</th>
                                                 <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-20 ps-2"><button type="button" class="text-uppercase btn bg-gradient-success mt-2 add-medicine"><i class="fas fa-plus"></i></button></th>
                                             </tr>
                                         </thead>
@@ -124,7 +124,7 @@
                                             <tr>
                                                 <td></td>
                                                 <td>
-                                                    <select class="form-control" name="medicine_id[]">
+                                                    <select class="form-control" name="medicine_id[1]">
                                                         <option value="">----</option>
                                                         @foreach ($medicines as $key => $item)
                                                             <option value="{{ $item->id }}">{{ $item->name }}</option>
@@ -132,18 +132,18 @@
                                                     </select>
                                                 </td>
                                                 <td>
-                                                    <input class="form-control" type="text" name="medicine_quantity[]" value="">
+                                                    <input class="form-control" type="number" name="medicine_quantity[1]" placeholder="Quantity">
                                                 </td>
                                                 <td>
-                                                    <select class="form-control" name="medicine_unit[]">
-                                                        <option>----</option>
+                                                    <select class="form-control" name="medicine_unit[1]">
+                                                        <option value="">----</option>
                                                         <option value="0">Bottle</option>
                                                         <option value="1">Tube</option>
                                                         <option value="2">Pill</option>
                                                     </select>
                                                 </td>
                                                 <td>
-                                                    <textarea class="form-control" name="medicine_note[]" rows="4" cols="4"></textarea>
+                                                    <textarea class="form-control mt-6" name="medicine_note[1]" rows="4" cols="4" placeholder="Note"></textarea>
                                                 </td>
                                                 <td>
                                                     <button type="button" class="text-uppercase btn bg-gradient-danger mt-2 delete-medicine"><i class="fas fa-trash"></i></button>
@@ -205,32 +205,31 @@
 @endsection
 @section('scripts')
     <script>
-        $(document).ready(function () {
-            function updateCountAndTable() {
-                $('tbody').find('tr').each(function(index) {
-                    $(this).find('td:first').text(index + 1);
-                });
-            }
-            updateCountAndTable();
+        function updateTable() {
+            $('tbody').find('tr').each(function(index) {
+                let i = index + 1;
+                $(this).find('td:first').text(i);
+                let html = $(this).html();
+                html = html.replace(/\[\d+\]/g, '['+ i +']');
+                $(this).html(html);
+            });
+        }
+        updateTable();
 
-            $('.add-medicine').on('click', function () {
-                let count = $('tbody').find('tr').length + 1;
-                let html = '<tr>';
-                html += '<td>'+ count +'</td>';
-                html += '<td>Medicine A</td>';
-                html += '<td>10</td>';
-                html += '<td>Pill</td>';
-                html += '<td>Drink</td>';
-                html += '<td><button type="button" class="text-uppercase btn bg-gradient-danger mt-2 delete-medicine"><i class="fas fa-trash"></i></button></td>';
-                html += '</tr>';
-                $('tbody').append(html);
-                updateCountAndTable();
-            });
-            $(document).on('click', '.delete-medicine', function () {
-                $(this).parent().parent().remove();
-                updateCountAndTable();
-            });
+        $('.add-medicine').on('click', function () {
+            let td = $('tbody').find('tr').html();
+            let html = '<tr>'+ td + '</tr>';
+            $('tbody').append(html);
+            updateTable();
         });
+        $(document).on('click', '.delete-medicine', function () {
+            if ($('tbody').find('tr').length == 1) {
+                return false;
+            }
+            $(this).closest('tr').remove();
+            updateTable();
+        });
+
         $('#but-create-prescription').on('click', function() {
             $('#but-create-prescription').text('Save');
             $('#but-create-prescription').prop('disabled', true);
