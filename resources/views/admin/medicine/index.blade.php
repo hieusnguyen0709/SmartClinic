@@ -213,7 +213,7 @@
                     $('#category-id').val(result.categoryId);
                     $('#dropdown-parent-category').html(result.categoryList);
                     $('#instruction').val('');
-                    $('#unit').val('0');
+                    $('#unit').val('');
                     $('#quantity').val('');
                 }
             });

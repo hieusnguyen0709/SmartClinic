@@ -30,7 +30,7 @@
                                 <div class="form-group">
                                     <label>Unit</label>
                                     <select class="form-control" id="unit" name="unit">
-                                        <option>----</option>
+                                        <option value="">----</option>
                                         <option value="0">Bottle</option>
                                         <option value="1">Tube</option>
                                         <option value="2">Pill</option>

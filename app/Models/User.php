@@ -12,6 +12,13 @@ class User extends Model
     use HasFactory;
     use Sluggable;
     use SluggableScopeHelpers;
+
+    const MALE = 0;
+    const FEMALE = 1;
+
+    const ACTIVE = 0;
+    const BLOCK = 1;
+
     /**
      * The table associated with the model.
      *
@@ -75,12 +82,21 @@ class User extends Model
     public function viewStatus()
     {
         $return = '';
-        if($this->status == 0) {
+        if($this->status == self::ACTIVE) {
             $return = 'Active';
         }
-        if($this->status == 1) {
+        if($this->status == self::BLOCK) {
             $return = 'Block';
         }
+        return $return;
+    }
+
+    public function getGender()
+    {
+        $return = [
+            self::MALE => 'Male',
+            self::FEMALE => 'Female',
+        ];
         return $return;
     }
 }

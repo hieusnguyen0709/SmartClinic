@@ -39,7 +39,7 @@
                                 <div class="form-group">
                                     <label>Gender</label>
                                     <select class="form-control" id="gender" name="gender">
-                                        <option>----</option>
+                                        <option value="">----</option>
                                         <option value="0">Male</option>
                                         <option value="1">Female</option>
                                     </select>

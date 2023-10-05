@@ -12,6 +12,11 @@ class Medicine extends Model
     use HasFactory;
     use Sluggable;
     use SluggableScopeHelpers;
+
+    const BOTTLE = 0;
+    const TUBE = 1;
+    const PILL = 2;
+
     /**
      * The table associated with the model.
      *
@@ -76,13 +81,13 @@ class Medicine extends Model
     public function viewUnit()
     {
         $return = '';
-        if($this->unit == 0) {
+        if($this->unit == self::BOTTLE) {
             $return = 'Bottle';
         }
-        if($this->unit == 1) {
+        if($this->unit == self::TUBE) {
             $return = 'Tube';
         }
-        if($this->unit == 1) {
+        if($this->unit == self::PILL) {
             $return = 'Pill';
         }
         return $return;

@@ -207,7 +207,7 @@
                     $('#email').val('');
                     $('#password').val('');
                     $('#confirm-password').val('');
-                    $('#gender').val('0');
+                    $('#gender').val('');
                     $('#phone').val('');
                     $('#age').val('');
                     $('#address').val('');
