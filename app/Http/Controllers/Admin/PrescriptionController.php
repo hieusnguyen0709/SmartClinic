@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller as BaseController;
 use Illuminate\Http\Request;
 use App\Repositories\Prescription\PrescriptionRepository;
+use App\Repositories\PrescriptionMedicine\PrescriptionMedicineRepository;
 use App\Repositories\User\UserRepository;
 use App\Repositories\Medicine\MedicineRepository;
 use Illuminate\Support\Facades\Validator;
@@ -17,6 +18,7 @@ class PrescriptionController extends BaseController
     use ServiceTrait;
     protected $request;
     protected $prescriptionRepo;
+    protected $prescriptionMedicineRepo;
     protected $userRepo;
     protected $medicineRepo;
 
@@ -26,12 +28,14 @@ class PrescriptionController extends BaseController
     public function __construct(
         Request $request,
         PrescriptionRepository $prescriptionRepo,
+        PrescriptionMedicineRepository $prescriptionMedicineRepo,
         UserRepository $userRepo,
         MedicineRepository $medicineRepo,
     )
     {
         $this->request = $request;
         $this->prescriptionRepo = $prescriptionRepo;
+        $this->prescriptionMedicineRepo = $prescriptionMedicineRepo;
         $this->userRepo = $userRepo;
         $this->medicineRepo = $medicineRepo;
     }
@@ -91,13 +95,13 @@ class PrescriptionController extends BaseController
             'name' => 'required',
             'patient_id' => 'required',
             'doctor_id' => 'required',
-            'medicine_id' => 'nullable',
+            'medicine.*' => 'required',
         ];
         $message = [
             'name.required' => 'Please fill out this field.',
             'patient_id.required' => 'Please fill out this field.',
             'doctor_id.required' => 'Please fill out this field.',
-            'medicine_id.required' => 'Please fill out this field.'
+            'medicine.*' => 'Please fill out all fields.'
         ];
         $validator = Validator::make($input, $rules, $message);
         if ($validator->fails()) {
@@ -113,11 +117,8 @@ class PrescriptionController extends BaseController
             'patient_id' => $input['patient_id'],
             'doctor_id' => $input['doctor_id'],
             'appointment_id' => $input['appointment_id'] ?? 0,
-            'medicine_id' => $input['medicine_id'] ?? 0,
+            'code' => 'PRES-'.str_pad(mt_rand(1, 1000), 4, '0', STR_PAD_LEFT)
         ];
-
-        $code = 'PRES-'.str_pad(mt_rand(1, 1000), 4, '0', STR_PAD_LEFT);
-        $data['code'] = $code;
 
         $detail = [
             'symptom' => $input['symptom'] ?? '',
@@ -127,10 +128,20 @@ class PrescriptionController extends BaseController
         ];
         $data['detail'] = json_encode($detail);
 
+        $medicines = $this->processMedicineToStore($input['medicine']);
+        $data['medicine'] = json_encode($medicines);
+
         if (!empty($input['id'])) {
-            $this->prescriptionRepo->update($input['id'], $data);
+            $prescription = $this->prescriptionRepo->update($input['id'], $data);
         } else {
-            $this->prescriptionRepo->create($data);
+            $prescription = $this->prescriptionRepo->create($data);
+
+            foreach ($input['medicine'] as $medicine) {
+                $this->prescriptionMedicineRepo->create([
+                    'prescription_id' => $prescription['id'],
+                    'medicine_id' => $medicine['id'],
+                ]);
+            }
         }
 
         return response()->json([
@@ -145,5 +156,22 @@ class PrescriptionController extends BaseController
         $this->prescriptionRepo->updateMulti($ids, ['is_delete' => 1]);
 
         return redirect()->back();
+    }
+
+    private function processMedicineToStore($medicines)
+    {
+        $result = [];
+        foreach ($medicines as $key => $item) {
+            $medicine = [
+                'id' => $item['id'],
+                'quantity' => $item['quantity'],
+                'unit' => $item['unit'],
+                'note' => $item['note'],
+            ];
+
+            array_push($result, $medicine);
+        }
+
+        return $result;
     }
 }

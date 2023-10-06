@@ -18,6 +18,8 @@ use App\Repositories\Medicine\MedicineRepository;
 use App\Repositories\Medicine\MedicineRepositoryEloquent;
 use App\Repositories\Prescription\PrescriptionRepository;
 use App\Repositories\Prescription\PrescriptionRepositoryEloquent;
+use App\Repositories\PrescriptionMedicine\PrescriptionMedicineRepository;
+use App\Repositories\PrescriptionMedicine\PrescriptionMedicineRepositoryEloquent;
 use App\Repositories\QrCode\QrCodeRepository;
 use App\Repositories\QrCode\QrCodeRepositoryEloquent;
 use App\Repositories\Role\RoleRepository;
@@ -43,6 +45,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(FrameRepository::class, FrameRepositoryEloquent::class);
         $this->app->bind(MedicineRepository::class, MedicineRepositoryEloquent::class);
         $this->app->bind(PrescriptionRepository::class, PrescriptionRepositoryEloquent::class);
+        $this->app->bind(PrescriptionMedicineRepository::class, PrescriptionMedicineRepositoryEloquent::class);
         $this->app->bind(QrCodeRepository::class, QrCodeRepositoryEloquent::class);
         $this->app->bind(RoleRepository::class, RoleRepositoryEloquent::class);
         $this->app->bind(ScheduleRepository::class, ScheduleRepositoryEloquent::class);

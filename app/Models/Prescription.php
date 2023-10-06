@@ -37,8 +37,8 @@ class Prescription extends Model
         'patient_id',
         'doctor_id',
         'appointment_id',
-        'medicine_id',
         'code',
+        'medicine',
         'detail',
         'slug',
         'is_delete',
@@ -92,8 +92,8 @@ class Prescription extends Model
         return $this->belongsTo('App\Models\Appointment', 'appointment_id');
     }
 
-    public function medicine()
+    public function prescriptionMedicines()
     {
-        return $this->hasMany('App\Models\Medicine', 'medicine_id');
+        return $this->hasMany(PrescriptionMedicine::class, 'prescription_id')->where('is_delete', 0);
     }
 }

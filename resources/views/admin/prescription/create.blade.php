@@ -106,7 +106,6 @@
                         <!-- Medicine -->     
                         <div class="row mt-4">
                             <p class="text-bold text-uppercase text-base">Medicine</p>   
-                            <div class="text-danger text-xs font-weight-bold mt-2" id="err-medicine-id"></div>
                             <div class="col-md-12">
                                 <div class="table-responsive p-0">
                                     <table class="table align-items-center mb-0">
@@ -124,7 +123,7 @@
                                             <tr>
                                                 <td></td>
                                                 <td>
-                                                    <select class="form-control" name="medicine_id[1]">
+                                                    <select class="form-control" name="medicine[1][id]">
                                                         <option value="">----</option>
                                                         @foreach ($medicines as $key => $item)
                                                             <option value="{{ $item->id }}">{{ $item->name }}</option>
@@ -132,10 +131,10 @@
                                                     </select>
                                                 </td>
                                                 <td>
-                                                    <input class="form-control" type="number" name="medicine_quantity[1]" placeholder="Quantity">
+                                                    <input class="form-control" type="number" name="medicine[1][quantity]" placeholder="Quantity">
                                                 </td>
                                                 <td>
-                                                    <select class="form-control" name="medicine_unit[1]">
+                                                    <select class="form-control" name="medicine[1][unit]" disabled>
                                                         <option value="">----</option>
                                                         <option value="0">Bottle</option>
                                                         <option value="1">Tube</option>
@@ -143,14 +142,15 @@
                                                     </select>
                                                 </td>
                                                 <td>
-                                                    <textarea class="form-control mt-6" name="medicine_note[1]" rows="4" cols="4" placeholder="Note"></textarea>
+                                                    <textarea class="form-control mt-6" name="medicine[1][note]" rows="4" cols="4" placeholder="Note"></textarea>
                                                 </td>
                                                 <td>
                                                     <button type="button" class="text-uppercase btn bg-gradient-danger mt-2 delete-medicine"><i class="fas fa-trash"></i></button>
                                                 </td>
                                             </tr>
                                         </tbody>
-                                    </table>                                                              
+                                    </table>      
+                                    <div class="text-danger text-xs font-weight-bold mt-2" id="err-medicine"></div>                                                        
                                 </div>
                             </div>
                         </div>
@@ -251,7 +251,7 @@
                         $('#err-name').text(result.errors.name);
                         $('#err-patient-id').text(result.errors.patient_id);
                         $('#err-doctor-id').text(result.errors.doctor_id);
-                        $('#err-medicine-id').text(result.errors.medicine_id);
+                        $('#err-medicine').text(result.errors.medicine);
                         for (let key in result.errors) {
                             $('input[name='+ key +'], select[name='+ key +']').addClass("is-invalid");
                         }
@@ -282,11 +282,10 @@
             $('#err-name').text('');
             $('#err-patient-id').text('');
             $('#err-doctor-id').text('');
-            $('#err-medicine-id').text('');
+            $('#err-medicine').text('');
             $("#name").removeClass("is-invalid");
             $("#patient-id").removeClass("is-invalid");
             $("#doctor-id").removeClass("is-invalid");
-            $("#medicine-id").removeClass("is-invalid");
         }
     </script>
 @endsection
