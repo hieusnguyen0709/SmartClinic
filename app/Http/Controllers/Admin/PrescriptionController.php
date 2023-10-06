@@ -70,6 +70,16 @@ class PrescriptionController extends BaseController
         ]);
     }
 
+    public function changeMedicine()
+    {
+        $input = $this->request->all();
+        $medicine = $this->medicineRepo->getMedicineById($input['medicine_id']);
+
+        return response()->json([
+            'medicine' => $medicine
+        ]);
+    }
+
     public function create()
     {
         $patients = $this->userRepo->getPatients();

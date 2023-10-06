@@ -94,6 +94,6 @@ class Prescription extends Model
 
     public function prescriptionMedicines()
     {
-        return $this->hasMany(PrescriptionMedicine::class, 'prescription_id')->where('is_delete', 0);
+        return $this->hasMany('App\Models\PrescriptionMedicine', 'prescription_id')->where('is_delete', 0);
     }
 }

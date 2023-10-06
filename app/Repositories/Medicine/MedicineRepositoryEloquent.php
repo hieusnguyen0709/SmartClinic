@@ -27,4 +27,13 @@ class MedicineRepositoryEloquent extends BaseRepository implements MedicineRepos
     ->orderBy($sortColumn, $sortType)
     ->paginate($numPerPage);
    }
+
+   public function getMedicineById($medicineId)
+   {
+       return $this->model->where('is_delete', 0)
+       ->when(!empty($medicineId), function ($query) use ($medicineId) {
+           return $query->where('id', $medicineId);
+       })
+       ->get();
+   }
 }

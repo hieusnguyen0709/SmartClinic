@@ -11,4 +11,5 @@ use App\Repositories\RepositoryInterface;
 interface MedicineRepository extends RepositoryInterface
 {
     public function getMedicines($search, $numPerPage, $sortColumn, $sortType);
+    public function getMedicineById($medicineId);
 }

@@ -123,7 +123,7 @@
                                             <tr>
                                                 <td></td>
                                                 <td>
-                                                    <select class="form-control" name="medicine[1][id]">
+                                                    <select class="form-control medicine-id" name="medicine[1][id]">
                                                         <option value="">----</option>
                                                         @foreach ($medicines as $key => $item)
                                                             <option value="{{ $item->id }}">{{ $item->name }}</option>
@@ -134,7 +134,7 @@
                                                     <input class="form-control" type="number" name="medicine[1][quantity]" placeholder="Quantity">
                                                 </td>
                                                 <td>
-                                                    <select class="form-control" name="medicine[1][unit]" disabled>
+                                                    <select class="form-control unit" name="medicine[1][unit]" disabled>
                                                         <option value="">----</option>
                                                         <option value="0">Bottle</option>
                                                         <option value="1">Tube</option>
@@ -262,20 +262,65 @@
             })
         });
         $('#patient-id').change(function() {
-            $.ajax({
-                type: 'GET',
-                url: '{{ route('prescription.change.patient') }}',
-                data: {
-                    'patient_id': $(this).val()
-                },
-                success: function(result) {
-                    $('#patient-name').val(result.patient[0].name);
-                    $('#patient-email').val(result.patient[0].email);
-                    $('#patient-address').val(result.patient[0].address);
-                    $('#patient-phone').val(result.patient[0].phone);
-                    $('#patient-age').val(result.patient[0].age);
-                    $('#patient-gender').val(result.patient[0].gender);
+            let patientId = $(this).val();
+            if (patientId === '') {
+                $('[id^="patient"]').each(function() {
+                    $(this).val('');
+                });
+            } else {
+                $.ajax({
+                    type: 'GET',
+                    url: '{{ route('prescription.change.patient') }}',
+                    data: {
+                        'patient_id': patientId
+                    },
+                    success: function(result) {
+                        $('#patient-name').val(result.patient[0].name);
+                        $('#patient-email').val(result.patient[0].email);
+                        $('#patient-address').val(result.patient[0].address);
+                        $('#patient-phone').val(result.patient[0].phone);
+                        $('#patient-age').val(result.patient[0].age);
+                        $('#patient-gender').val(result.patient[0].gender);
+                    }
+                });
+            }
+        });
+        $(document).on('change', '.medicine-id', function () {
+            let medicineId = $(this).val();
+            let unit = $(this).closest('tr').find('.unit');
+            if (medicineId === '') {
+                unit.val('');
+            } else {
+                $.ajax({
+                    type: 'GET',
+                    url: '{{ route('prescription.change.medicine') }}',
+                    data: {
+                        'medicine_id': medicineId
+                    },
+                    success: function(result) {
+                        unit.val(result.medicine[0].unit);
+                    }
+                });
+            }
+    
+            $('.medicine-id').not(this).each(function() {
+                let row = $(this).attr('name').match(/\d+/)[0];
+
+                if (!$(this).data('disabledOptions')) {
+                    $(this).data('disabledOptions', []);
                 }
+
+                let disabledOptions = $(this).data('disabledOptions');
+                $(this).find('option').each(function() {
+                    $(this).prop('disabled', false); 
+                });
+                disabledOptions.push(medicineId);
+                $(this).find('option').each(function() {
+                    let optionValue = $(this).val();
+                    if (disabledOptions.includes(optionValue)) {
+                        $(this).prop('disabled', true);
+                    }
+                });
             });
         });
         function resetErrors() {
