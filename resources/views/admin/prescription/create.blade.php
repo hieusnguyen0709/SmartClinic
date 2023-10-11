@@ -123,10 +123,10 @@
                                             <tr>
                                                 <td></td>
                                                 <td>
-                                                    <select class="form-control medicine-id" name="medicine[0][id]">
+                                                <select class="form-control medicine-id" name="medicine[0][id]">
                                                         <option value="">----</option>
                                                         @foreach ($medicines as $key => $item)
-                                                            <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                                            <option value="{{ $item->id }}" data-icon="fa fa-check">{{ $item->name }}</option>
                                                         @endforeach
                                                     </select>
                                                 </td>
@@ -205,6 +205,9 @@
 @endsection
 @section('scripts')
     <script>
+        // $('.medicine-id').selectpicker();
+        // $('.unit').selectpicker();
+
         function updateTable() {
             $('tbody').find('tr').each(function(index) {
                 $(this).find('td:first').text(index + 1);
@@ -259,11 +262,12 @@
             let medicineId = $(this).val();
             let unit = $(this).closest('tr').find('.unit');
             if (medicineId === '') {
-                unit.val('');
                 let prevMedicineId = medicineIds.indexOf($(this).data('prevMedicineId'));
                 if (prevMedicineId !== -1) {
                     medicineIds.splice(prevMedicineId, 1);
                 }
+                unit.val('');
+                // unit.prop('disabled', false);
             } else {
                 $.ajax({
                     type: 'GET',
@@ -273,6 +277,8 @@
                     },
                     success: function(result) { 
                         unit.val(result.medicine[0].unit);
+                        // unit.find('option[value="'+ result.medicine[0].unit +'"]').attr('selected', 'selected');
+                        // unit.prop('disabled', true);
                     }
                 });
                 if (medicineId !== '' && !medicineIds.includes(medicineId)) {
@@ -281,11 +287,23 @@
             }
             $(this).data('prevMedicineId', medicineId);
 
-            // $('.medicine-id').not(this).each(function() {
-            //     $(this).find('option').each(function() {
-            //         $(this).prop('disabled', medicineIds.includes($(this).val()));
-            //     });
-            // });
+            $('.medicine-id').not(this).each(function() {
+                $(this).find('option').each(function() {
+                    if (medicineIds.includes($(this).val())) {
+                        // $(this).prop('disabled', true);
+                        $(this).css({
+                            'background-color': '#2dce89',
+                            'color': 'white'
+                        });
+                    } else {
+                        // $(this).prop('disabled', false);
+                        $(this).css({
+                            'background-color': 'white',
+                            'color': 'black'
+                        });
+                    }
+                });
+            });
         });
 
         $('#but-create-prescription').on('click', function() {
