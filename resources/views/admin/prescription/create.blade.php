@@ -123,10 +123,11 @@
                                             <tr>
                                                 <td></td>
                                                 <td>
-                                                <select class="form-control medicine-id" name="medicine[0][id]">
+                                                    <input type="hidden" name="medicine[0][id]" class="hidden-medicine-id" value="">
+                                                    <select class="form-control medicine-id">
                                                         <option value="">----</option>
                                                         @foreach ($medicines as $key => $item)
-                                                            <option value="{{ $item->id }}" data-icon="fa fa-check">{{ $item->name }}</option>
+                                                            <option value="{{ $item->id }}">{{ $item->name }}</option>
                                                         @endforeach
                                                     </select>
                                                 </td>
@@ -134,7 +135,8 @@
                                                     <input class="form-control" type="number" name="medicine[0][quantity]" placeholder="Quantity">
                                                 </td>
                                                 <td>
-                                                    <select class="form-control unit" name="medicine[0][unit]">
+                                                    <input type="hidden" name="medicine[0][unit]" class="hidden-unit" value="">
+                                                    <select class="form-control unit">
                                                         <option value="">----</option>
                                                         <option value="0">Bottle</option>
                                                         <option value="1">Tube</option>
@@ -205,8 +207,7 @@
 @endsection
 @section('scripts')
     <script>
-        // $('.medicine-id').selectpicker();
-        // $('.unit').selectpicker();
+        var medicineIds = [];
 
         function updateTable() {
             $('tbody').find('tr').each(function(index) {
@@ -228,6 +229,11 @@
         $(document).on('click', '.delete-medicine', function () {
             if ($('tbody').find('tr').length == 1) {
                 return false;
+            }
+            let medicineId = $(this).closest('tr').find('.medicine-id option:selected').val();
+            if (medicineId !== '') {
+                medicineIds.splice($.inArray(medicineId, medicineIds), 1);
+                disabledMedicineIds();
             }
             $(this).closest('tr').remove();
             updateTable();
@@ -256,47 +262,57 @@
                 });
             }
         });
-
-        let medicineIds = [];
         $(document).on('change', '.medicine-id', function () {
             let medicineId = $(this).val();
+            let hiddenMedicineId = $(this).closest('tr').find('.hidden-medicine-id');
             let unit = $(this).closest('tr').find('.unit');
+            let hiddenUnit = $(this).closest('tr').find('.hidden-unit');
+            let prevMedicineId = medicineIds.indexOf($(this).data('prevMedicineId'));
+
             if (medicineId === '') {
-                let prevMedicineId = medicineIds.indexOf($(this).data('prevMedicineId'));
                 if (prevMedicineId !== -1) {
-                    medicineIds.splice(prevMedicineId, 1);
+                    medicineIds.splice($.inArray(prevMedicineId, medicineIds), 1);
                 }
                 unit.val('');
-                // unit.prop('disabled', false);
+                unit.prop('disabled', false);
+                hiddenUnit.val('');
             } else {
-                $.ajax({
-                    type: 'GET',
-                    url: '{{ route('prescription.change.medicine') }}',
-                    data: {
-                        'medicine_id': medicineId
-                    },
-                    success: function(result) { 
-                        unit.val(result.medicine[0].unit);
-                        // unit.find('option[value="'+ result.medicine[0].unit +'"]').attr('selected', 'selected');
-                        // unit.prop('disabled', true);
+                if (medicineId !== prevMedicineId) {
+                    if (prevMedicineId !== -1) {
+                        medicineIds.splice($.inArray(prevMedicineId, medicineIds), 1);
                     }
-                });
-                if (medicineId !== '' && !medicineIds.includes(medicineId)) {
-                    medicineIds.push(medicineId);
+                    $.ajax({
+                        type: 'GET',
+                        url: '{{ route('prescription.change.medicine') }}',
+                        data: {
+                            'medicine_id': medicineId
+                        },
+                        success: function(result) { 
+                            unit.val(result.medicine[0].unit);
+                            unit.prop('disabled', true);
+                            hiddenUnit.val(result.medicine[0].unit);
+                        }
+                    });
+                    if (!medicineIds.includes(medicineId)) {
+                        medicineIds.push(medicineId);
+                    }
                 }
             }
+            hiddenMedicineId.val(medicineId);
             $(this).data('prevMedicineId', medicineId);
-
-            $('.medicine-id').not(this).each(function() {
+            disabledMedicineIds();
+        });
+        function disabledMedicineIds() {
+            $('.medicine-id').each(function() {
                 $(this).find('option').each(function() {
                     if (medicineIds.includes($(this).val())) {
-                        // $(this).prop('disabled', true);
+                        $(this).prop('disabled', true);
                         $(this).css({
                             'background-color': '#2dce89',
                             'color': 'white'
                         });
                     } else {
-                        // $(this).prop('disabled', false);
+                        $(this).prop('disabled', false);
                         $(this).css({
                             'background-color': 'white',
                             'color': 'black'
@@ -304,7 +320,7 @@
                     }
                 });
             });
-        });
+        }
 
         $('#but-create-prescription').on('click', function() {
             $('#but-create-prescription').text('Save');
