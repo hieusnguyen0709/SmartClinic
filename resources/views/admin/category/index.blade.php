@@ -76,10 +76,10 @@
                                             <p class="text-xs font-weight-bold mb-0">{{ $item->description }}</p>
                                         </td>
                                         <td>
-                                            <p class="text-xs font-weight-bold mb-0">@if ($item->parent) {{ $item->parent->name }} @endif </p>
+                                            <p class="text-xs font-weight-bold mb-0">{{ $item->parent->name ?? '' }}</p>
                                         </td>
                                         <td>
-                                            <p class="text-xs font-weight-bold mb-0">{{ $item->user->name }}</p>
+                                            <p class="text-xs font-weight-bold mb-0">{{ $item->user->name ?? '' }}</p>
                                         </td>
                                         <td class="align-middle">
                                             <i class="fas fa-solid fa-eye ms-auto text-primary cursor-pointer view-category" data-bs-placement="top" data-bs-toggle="modal" data-bs-target="#modal-category" data-id="{{ $item->id }}" title="View"></i>

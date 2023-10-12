@@ -104,7 +104,7 @@
                                             <p class="text-xs font-weight-bold mb-0">{{ $item->email }}</p>
                                         </td>
                                         <td>
-                                            <p class="text-xs font-weight-bold mb-0">{{ $item->role }}</p>
+                                            <p class="text-xs font-weight-bold mb-0">{{ $item->role ?? '' }}</p>
                                         </td>
                                         <td>
                                             <p class="badge badge-sm bg-gradient-{{ $item->viewStatus() == 'Active' ? 'success' : 'danger' }}">{{ $item->viewStatus() }}</p>

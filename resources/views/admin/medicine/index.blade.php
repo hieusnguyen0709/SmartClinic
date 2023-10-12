@@ -93,7 +93,7 @@
                                             <p class="text-xs font-weight-bold mb-0">{{ $item->name }}</p>
                                         </td>
                                         <td>
-                                            <p class="text-xs font-weight-bold mb-0">{{ $item->category->name }}</p>
+                                            <p class="text-xs font-weight-bold mb-0">{{ $item->category->name ?? '' }}</p>
                                         </td>
                                         <td>
                                             <p class="text-xs font-weight-bold mb-0">{{ $item->instruction }}</p>
@@ -105,7 +105,7 @@
                                             <p class="text-xs font-weight-bold mb-0">{{ $item->quantity }}</p>
                                         </td>
                                         <td>
-                                            <p class="text-xs font-weight-bold mb-0">{{ $item->user->name }}</p>
+                                            <p class="text-xs font-weight-bold mb-0">{{ $item->user->name ?? '' }}</p>
                                         </td>
                                         <td class="align-middle">
                                             <i class="fas fa-solid fa-eye ms-auto text-primary cursor-pointer view-medicine" data-bs-placement="top" data-bs-toggle="modal" data-bs-target="#modal-medicine" data-id="{{ $item->id }}" title="View"></i>

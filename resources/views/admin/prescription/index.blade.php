@@ -88,10 +88,10 @@
                                             <p class="text-xs font-weight-bold mb-0">{{ $item->code }}</p>
                                         </td>
                                         <td>
-                                            <p class="text-xs font-weight-bold mb-0">@if ($item->patient) {{ $item->patient }} @endif </p>
+                                            <p class="text-xs font-weight-bold mb-0">{{ $item->patient ?? '' }}</p>
                                         </td>
                                         <td>
-                                            <p class="text-xs font-weight-bold mb-0">@if ($item->doctor) {{ $item->doctor }} @endif </p>
+                                            <p class="text-xs font-weight-bold mb-0">{{ $item->doctor ?? '' }}</p>
                                         </td>
                                         <td class="align-middle">
                                             <i class="fas fa-solid fa-eye ms-auto text-primary cursor-pointer" onclick="location.href='{{ route('prescription.edit', [$item->slug, true]) }}'" data-bs-placement="top" data-id="{{ $item->id }}" title="View"></i>
