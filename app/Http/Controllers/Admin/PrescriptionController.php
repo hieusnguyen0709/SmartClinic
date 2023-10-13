@@ -105,13 +105,18 @@ class PrescriptionController extends BaseController
             'name' => 'required',
             'patient_id' => 'required',
             'doctor_id' => 'required',
-            'medicine.*' => 'required',
+            'medicine.*.id' => 'required',
+            'medicine.*.quantity' => 'required|numeric',
+            'medicine.*.unit' => 'required'
         ];
         $message = [
             'name.required' => 'Please fill out this field.',
             'patient_id.required' => 'Please fill out this field.',
             'doctor_id.required' => 'Please fill out this field.',
-            'medicine.*' => 'Please fill out all fields.'
+            'medicine.*.id.required' => 'Please fill out this field.',
+            'medicine.*.quantity.required' => 'Please fill out this field.',
+            'medicine.*.quantity.numeric' => 'Please use number on this field.',
+            'medicine.*.unit.required' => 'Please fill out this field.'
         ];
         $validator = Validator::make($input, $rules, $message);
         if ($validator->fails()) {

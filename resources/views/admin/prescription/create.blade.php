@@ -123,18 +123,21 @@
                                             <tr>
                                                 <td></td>
                                                 <td>
+                                                    <div class="text-danger text-xs font-weight-bold err-medicine-0-id">&nbsp;</div>  
                                                     <input type="hidden" name="medicine[0][id]" class="hidden-medicine-id" value="">
                                                     <select class="form-control medicine-id">
                                                         <option value="">----</option>
                                                         @foreach ($medicines as $key => $item)
                                                             <option value="{{ $item->id }}">{{ $item->name }}</option>
                                                         @endforeach
-                                                    </select>
+                                                    </select>                                                      
                                                 </td>
                                                 <td>
+                                                    <div class="text-danger text-xs font-weight-bold err-medicine-0-quantity">&nbsp;</div>
                                                     <input class="form-control" type="number" name="medicine[0][quantity]" placeholder="Quantity">
                                                 </td>
                                                 <td>
+                                                    <div class="text-danger text-xs font-weight-bold err-medicine-0-unit">&nbsp;</div>
                                                     <input type="hidden" name="medicine[0][unit]" class="hidden-unit" value="">
                                                     <select class="form-control unit">
                                                         <option value="">----</option>
@@ -144,6 +147,7 @@
                                                     </select>
                                                 </td>
                                                 <td>
+                                                    <div class="text-danger text-xs font-weight-bold">&nbsp;</div>
                                                     <textarea class="form-control mt-6" name="medicine[0][note]" rows="4" cols="4" placeholder="Note"></textarea>
                                                 </td>
                                                 <td>
@@ -151,8 +155,7 @@
                                                 </td>
                                             </tr>
                                         </tbody>
-                                    </table>      
-                                    <div class="text-danger text-xs font-weight-bold mt-2" id="err-medicine"></div>                                                        
+                                    </table>                                                          
                                 </div>
                             </div>
                         </div>
@@ -213,17 +216,24 @@
             $('tbody').find('tr').each(function(index) {
                 $(this).find('td:first').text(index + 1);
                 $(this).find('[name*="medicine"]').each(function() {
-                    let name = $(this).attr('name').replace(/\[\d+\]/g, '['+ index +']');
-                    $(this).attr('name', name);
+                    let newName = $(this).attr('name').replace(/\[\d+\]/g, '['+ index +']');
+                    $(this).attr('name', newName);
+                });
+                $(this).find('[class*="err-medicine"]').each(function() {
+                    let newClass = $(this).attr('class').replace(/\d+/g, index);
+                    $(this).attr('class', newClass);
                 });
             });
         }
         updateTable();
 
         $('.add-medicine').on('click', function () {
-            let td = $('tbody').find('tr:first').html();
-            let html = '<tr>'+ td + '</tr>';
-            $('tbody').append(html);
+            let $firstRow = $('tbody').find('tr:first').html();
+            let html = '<tr>'+ $firstRow +'</tr';
+            let $newRow = $(html);
+            $newRow.find('[class*="err-medicine"]').html('&nbsp;');
+            $newRow.find('input.is-invalid, select.is-invalid').removeClass('is-invalid');
+            $('tbody').append($newRow);
             updateTable();
         });
         $(document).on('click', '.delete-medicine', function () {
@@ -343,9 +353,17 @@
                         $('#err-name').text(result.errors.name);
                         $('#err-patient-id').text(result.errors.patient_id);
                         $('#err-doctor-id').text(result.errors.doctor_id);
-                        $('#err-medicine').text(result.errors.medicine);
                         for (let key in result.errors) {
-                            $('input[name='+ key +'], select[name='+ key +']').addClass("is-invalid");
+                            $('input[name="'+ key +'"], select[name="'+ key +'"]').addClass("is-invalid");
+                            if (key.startsWith('medicine.')) {
+                                let medicine = key.split('.');
+                                if (medicine.length === 3) {
+                                    let index = medicine[1];
+                                    let field = medicine[2];
+                                    $('.err-medicine-'+ index +'-'+ field +'').text(result.errors[key]);
+                                    $('.err-medicine-'+ index +'-'+ field +'').closest('td').find('select, input').addClass("is-invalid");
+                                }
+                            }
                         }
                     } else {
                         location.href = '{{ route("prescription.index") }}';
@@ -357,10 +375,13 @@
             $('#err-name').text('');
             $('#err-patient-id').text('');
             $('#err-doctor-id').text('');
-            $('#err-medicine').text('');
             $("#name").removeClass("is-invalid");
             $("#patient-id").removeClass("is-invalid");
             $("#doctor-id").removeClass("is-invalid");
+            $('tbody').find('tr').each(function() {
+                $(this).find('[class*="err-medicine"]').html('&nbsp;');
+                $(this).find('input.is-invalid, select.is-invalid').removeClass('is-invalid');
+            });
         }
     </script>
 @endsection
