@@ -70,5 +70,6 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function 
         Route::post('/delete', 'PrescriptionController@delete')->name('prescription.delete');
         Route::get('/change-patient', 'PrescriptionController@changePatient')->name('prescription.change.patient');
         Route::get('/change-medicine', 'PrescriptionController@changeMedicine')->name('prescription.change.medicine');
+        Route::get('/check-medicine-quantity', 'PrescriptionController@checkMedicineQuantity')->name('prescription.check.medicine.quantity');
     });
 });

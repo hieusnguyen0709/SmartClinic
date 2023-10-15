@@ -10,6 +10,6 @@ use App\Repositories\RepositoryInterface;
  */
 interface MedicineRepository extends RepositoryInterface
 {
-    public function getMedicines($search, $numPerPage, $sortColumn, $sortType);
-    public function getMedicineById($medicineId);
+    public function getMedicines($search = null, $numPerPage = null, $sortColumn = null, $sortType = null);
+    public function getMedicineById($medicineId = null);
 }

@@ -28,7 +28,7 @@ class MedicineRepositoryEloquent extends BaseRepository implements MedicineRepos
     ->paginate($numPerPage);
    }
 
-   public function getMedicineById($medicineId)
+   public function getMedicineById($medicineId = null)
    {
        return $this->model->where('is_delete', 0)
        ->when(!empty($medicineId), function ($query) use ($medicineId) {

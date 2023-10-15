@@ -10,5 +10,5 @@ use App\Repositories\RepositoryInterface;
  */
 interface PrescriptionRepository extends RepositoryInterface
 {
-    public function getPrescriptions($search, $numPerPage, $sortColumn, $sortType);
+    public function getPrescriptions($search = null, $numPerPage = null, $sortColumn = null, $sortType = null);
 }

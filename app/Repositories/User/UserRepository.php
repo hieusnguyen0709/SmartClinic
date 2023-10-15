@@ -10,8 +10,8 @@ use App\Repositories\RepositoryInterface;
  */
 interface UserRepository extends RepositoryInterface
 {
-    public function getUsers($search, $numPerPage, $sortColumn, $sortType, $roleId);
+    public function getUsers($search = null, $numPerPage = null, $sortColumn = null, $sortType = null, $roleId = null);
     public function getPatients();
-    public function getPatientById($patientId);
+    public function getPatientById($patientId = null);
     public function getDoctors();
 }

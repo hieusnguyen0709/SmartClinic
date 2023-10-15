@@ -80,6 +80,20 @@ class PrescriptionController extends BaseController
         ]);
     }
 
+    public function checkMedicineQuantity()
+    {
+        $input = $this->request->all();
+        $medicine = $this->medicineRepo->find($input['medicine_id']);
+        $response = '';
+        if ($input['quantity'] > $medicine->quantity) {
+            $response = 'Not enough quantity.';
+        }
+
+        return response()->json([
+            'response' => $response
+        ]);
+    }
+
     public function create()
     {
         $patients = $this->userRepo->getPatients();

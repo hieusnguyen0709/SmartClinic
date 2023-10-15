@@ -134,7 +134,7 @@
                                                 </td>
                                                 <td>
                                                     <div class="text-danger text-xs font-weight-bold err-medicine-0-quantity">&nbsp;</div>
-                                                    <input class="form-control" type="number" name="medicine[0][quantity]" placeholder="Quantity">
+                                                    <input class="form-control quantity" type="number" name="medicine[0][quantity]" placeholder="Quantity">
                                                 </td>
                                                 <td>
                                                     <div class="text-danger text-xs font-weight-bold err-medicine-0-unit">&nbsp;</div>
@@ -210,7 +210,7 @@
 @endsection
 @section('scripts')
     <script>
-        var medicineIds = [];
+        const medicineIds = [];
 
         function updateTable() {
             $('tbody').find('tr').each(function(index) {
@@ -332,6 +332,34 @@
             });
         }
 
+        let timeoutId;
+        $(document).on('keyup', '.quantity', function() {
+            let input = $(this);
+            clearTimeout(timeoutId);
+            timeoutId = setTimeout(function() {
+                let quantity = input.val();
+                let medicineId = input.closest('tr').find('.medicine-id option:selected').val();
+                if (quantity !== '' && medicineId !== '') {
+                    $.ajax({
+                        type: 'GET',
+                        url: '{{ route('prescription.check.medicine.quantity') }}',
+                        data: {
+                            'quantity': quantity,
+                            'medicine_id': medicineId
+                        },
+                        success: function(result) {
+                            if (result.response !== '') {
+                                input.closest('td').find('[class*="err-medicine"]').html(result.response);
+                                input.addClass('is-invalid');
+                            } else {
+                                input.closest('td').find('[class*="err-medicine"]').html('&nbsp;');
+                                input.removeClass('is-invalid');
+                            }
+                        }
+                    });
+                }
+            }, 500);
+        });
         $('#but-create-prescription').on('click', function() {
             $('#but-create-prescription').text('Save');
             $('#but-create-prescription').prop('disabled', true);

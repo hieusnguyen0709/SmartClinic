@@ -47,7 +47,7 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
         ->get();
     }
 
-    public function getPatientById($patientId)
+    public function getPatientById($patientId = null)
     {
         return $this->model->where('is_delete', 0)
         ->where(function ($query) {
