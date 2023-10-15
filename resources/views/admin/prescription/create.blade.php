@@ -197,8 +197,8 @@
 
                         <div class="container m-auto row justify-content-md-center pb-5">
                             <div class="col-md-3 d-flex">
-                                <button type="button" class="btn bg-gradient-primary btn-lg btn-rounded w-60 mx-1" onclick="location.href='{{ route('prescription.index') }}'">Cancel</button>
-                                <button type="button" class="btn bg-gradient-primary btn-lg btn-rounded w-60 mx-1" id="but-create-prescription">Save</button>
+                                <button type="button" class="btn bg-gradient-primary btn-lg btn-rounded w-70 mx-1" onclick="location.href='{{ route('prescription.index') }}'">Cancel</button>
+                                <button type="button" class="btn bg-gradient-primary btn-lg btn-rounded w-70 mx-1" id="but-create-prescription">Save</button>
                             </div>
                         </div>
                     </div>
