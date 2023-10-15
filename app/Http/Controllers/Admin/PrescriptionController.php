@@ -164,12 +164,15 @@ class PrescriptionController extends BaseController
             $prescription = $this->prescriptionRepo->update($input['id'], $data);
         } else {
             $prescription = $this->prescriptionRepo->create($data);
-
-            foreach ($input['medicine'] as $medicine) {
+            
+            foreach ($input['medicine'] as $item) {
                 $this->prescriptionMedicineRepo->create([
                     'prescription_id' => $prescription['id'],
-                    'medicine_id' => $medicine['id'],
+                    'medicine_id' => $item['id'],
                 ]);
+                $medicine = $this->medicineRepo->find($item['id']);
+                $quantity = $medicine->quantity - $item['quantity'];
+                $this->medicineRepo->update($medicine['id'], ['quantity' => $quantity]);
             }
         }
 

@@ -351,9 +351,11 @@
                             if (result.response !== '') {
                                 input.closest('td').find('[class*="err-medicine"]').html(result.response);
                                 input.addClass('is-invalid');
+                                $('#but-create-prescription').prop('disabled', true);
                             } else {
                                 input.closest('td').find('[class*="err-medicine"]').html('&nbsp;');
                                 input.removeClass('is-invalid');
+                                $('#but-create-prescription').prop('disabled', false);
                             }
                         }
                     });
