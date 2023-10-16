@@ -21,7 +21,6 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
         return $this->model->join('roles', 'roles.id', '=', 'users.role_id')
         ->selectRaw('users.*, roles.name as role')
         ->where('users.is_delete', 0)
-        ->where('roles.is_delete', 0)
         ->when(!empty($search), function ($query1) use ($search) {
             $query1->where(function ($query1)  use ($search) {
                 $query1->where('users.email', 'like', '%' . $search . '%')

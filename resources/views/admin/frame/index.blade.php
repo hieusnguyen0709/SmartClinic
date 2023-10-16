@@ -68,6 +68,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @if (count($frames) > 0)
                                     @foreach ($frames as $key => $item)
                                     <tr>
                                         <td class="ps-4">
@@ -94,6 +95,11 @@
                                         </td>
                                     </tr>
                                     @endforeach
+                                    @else
+                                        <tr>
+                                            <td colspan="6" class="text-center">{{ config('message.NO_DATA') }}</td>
+                                        </tr>
+                                    @endif
                                 </tbody>
                             </table>
                         </div>

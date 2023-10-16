@@ -60,6 +60,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @if (count($roles) > 0)
                                     @foreach ($roles as $key => $item)
                                     <tr>
                                         <td class="ps-4">
@@ -80,6 +81,11 @@
                                         </td>
                                     </tr>
                                     @endforeach
+                                    @else
+                                        <tr>
+                                            <td colspan="4" class="text-center">{{ config('message.NO_DATA') }}</td>
+                                        </tr>
+                                    @endif
                                 </tbody>
                             </table>
                         </div>

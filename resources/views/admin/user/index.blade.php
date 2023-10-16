@@ -83,6 +83,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @if (count($users) > 0)
                                     @foreach ($users as $key => $item)
                                     <tr>
                                         <td class="ps-4">
@@ -117,6 +118,11 @@
                                         </td>
                                     </tr>
                                     @endforeach
+                                    @else
+                                        <tr>
+                                            <td colspan="7" class="text-center">{{ config('message.NO_DATA') }}</td>
+                                        </tr>
+                                    @endif
                                 </tbody>
                             </table>
                         </div>

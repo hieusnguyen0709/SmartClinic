@@ -82,6 +82,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @if (count($medicines) > 0)
                                     @foreach ($medicines as $key => $item)
                                     <tr>
                                         <td class="ps-4">
@@ -114,6 +115,11 @@
                                         </td>
                                     </tr>
                                     @endforeach
+                                    @else
+                                        <tr>
+                                            <td colspan="8" class="text-center">{{ config('message.NO_DATA') }}</td>
+                                        </tr>
+                                    @endif
                                 </tbody>
                             </table>
                         </div>
