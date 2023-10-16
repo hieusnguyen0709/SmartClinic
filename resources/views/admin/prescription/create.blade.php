@@ -95,7 +95,10 @@
                                 <div class="form-group">
                                     <label for="example-text-input" class="form-control-label">Gender</label>
                                     <select class="form-control" id="patient-gender" disabled>
-                                        <option>----</option>
+                                        <option value="">----</option>
+                                        @foreach(config('constants.GENDER') as $key => $item)
+                                            <option value="{{ $key }}">{{ $item }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>

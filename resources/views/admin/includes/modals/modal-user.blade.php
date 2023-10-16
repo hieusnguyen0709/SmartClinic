@@ -40,8 +40,9 @@
                                     <label>Gender</label>
                                     <select class="form-control" id="gender" name="gender">
                                         <option value="">----</option>
-                                        <option value="0">Male</option>
-                                        <option value="1">Female</option>
+                                        @foreach(config('constants.GENDER') as $key => $item)
+                                            <option value="{{ $key }}">{{ $item }}</option>
+                                        @endforeach
                                     </select>
                                     <div class="text-danger text-xs font-weight-bold mt-2" id="err-gender"></div>
                                 </div>

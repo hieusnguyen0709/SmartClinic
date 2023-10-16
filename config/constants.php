@@ -71,5 +71,12 @@ return [
         0 => 'Bottle',
         1 => 'Tube',
         2 => 'Pill',
+    ],
+
+    'GENDER_MALE' => 0,
+    'GENDER_FEMALE' => 1,
+    'GENDER' => [
+        0 => 'Male',
+        1 => 'Female'
     ]
 ];
