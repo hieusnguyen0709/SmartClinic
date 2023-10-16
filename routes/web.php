@@ -72,4 +72,11 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function 
         Route::get('/change-medicine', 'PrescriptionController@changeMedicine')->name('prescription.change.medicine');
         Route::get('/check-medicine-quantity', 'PrescriptionController@checkMedicineQuantity')->name('prescription.check.medicine.quantity');
     });
+
+    Route::prefix('frame')->group(function () {
+        Route::get('/', 'FrameController@index')->name('frame.index');
+        Route::get('/get-edit', 'FrameController@getEdit')->name('frame.get.edit');
+        Route::post('/store', 'FrameController@store')->name('frame.store');
+        Route::post('/delete', 'FrameController@delete')->name('frame.delete');
+    });
 });

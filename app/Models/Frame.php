@@ -4,10 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Cviebrock\EloquentSluggable\Sluggable;
+use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 
 class Frame extends Model
 {
     use HasFactory;
+    use Sluggable;
+    use SluggableScopeHelpers;
+
     /**
      * The table associated with the model.
      *
@@ -32,6 +37,7 @@ class Frame extends Model
         'start_time',
         'end_time',
         'slug',
+        'user_id',
         'is_delete',
     ];
 
@@ -40,5 +46,24 @@ class Frame extends Model
      *
      * @var array
      */
-    protected $dates = ['deleted_at', 'created_at', 'updated_at'];    
+    protected $dates = ['deleted_at', 'created_at', 'updated_at'];   
+    
+    /**
+     * Return the sluggable configuration array for this model.
+     *
+     * @return array
+     */
+    public function sluggable(): array
+    {
+        return [
+            'slug' => [
+                'source' => 'name'
+            ]
+        ];
+    }
+
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User', 'user_id');
+    }
 }

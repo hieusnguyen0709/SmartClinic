@@ -57,19 +57,19 @@
         </li>
         <hr class="horizontal dark mt-0">
         <li class="nav-item">
-          <a class="nav-link" href="">
+          <a class="nav-link" href="{{ route('frame.index') }}">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="ni ni-calendar-grid-58 text-primary text-sm opacity-10"></i>
+              <i class="ni ni-time-alarm text-primary text-sm opacity-10"></i>
             </div>
-            <span class="nav-link-text ms-1">Schedules</span>
+            <span class="nav-link-text ms-1">Frames</span>
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="ni ni-time-alarm text-primary text-sm opacity-10"></i>
+              <i class="ni ni-calendar-grid-58 text-primary text-sm opacity-10"></i>
             </div>
-            <span class="nav-link-text ms-1">Frames</span>
+            <span class="nav-link-text ms-1">Schedules</span>
           </a>
         </li>
         <li class="nav-item">

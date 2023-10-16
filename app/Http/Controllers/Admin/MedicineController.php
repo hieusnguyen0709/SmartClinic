@@ -47,7 +47,6 @@ class MedicineController extends BaseController
         if (!empty($this->request->input('sort_type'))) {
             $sortType = $this->request->input('sort_type');
         }
-        $roleId = $this->request->input('select_role');
         $medicines = $this->medicineRepo->getMedicines($search, $numPerPage, $sortColumn, $sortType);
         
         return view('admin.medicine.index', compact('medicines', 'search', 'numPerPage', 'sortColumn', 'sortType'));

@@ -1,8 +1,8 @@
 <?php 
-function getDateFormat($date)
+function getTimeFormat($time)
 {
-    if (empty($date)) {
+    if (empty($time)) {
         return null;
     }
-    return date_format($date, "d-m-Y H:i");
+    return substr($time, 0, 5);;
 }

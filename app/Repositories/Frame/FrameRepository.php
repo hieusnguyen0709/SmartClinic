@@ -1,13 +1,14 @@
 <?php
 
 namespace App\Repositories\Frame;
+use App\Repositories\RepositoryInterface;
 
 /**
  * Interface FrameRepository.
  *
  * @package namespace App\Repositories;
  */
-interface FrameRepository
+interface FrameRepository extends RepositoryInterface
 {
-    public function getAll();
+    public function getFrames($search = null, $numPerPage = null, $sortColumn = null, $sortType = null);
 }

@@ -1,27 +1,29 @@
 <?php
 
 namespace App\Repositories\Frame;
-
-use App\Models\Frame;
+use App\Repositories\BaseRepository;
 
 /**
  * Class FrameRepositoryEloquent.
  *
  * @package App\Repositories\Frame;
  */
-class FrameRepositoryEloquent implements FrameRepository
+class FrameRepositoryEloquent extends BaseRepository implements FrameRepository
 {
-    protected $model;
+  public function getModel()
+  {
+      return \App\Models\Frame::class;
+  }
 
-    public function __construct(Frame $model)
-    {
-      $this->model = $model;
-    }
-
-    public function getAll()
-    {
-        $model = $this->model->get();
-        return $model;
-    }
-
+  public function getFrames($search = null, $numPerPage = null, $sortColumn = null, $sortType = null)
+  {
+    return $this->model->where('is_delete', 0)
+    ->when(!empty($search), function ($query) use ($search) {
+        $query->where(function ($query)  use ($search) {
+            $query->where('name', 'like', '%' . $search . '%');
+        });
+    })
+    ->orderBy($sortColumn, $sortType)
+    ->paginate($numPerPage);
+  }
 }
