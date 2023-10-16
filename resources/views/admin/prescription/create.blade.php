@@ -141,9 +141,9 @@
                                                     <input type="hidden" name="medicine[0][unit]" class="hidden-unit" value="">
                                                     <select class="form-control unit">
                                                         <option value="">----</option>
-                                                        <option value="0">Bottle</option>
-                                                        <option value="1">Tube</option>
-                                                        <option value="2">Pill</option>
+                                                        @foreach(config('constants.UNIT') as $key => $item)
+                                                            <option value="{{ $key }}">{{ $item }}</option>
+                                                        @endforeach
                                                     </select>
                                                 </td>
                                                 <td>
@@ -229,8 +229,8 @@
 
         $('.add-medicine').on('click', function () {
             let $firstRow = $('tbody').find('tr:first').html();
-            let html = '<tr>'+ $firstRow +'</tr';
-            let $newRow = $(html);
+            let $newRow = $('<tr>'+ $firstRow +'</tr');
+            $newRow.find('input, select').val('');
             $newRow.find('[class*="err-medicine"]').html('&nbsp;');
             $newRow.find('input.is-invalid, select.is-invalid').removeClass('is-invalid');
             $('tbody').append($newRow);

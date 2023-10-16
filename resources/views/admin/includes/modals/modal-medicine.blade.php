@@ -31,9 +31,9 @@
                                     <label>Unit</label>
                                     <select class="form-control" id="unit" name="unit">
                                         <option value="">----</option>
-                                        <option value="0">Bottle</option>
-                                        <option value="1">Tube</option>
-                                        <option value="2">Pill</option>
+                                        @foreach(config('constants.UNIT') as $key => $item)
+                                            <option value="{{ $key }}">{{ $item }}</option>
+                                        @endforeach
                                     </select>
                                     <div class="text-danger text-xs font-weight-bold mt-2" id="err-unit"></div>
                                 </div>

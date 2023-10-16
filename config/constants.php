@@ -62,5 +62,14 @@ return [
         'DOCTOR' => 3,
         'RECEPTIONIST' => 4,
         'PHAMARCIST' => 5,
+    ],
+
+    'UNIT_BOTTLE' => 0,
+    'UNIT_TUBE' => 1,
+    'UNIT_PILL' => 2,
+    'UNIT' => [
+        0 => 'Bottle',
+        1 => 'Tube',
+        2 => 'Pill',
     ]
 ];

@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Config;
 use App\Http\Traits\ServiceTrait;
 use Auth;
+use DB;
 
 class PrescriptionController extends BaseController
 {
@@ -108,8 +109,9 @@ class PrescriptionController extends BaseController
         $prescription = $this->prescriptionRepo->findBySlugOrFail($slug);
         $patients = $this->userRepo->getPatients();
         $doctors = $this->userRepo->getDoctors();
+        $medicines = $this->medicineRepo->getAllRecordActive();
         
-        return view('admin.prescription.edit', compact('prescription', 'patients', 'doctors'));
+        return view('admin.prescription.edit', compact('prescription', 'patients', 'doctors', 'medicines'));
     }
 
     public function store()
@@ -157,25 +159,17 @@ class PrescriptionController extends BaseController
         ];
         $data['detail'] = json_encode($detail);
 
-        $medicines = $this->processMedicineToStore($input['medicine']);
+        $medicines = $this->convertMedicineToArray($input['medicine']);
         $data['medicine'] = json_encode($medicines);
 
+        $prescription = '';
         if (!empty($input['id'])) {
             $prescription = $this->prescriptionRepo->update($input['id'], $data);
         } else {
             $prescription = $this->prescriptionRepo->create($data);
-            
-            foreach ($input['medicine'] as $item) {
-                $this->prescriptionMedicineRepo->create([
-                    'prescription_id' => $prescription['id'],
-                    'medicine_id' => $item['id'],
-                ]);
-                $medicine = $this->medicineRepo->find($item['id']);
-                $quantity = $medicine->quantity - $item['quantity'];
-                $this->medicineRepo->update($medicine['id'], ['quantity' => $quantity]);
-            }
         }
-
+        $this->processMedicineTransaction($input['id'] ?? '', $input['medicine'], $prescription['id']);
+        
         return response()->json([
             'code' => '200'
         ]);
@@ -190,7 +184,7 @@ class PrescriptionController extends BaseController
         return redirect()->back();
     }
 
-    private function processMedicineToStore($medicines)
+    private function convertMedicineToArray($medicines)
     {
         $result = [];
         foreach ($medicines as $key => $item) {
@@ -205,5 +199,27 @@ class PrescriptionController extends BaseController
         }
 
         return $result;
+    }
+
+    private function processMedicineTransaction($id, $medicines, $prescriptionId)
+    {
+        DB::beginTransaction();
+        try {
+            if (!empty($id)) {
+                $this->prescriptionMedicineRepo->updateByColumn('prescription_id', $prescriptionId, ['is_delete' => 1]);
+            }
+            foreach ($medicines as $key => $item) {
+                $this->prescriptionMedicineRepo->create(['prescription_id' => $prescriptionId, 'medicine_id' => $item['id']]);
+                $medicine = $this->medicineRepo->find($item['id']);
+                $quantity = $medicine->quantity - $item['quantity'];
+                $this->medicineRepo->update($medicine['id'], ['quantity' => $quantity]);
+            }
+            
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollBack();
+            
+            throw new Exception($e->getMessage());
+        }
     }
 }
