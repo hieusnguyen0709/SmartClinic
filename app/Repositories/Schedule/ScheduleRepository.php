@@ -1,13 +1,14 @@
 <?php
 
 namespace App\Repositories\Schedule;
+use App\Repositories\RepositoryInterface;
 
 /**
  * Interface ScheduleRepository.
  *
  * @package namespace App\Repositories;
  */
-interface ScheduleRepository
+interface ScheduleRepository extends RepositoryInterface
 {
-    public function getAll();
+
 }

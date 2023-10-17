@@ -79,4 +79,8 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function 
         Route::post('/store', 'FrameController@store')->name('frame.store');
         Route::post('/delete', 'FrameController@delete')->name('frame.delete');
     });
+
+    Route::prefix('schedule')->group(function () {
+        Route::get('/', 'ScheduleController@index')->name('schedule.index');
+    });
 });

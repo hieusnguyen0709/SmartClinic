@@ -1,27 +1,17 @@
 <?php
 
 namespace App\Repositories\Schedule;
-
-use App\Models\Schedule;
+use App\Repositories\BaseRepository;
 
 /**
  * Class ScheduleRepositoryEloquent.
  *
  * @package App\Repositories\Schedule;
  */
-class ScheduleRepositoryEloquent implements ScheduleRepository
+class ScheduleRepositoryEloquent extends BaseRepository implements ScheduleRepository
 {
-    protected $model;
-
-    public function __construct(Schedule $model)
-    {
-      $this->model = $model;
-    }
-
-    public function getAll()
-    {
-        $model = $this->model->get();
-        return $model;
-    }
-
+  public function getModel()
+  {
+    return \App\Models\Schedule::class;
+  }
 }
