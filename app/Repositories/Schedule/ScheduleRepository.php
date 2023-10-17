@@ -10,5 +10,5 @@ use App\Repositories\RepositoryInterface;
  */
 interface ScheduleRepository extends RepositoryInterface
 {
-
+    public function getSchedules();
 }

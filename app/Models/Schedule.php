@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Config;
 
 class Schedule extends Model
 {
@@ -30,7 +31,6 @@ class Schedule extends Model
     protected $fillable = [
         'doctor_id',
         'frame_id',
-        'slug',
         'is_delete',
     ];
 
@@ -39,5 +39,16 @@ class Schedule extends Model
      *
      * @var array
      */
-    protected $dates = ['date','deleted_at', 'created_at', 'updated_at'];   
+    protected $dates = ['deleted_at', 'created_at', 'updated_at'];
+    
+    public function doctor()
+    {
+        return $this->belongsTo('App\Models\User', 'doctor_id')
+        ->where('is_delete', 0)
+        ->where(function ($query) {
+            $query->whereHas('role', function ($roleQuery) {
+                $roleQuery->where('permission', Config::get('constants.PERMISSION_BY_ROLE.DOCTOR'));
+            });
+        });
+    }
 }

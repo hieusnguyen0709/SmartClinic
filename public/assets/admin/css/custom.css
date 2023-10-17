@@ -1,3 +1,9 @@
 .table-header {
     display: flex;
 }
+.frame > *{
+    margin-right: 10px;
+}
+.delete-frame, .add-frame {
+    height: 45px;
+}
