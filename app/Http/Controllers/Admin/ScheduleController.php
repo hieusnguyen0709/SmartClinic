@@ -54,21 +54,19 @@ class ScheduleController extends BaseController
     public function getEdit()
     {
         $input = $this->request->all();
-        $schedule = $doctorId = $frameId = '';
+        $schedule = $doctorId = '';
         if (!empty($input['id'])) {
             $schedule = $this->scheduleRepo->find($input['id']);
             $doctorId = $schedule['doctor_id'];
-            $frameId = $schedule['frame_id'];
         }
         $doctors = $this->userRepo->getDoctors();
         $doctorList = $this->getListSelect($doctors, $doctorId);
         $frames = $this->frameRepo->getAllRecordActive();
-        $frameList = $this->getListSelect($frames, $frameId);
         
         return response()->json([
             'schedule' => $schedule,
             'doctorList' => $doctorList,
-            'frameList' => $frameList
+            'frames' => $frames
         ]);
     }
 
@@ -77,11 +75,11 @@ class ScheduleController extends BaseController
         $input = $this->request->all();
         $rules = [
             'doctor_id' => 'required',
-            'frame_id' => 'required'
+            'frame_ids' => 'required'
         ];
         $message = [
             'doctor_id.required' => 'Please fill out this field.',
-            'frame_id.required' => 'Please fill out this field.'
+            'frame_ids.required' => 'Please fill out this field.'
         ];
         $validator = Validator::make($input, $rules, $message);
         if ($validator->fails()) {
@@ -94,7 +92,7 @@ class ScheduleController extends BaseController
         
         $data = [
             'doctor_id' => $input['doctor_id'],
-            'frame_id' => $input['frame_id'],
+            'frame_ids' => $input['frame_ids'],
         ];
 
         if (!empty($input['id'])) {
@@ -105,16 +103,6 @@ class ScheduleController extends BaseController
 
         return response()->json([
             'code' => '200'
-        ]);
-    }
-
-    public function changeFrame()
-    {
-        $input = $this->request->all();
-        $frame = $this->frameRepo->find($input['frame_id']);
-
-        return response()->json([
-            'frame' => $frame
         ]);
     }
 }

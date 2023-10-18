@@ -1,9 +1,9 @@
 .table-header {
     display: flex;
 }
-.frame > *{
+.frame-body > *{
     margin-right: 10px;
 }
-.delete-frame, .add-frame {
-    height: 45px;
+.frame-header > *{
+    margin-right: 10px;
 }

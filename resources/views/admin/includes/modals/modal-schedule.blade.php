@@ -16,28 +16,42 @@
                                     </select>
                                     <div class="text-danger text-xs font-weight-bold mt-2" id="err-doctor-id"></div>
                                 </div>
-                                <div class="d-flex frame">
-                                    <div class="form-group col-4">
-                                        <label>Frame</label>
-                                        <select class="form-control frame-id" name="frame_id">
-                                        </select>
-                                        <div class="text-danger text-xs font-weight-bold mt-2 err-frame-id"></div>
+                                <div class="frame">
+                                    <div class="d-flex frame-header">
+                                        <div class="form-group col-1">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="check-all-frame">
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-4">
+                                            <label>Frame</label>
+                                        </div>
+                                        <div class="form-group col-3">
+                                            <label>Start Time</label>
+                                        </div>
+                                        <div class="form-group col-3">
+                                            <label>End Time</label>
+                                        </div>
                                     </div>
-                                    <div class="form-group col-3">
-                                        <label>Start Time</label>
-                                        <input type="time" class="form-control start-time" placeholder="Start Time" name="start_time" disabled>
-                                    </div>
-                                    <div class="form-group col-3">
-                                        <label>End Time</label>
-                                        <input type="time" class="form-control end-time" placeholder="End Time" name="end_time" disabled>
-                                    </div>
-                                    <div class="col-2">
-                                        <button type="button" class="text-uppercase btn bg-gradient-danger mt-4 delete-frame"><i class="fas fa-trash"></i></button>
+                                    <div class="d-flex frame-body">
+                                        <div class="form-group col-1">
+                                            <div class="form-check">
+                                                <input class="form-check-input frame-id" type="checkbox" value="">
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-4">
+                                            <input type="text" class="form-control frame-name" value="" disabled>
+                                        </div>
+                                        <div class="form-group col-3">
+                                            <input type="time" class="form-control frame-start-time" value="" disabled>
+                                        </div>
+                                        <div class="form-group col-3">
+                                            <input type="time" class="form-control frame-end-time" value="" disabled>
+                                        </div>
                                     </div>
                                 </div>
-                                <div>
-                                    <button type="button" class="text-uppercase btn bg-gradient-success add-frame"><i class="fas fa-plus"></i></button>
-                                </div>
+                                <div class="text-danger text-xs font-weight-bold mt-2" id="err-frame-ids"></div>
+                                <input type="hidden" name="frame_ids" id="frame-ids" value="">
                                 <input type="hidden" name="id" id="id" value="">
                                 <div class="text-center">
                                     <button type="button" class="btn bg-gradient-primary btn-lg btn-rounded w-50 mt-4 mb-0" id="but-create-schedule">Save</button>

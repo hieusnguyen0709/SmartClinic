@@ -2,8 +2,24 @@
 @section('content')
     <div class="container-fluid container m-auto row justify-content-md-center py-4">
         <div class="row">
-            <div class="col-12">
+            <div class="col-10">
                 <div id="calendar" class="bg-white rounded px-4 pt-4">
+                </div>
+            </div>
+            <div class="col-2">
+                <div class="bg-white rounded border border-dark px-4 pt-4">
+                    <img src="{{ asset('assets/admin/img/default-avatar.png') }}" class="avatar avatar-lx me-3">
+                    <label for="example-text-input" class="form-control-label">Doctor A</label>
+                    <label for="example-text-input" class="form-control-label">Morning</label>
+                    <label for="example-text-input" class="form-control-label">07:00</label>
+                    <label for="example-text-input" class="form-control-label">11:00</label>
+                </div>
+                <div class="bg-white rounded px-4 border border-dark pt-4 mt-2">
+                    <img src="{{ asset('assets/admin/img/default-avatar.png') }}" class="avatar avatar-lx me-3">
+                    <label for="example-text-input" class="form-control-label">Doctor B</label>
+                    <label for="example-text-input" class="form-control-label">Noon</label>
+                    <label for="example-text-input" class="form-control-label">13:00</label>
+                    <label for="example-text-input" class="form-control-label">17:00</label>
                 </div>
             </div>
         </div>
@@ -46,7 +62,7 @@
                                 $('#but-create-schedule').text('Save');
                                 $('#but-create-schedule').prop('disabled', false);
                                 $('#err-doctor-id').text(result.errors.doctor_id);
-                                $('.err-frame-id').text(result.errors.frame_id);
+                                $('#err-frame-ids').text(result.errors.frame_ids);
                                 for (let key in result.errors) {
                                     $('select[name='+ key +']').addClass("is-invalid");
                                 }
@@ -70,37 +86,41 @@
             },
             success: function(result) {
                 $('#doctor-id').html(result.doctorList);
-                $('.frame-id').html(result.frameList);
+                let $firstRow = $('.frame').find('.frame-body:first');
+                result.frames.forEach(function(frame) {
+                    let $newRow = $('<div class="d-flex frame-body">'+ $firstRow.html() +'</div');
+                    $newRow.find('.frame-id').val(frame.id);
+                    $newRow.find('.frame-name').val(frame.name);
+                    $newRow.find('.frame-start-time').val(frame.start_time);
+                    $newRow.find('.frame-end-time').val(frame.end_time);
+                    $('.frame').append($newRow);
+                });
+                $firstRow.remove();
             }
-        });
+        }); 
     });
-    $('.frame-id').change(function() {
-        let frameId = $(this).val();
-        let startTime = $(this).closest('div.frame').find('.start-time');
-        let endTime = $(this).closest('div.frame').find('.end-time');
 
-        if (frameId === '') {
-            startTime.val('');
-            endTime.val('');
-        } else {
-            $.ajax({
-                type: 'GET',
-                url: '{{ route('schedule.change.frame') }}',
-                data: {
-                    'frame_id': frameId
-                },
-                success: function(result) {
-                    startTime.val(result.frame.start_time);  
-                    endTime.val(result.frame.end_time);                
-                }
-            });
-        }
+    function updateFrameIds() {
+        let frameIds = [];
+        $('.frame-id:checked').each(function() {
+            let frameId = $(this).val();
+            frameIds.push(frameId);
+        });
+        $('#frame-ids').val(frameIds.toString());
+    }
+    $('#check-all-frame').click(function() {
+        let checked = $(this).prop('checked');
+        $('.frame-id').prop('checked', checked);
+        updateFrameIds();
     });
+    $(document).on('click', '.frame-id', function() {
+        updateFrameIds();
+    });
+    
     function resetErrors() {
-            $('#err-doctor-id').text('');
-            $('.err-frame-id').text('');
-            $("#doctor-id").removeClass("is-invalid");
-            $(".frame-id").removeClass("is-invalid");
-        }
+        $('#err-doctor-id').text('');
+        $('#err-frame-ids').text('');
+        $("#doctor-id").removeClass("is-invalid");
+    }
 </script>
 @endsection
