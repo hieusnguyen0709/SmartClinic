@@ -38,17 +38,16 @@ class ScheduleController extends BaseController
     {
         $events = [];
         $schedules = $this->scheduleRepo->getSchedules();
-
         foreach ($schedules as $schedule) {
             $events[] = [
                 'id'   => $schedule->id,
                 'title' => $schedule->doctor->name,
-                'start' => '2023-10-20 06:30:00',
-                'end' => '2023-10-20 00:00:00',
+                'start' => $schedule->start_date,
+                'end' => $schedule->end_date,
             ];
         }
 
-        return view('admin.schedule.index', compact('events', 'schedules'));
+        return view('admin.schedule.index', compact('events'));
     }
 
     public function getEdit()
@@ -93,6 +92,8 @@ class ScheduleController extends BaseController
         $data = [
             'doctor_id' => $input['doctor_id'],
             'frame_ids' => $input['frame_ids'],
+            'start_date' => $input['start_date'],
+            'end_date' => $input['end_date'],
         ];
 
         if (!empty($input['id'])) {

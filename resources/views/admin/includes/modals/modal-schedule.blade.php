@@ -16,6 +16,7 @@
                                     </select>
                                     <div class="text-danger text-xs font-weight-bold mt-2" id="err-doctor-id"></div>
                                 </div>
+                                <input type="hidden" name="frame_ids" id="frame-ids" value="">
                                 <div class="frame">
                                     <div class="d-flex frame-header">
                                         <div class="form-group col-1">
@@ -51,7 +52,8 @@
                                     </div>
                                 </div>
                                 <div class="text-danger text-xs font-weight-bold mt-2" id="err-frame-ids"></div>
-                                <input type="hidden" name="frame_ids" id="frame-ids" value="">
+                                <input type="hidden" name="start_date" id="start-date" value="">
+                                <input type="hidden" name="end_date" id="end-date" value="">
                                 <input type="hidden" name="id" id="id" value="">
                                 <div class="text-center">
                                     <button type="button" class="btn bg-gradient-primary btn-lg btn-rounded w-50 mt-4 mb-0" id="but-create-schedule">Save</button>

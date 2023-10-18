@@ -41,8 +41,11 @@
             selectable: true,
             selectHelper: true,
             select: function(start, end, allDays) {
-                $('#modal-schedule').find('.modal-title').text('Add Schedule');
                 $('#modal-schedule').modal('toggle');
+                $('#modal-schedule').find('.modal-title').text('Add Schedule');
+                $('#modal-schedule').find('#start-date').val(moment(start).format('YYYY-MM-DD'));
+                $('#modal-schedule').find('#end-date').val(moment(end).format('YYYY-MM-DD'));
+
                 $('#but-create-schedule').on('click', function() {
                     $('#but-create-schedule').text('Saving ...');
                     $('#but-create-schedule').prop('disabled', true);

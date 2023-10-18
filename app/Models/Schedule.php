@@ -31,6 +31,8 @@ class Schedule extends Model
     protected $fillable = [
         'doctor_id',
         'frame_ids',
+        'start_date',
+        'end_date',
         'detail',
         'is_delete',
     ];
