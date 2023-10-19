@@ -79,6 +79,9 @@
             }
         });
     });
+    $("#modal-schedule").on("hidden.bs.modal", function() {
+        $('#but-create-schedule').unbind();
+    });
     $(window).on('load', function() {
         resetErrors();
         $.ajax({
@@ -102,6 +105,11 @@
             }
         }); 
     });
+    function resetErrors() {
+        $('#err-doctor-id').text('');
+        $('#err-frame-ids').text('');
+        $("#doctor-id").removeClass("is-invalid");
+    }
 
     function updateFrameIds() {
         let frameIds = [];
@@ -119,11 +127,5 @@
     $(document).on('click', '.frame-id', function() {
         updateFrameIds();
     });
-    
-    function resetErrors() {
-        $('#err-doctor-id').text('');
-        $('#err-frame-ids').text('');
-        $("#doctor-id").removeClass("is-invalid");
-    }
 </script>
 @endsection
