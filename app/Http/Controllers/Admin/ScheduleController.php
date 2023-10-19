@@ -72,10 +72,17 @@ class ScheduleController extends BaseController
     public function store()
     {
         $input = $this->request->all();
-        $rules = [
-            'doctor_id' => 'required',
-            'frame_ids' => 'required'
-        ];
+        if (!empty($input['id'])) {
+            $rules = [
+                'doctor_id' => 'nullable',
+                'frame_ids' => 'nullable'
+            ];
+        } else {
+            $rules = [
+                'doctor_id' => 'required',
+                'frame_ids' => 'required'
+            ];
+        }
         $message = [
             'doctor_id.required' => 'Please fill out this field.',
             'frame_ids.required' => 'Please fill out this field.'
@@ -97,7 +104,10 @@ class ScheduleController extends BaseController
         ];
 
         if (!empty($input['id'])) {
-            $this->scheduleRepo->update($input['id'], $data);
+            $this->scheduleRepo->update($input['id'], [
+                'start_date' => $input['start_date'], 
+                'end_date' => $input['end_date']
+            ]);
         } else {
             $this->scheduleRepo->create($data);
         }
@@ -105,5 +115,14 @@ class ScheduleController extends BaseController
         return response()->json([
             'code' => '200'
         ]);
+    }
+
+    public function delete()
+    {
+        $input = $this->request->all();
+        $ids = explode(',', $input['id_delete']);
+        $this->scheduleRepo->updateMulti($ids ,['is_delete' => 1]);
+        
+        return redirect()->back();
     }
 }

@@ -26,6 +26,7 @@
     </div>
 @endsection
 @include('admin.includes.modals.modal-schedule')
+@include('admin.includes.modals.modal-delete')
 @section('scripts')
 <script>
     $(document).ready(function() {
@@ -76,7 +77,38 @@
                         }
                     })
                 });
-            }
+            },
+            editable: true,
+            eventDrop: function(event) {
+                $('#modal-schedule').find('#id').val(event.id);
+                $('#modal-schedule').find('#start-date').val(moment(event.start).format('YYYY-MM-DD'));
+                $('#modal-schedule').find('#end-date').val(moment(event.end).format('YYYY-MM-DD'));
+                let form = $('#frm-schedule')[0];
+                let data = new FormData(form);
+                $.ajax({
+                    type: "POST",
+                    enctype: 'multipart/form-data',
+                    url:'{{ route("schedule.store") }}',
+                    data: data,
+                    processData: false,
+                    contentType: false,
+                    cache: false,
+                    success: function(result){
+                        if (result.code == 200) {
+                            swal("Successfully!", "Schedule Updated!", "success");
+                        }
+                    }
+                })
+            },
+            eventClick: function(event){
+                $('#modal-delete').modal('toggle');
+                $('#frm-delete').find('#id-delete').val(event.id);
+                $('#frm-delete').attr('action', '{{ route('schedule.delete') }}');
+            },
+            selectAllow: function(event)
+            {
+                return moment(event.start).utcOffset(false).isSame(moment(event.end).subtract(1, 'second').utcOffset(false), 'day');
+            },
         });
     });
     $("#modal-schedule").on("hidden.bs.modal", function() {
