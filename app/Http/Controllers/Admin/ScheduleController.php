@@ -101,6 +101,7 @@ class ScheduleController extends BaseController
             'frame_ids' => $input['frame_ids'],
             'start_date' => $input['start_date'],
             'end_date' => $input['end_date'],
+            'color' => $input['color']
         ];
 
         if (!empty($input['id'])) {

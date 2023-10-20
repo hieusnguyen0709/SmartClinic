@@ -33,7 +33,7 @@ class Schedule extends Model
         'frame_ids',
         'start_date',
         'end_date',
-        'detail',
+        'color',
         'is_delete',
     ];
 

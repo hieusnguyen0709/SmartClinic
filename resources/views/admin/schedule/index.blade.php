@@ -70,6 +70,7 @@
         $('#frm-schedule').find('#id').val(id);
         $('#frm-schedule').find('#start-date').val(start_date);
         $('#frm-schedule').find('#end-date').val(end_date);
+        $('#frm-schedule').find('#color').val(getRandomColor());
         let form = $('#frm-schedule')[0];
         let data = new FormData(form);
         $.ajax({
@@ -151,5 +152,15 @@
     $(document).on('click', '.frame-id', function() {
         updateFrameIds();
     });
+
+    function getRandomColor() {
+        let red = Math.floor(Math.random() * 256);
+        let green = Math.floor(Math.random() * 256);
+        let blue = Math.floor(Math.random() * 256);
+
+        let color = "#" + red.toString(16) + green.toString(16) + blue.toString(16);
+
+        return color;
+    }
 </script>
 @endsection

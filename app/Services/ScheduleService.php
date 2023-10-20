@@ -17,6 +17,7 @@ class ScheduleService
                 'title' => $schedule->doctor->name,
                 'start' => $schedule->start_date . ' ' . min($start_time),
                 'end' => $schedule->end_date . ' ' . max($end_time),
+                'color' => $schedule->color
             ];
         }
 
