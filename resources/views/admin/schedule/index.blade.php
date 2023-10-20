@@ -44,78 +44,69 @@
             select: function(start, end, allDays) {
                 $('#modal-schedule').modal('toggle');
                 $('#modal-schedule').find('.modal-title').text('Add Schedule');
-                $('#modal-schedule').find('#start-date').val(moment(start).format('YYYY-MM-DD'));
-                $('#modal-schedule').find('#end-date').val(moment(end).format('YYYY-MM-DD'));
-
                 $('#but-create-schedule').on('click', function() {
                     $('#but-create-schedule').text('Saving ...');
                     $('#but-create-schedule').prop('disabled', true);
-                    let form = $('#frm-schedule')[0];
-                    let data = new FormData(form);
-                    $.ajax({
-                        type: "POST",
-                        enctype: 'multipart/form-data',
-                        url:'{{ route("schedule.store") }}',
-                        data: data,
-                        processData: false,
-                        contentType: false,
-                        cache: false,
-                        success: function(result){
-                            if (result.code == 422) {
-                                resetErrors();
-                                $('#but-create-schedule').text('Save');
-                                $('#but-create-schedule').prop('disabled', false);
-                                $('#err-doctor-id').text(result.errors.doctor_id);
-                                $('#err-frame-ids').text(result.errors.frame_ids);
-                                for (let key in result.errors) {
-                                    $('select[name='+ key +']').addClass("is-invalid");
-                                }
-                            } else {
-                                $('#modal-schedule').hide(); 
-                                location.reload();
-                            }
-                        }
-                    })
+                    storeSchedule(id = null, moment(start).format('YYYY-MM-DD'), moment(end).format('YYYY-MM-DD'));
                 });
             },
             editable: true,
             eventDrop: function(event) {
-                $('#modal-schedule').find('#id').val(event.id);
-                $('#modal-schedule').find('#start-date').val(moment(event.start).format('YYYY-MM-DD'));
-                $('#modal-schedule').find('#end-date').val(moment(event.end).format('YYYY-MM-DD'));
-                let form = $('#frm-schedule')[0];
-                let data = new FormData(form);
-                $.ajax({
-                    type: "POST",
-                    enctype: 'multipart/form-data',
-                    url:'{{ route("schedule.store") }}',
-                    data: data,
-                    processData: false,
-                    contentType: false,
-                    cache: false,
-                    success: function(result){
-                        if (result.code == 200) {
-                            swal("Successfully!", "Schedule Updated!", "success");
-                        }
-                    }
-                })
+                storeSchedule(event.id, moment(event.start).format('YYYY-MM-DD'), moment(event.end).format('YYYY-MM-DD'));
             },
             eventClick: function(event){
-                $('#modal-delete').modal('toggle');
-                $('#frm-delete').find('#id-delete').val(event.id);
-                $('#frm-delete').attr('action', '{{ route('schedule.delete') }}');
+                deleteSchedule(event.id);
             },
             selectAllow: function(event)
             {
-                return moment(event.start).utcOffset(false).isSame(moment(event.end).subtract(1, 'second').utcOffset(false), 'day');
+                // return moment(event.start).utcOffset(false).isSame(moment(event.end).subtract(1, 'second').utcOffset(false), 'day');
             },
         });
     });
     $("#modal-schedule").on("hidden.bs.modal", function() {
-        $('#but-create-schedule').unbind();
+        $('#but-create-schedule').off('click');
     });
+    function storeSchedule(id = null, start_date = null, end_date = null) {
+        $('#frm-schedule').find('#id').val(id);
+        $('#frm-schedule').find('#start-date').val(start_date);
+        $('#frm-schedule').find('#end-date').val(end_date);
+        let form = $('#frm-schedule')[0];
+        let data = new FormData(form);
+        $.ajax({
+            type: "POST",
+            enctype: 'multipart/form-data',
+            url:'{{ route("schedule.store") }}',
+            data: data,
+            processData: false,
+            contentType: false,
+            cache: false,
+            success: function(result){
+                if (result.code == 422) {
+                    resetErrors();
+                    $('#but-create-schedule').text('Save');
+                    $('#but-create-schedule').prop('disabled', false);
+                    $('#err-doctor-id').text(result.errors.doctor_id);
+                    $('#err-frame-ids').text(result.errors.frame_ids);
+                    for (let key in result.errors) {
+                        $('select[name='+ key +']').addClass("is-invalid");
+                    }
+                } else {
+                    if (id !== null) {
+                        swal("Successfully!", "Schedule Updated!", "success");
+                    } else {
+                        $('#modal-schedule').hide(); 
+                        location.reload();
+                    }
+                }
+            }
+        })
+    }
+    function deleteSchedule(id = null) {
+        $('#modal-delete').modal('toggle');
+        $('#frm-delete').attr('action', '{{ route('schedule.delete') }}');
+        $('#frm-delete').find('#id-delete').val(id);
+    }
     $(window).on('load', function() {
-        resetErrors();
         $.ajax({
             type: 'GET',
             url: '{{ route('schedule.get.edit') }}',
@@ -136,6 +127,7 @@
                 $firstRow.remove();
             }
         }); 
+        resetErrors();
     });
     function resetErrors() {
         $('#err-doctor-id').text('');
