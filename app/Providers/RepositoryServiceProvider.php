@@ -26,6 +26,8 @@ use App\Repositories\Role\RoleRepository;
 use App\Repositories\Role\RoleRepositoryEloquent;
 use App\Repositories\Schedule\ScheduleRepository;
 use App\Repositories\Schedule\ScheduleRepositoryEloquent;
+use App\Repositories\ScheduleFrame\ScheduleFrameRepository;
+use App\Repositories\ScheduleFrame\ScheduleFrameRepositoryEloquent;
 use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider
@@ -49,6 +51,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(QrCodeRepository::class, QrCodeRepositoryEloquent::class);
         $this->app->bind(RoleRepository::class, RoleRepositoryEloquent::class);
         $this->app->bind(ScheduleRepository::class, ScheduleRepositoryEloquent::class);
+        $this->app->bind(ScheduleFrameRepository::class, ScheduleFrameRepositoryEloquent::class);
     }
 
     /**

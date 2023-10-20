@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller as BaseController;
 use Illuminate\Http\Request;
+use App\Services\ScheduleService;
 use App\Repositories\Schedule\ScheduleRepository;
 use App\Repositories\User\UserRepository;
 use App\Repositories\Frame\FrameRepository;
+use App\Repositories\ScheduleFrame\ScheduleFrameRepository;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Traits\ServiceTrait;
 
@@ -14,39 +16,37 @@ class ScheduleController extends BaseController
 {
     use ServiceTrait;
     protected $request;
+    protected $scheduleService;
     protected $scheduleRepo;
     protected $userRepo;
     protected $frameRepo;
+    protected $scheduleFrameRepo;
 
     /**
      * Constructor
      */
     public function __construct(
         Request $request,
+        ScheduleService $scheduleService,
         ScheduleRepository $scheduleRepo,
         UserRepository $userRepo,
         FrameRepository $frameRepo,
+        ScheduleFrameRepository $scheduleFrameRepo,
     )
     {
         $this->request = $request;
+        $this->scheduleService = $scheduleService;
         $this->scheduleRepo = $scheduleRepo;
         $this->userRepo = $userRepo;
         $this->frameRepo = $frameRepo;
+        $this->scheduleFrameRepo = $scheduleFrameRepo;
     }
 
     public function index()
     {
-        $events = [];
         $schedules = $this->scheduleRepo->getSchedules();
-        foreach ($schedules as $schedule) {
-            $events[] = [
-                'id'   => $schedule->id,
-                'title' => $schedule->doctor->name,
-                'start' => $schedule->start_date,
-                'end' => $schedule->end_date,
-            ];
-        }
-
+        $events = $this->scheduleService->parseToViewEvent($schedules);
+        
         return view('admin.schedule.index', compact('events'));
     }
 
@@ -109,7 +109,13 @@ class ScheduleController extends BaseController
                 'end_date' => $input['end_date']
             ]);
         } else {
-            $this->scheduleRepo->create($data);
+            $schedule = $this->scheduleRepo->create($data);
+            foreach (explode(',', $schedule->frame_ids) as $frameId) {
+                $this->scheduleFrameRepo->create([
+                    'schedule_id' => $schedule['id'],
+                    'frame_id' => $frameId
+                ]);
+            }
         }
 
         return response()->json([

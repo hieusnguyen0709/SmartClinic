@@ -47,7 +47,7 @@
                 $('#but-create-schedule').on('click', function() {
                     $('#but-create-schedule').text('Saving ...');
                     $('#but-create-schedule').prop('disabled', true);
-                    storeSchedule(id = null, moment(start).format('YYYY-MM-DD'), moment(end).format('YYYY-MM-DD'));
+                    storeSchedule(null, moment(start).format('YYYY-MM-DD'), moment(end).subtract(1, 'days').format('YYYY-MM-DD'));
                 });
             },
             editable: true,

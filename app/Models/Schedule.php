@@ -54,4 +54,9 @@ class Schedule extends Model
             });
         });
     }
+
+    public function scheduleFrames()
+    {
+        return $this->hasMany('App\Models\ScheduleFrame', 'schedule_id')->where('is_delete', 0);
+    }
 }
