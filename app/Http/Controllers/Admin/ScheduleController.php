@@ -10,6 +10,7 @@ use App\Repositories\User\UserRepository;
 use App\Repositories\Frame\FrameRepository;
 use App\Repositories\ScheduleFrame\ScheduleFrameRepository;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Config;
 use App\Http\Traits\ServiceTrait;
 
 class ScheduleController extends BaseController
@@ -44,19 +45,40 @@ class ScheduleController extends BaseController
 
     public function index()
     {
-        $schedules = $this->scheduleRepo->getSchedules();
+        $search = $this->request->input('search');
+        $numPerPage = $this->request->input('num_per_page');
+        if (empty($numPerPage)) {
+            $numPerPage = \Config::get('constants.NUM_PER_PAGE');;
+        }
+        $sortColumn = 'id';
+        $sortType = 'desc';
+        if (!empty($this->request->input('sort_column'))) {
+            $sortColumn = $this->request->input('sort_column');
+        }
+        if (!empty($this->request->input('sort_type'))) {
+            $sortType = $this->request->input('sort_type');
+        }
+        $schedules = $this->scheduleRepo->getSchedules($search, $numPerPage, $sortColumn, $sortType);
+
+        return view('admin.schedule.index', compact('schedules', 'search', 'numPerPage', 'sortColumn', 'sortType'));
+    }
+
+    public function calendar()
+    {
+        $schedules = $this->scheduleRepo->getSchedulesToCalendar();
         $events = $this->scheduleService->parseToViewEvent($schedules);
         
-        return view('admin.schedule.index', compact('events'));
+        return view('admin.schedule.calendar', compact('events'));
     }
 
     public function getEdit()
     {
         $input = $this->request->all();
-        $schedule = $doctorId = '';
+        $schedule = $doctorId = $frameIds = '';
         if (!empty($input['id'])) {
             $schedule = $this->scheduleRepo->find($input['id']);
             $doctorId = $schedule['doctor_id'];
+            $frameIds = $schedule['frame_ids'];
         }
         $doctors = $this->userRepo->getDoctors();
         $doctorList = $this->getListSelect($doctors, $doctorId);
@@ -65,24 +87,18 @@ class ScheduleController extends BaseController
         return response()->json([
             'schedule' => $schedule,
             'doctorList' => $doctorList,
-            'frames' => $frames
+            'frames' => $frames,
+            'frameIds' => $frameIds
         ]);
     }
 
     public function store()
     {
         $input = $this->request->all();
-        if (!empty($input['id'])) {
-            $rules = [
-                'doctor_id' => 'nullable',
-                'frame_ids' => 'nullable'
-            ];
-        } else {
-            $rules = [
-                'doctor_id' => 'required',
-                'frame_ids' => 'required'
-            ];
-        }
+        $rules = [
+            'doctor_id' => 'required',
+            'frame_ids' => 'required'
+        ];
         $message = [
             'doctor_id.required' => 'Please fill out this field.',
             'frame_ids.required' => 'Please fill out this field.'
@@ -105,10 +121,7 @@ class ScheduleController extends BaseController
         ];
 
         if (!empty($input['id'])) {
-            $this->scheduleRepo->update($input['id'], [
-                'start_date' => $input['start_date'], 
-                'end_date' => $input['end_date']
-            ]);
+            $this->scheduleRepo->update($input['id'], $data);
         } else {
             $schedule = $this->scheduleRepo->create($data);
             foreach (explode(',', $schedule->frame_ids) as $frameId) {
@@ -122,6 +135,20 @@ class ScheduleController extends BaseController
         return response()->json([
             'code' => '200'
         ]);
+    }
+
+    public function updateCalendar()
+    {
+        $input = $this->request->all();
+        $this->scheduleRepo->update($input['id'], [
+            'start_date' => $input['start_date'], 
+            'end_date' => $input['end_date']
+        ]);
+
+        return response()->json([
+            'code' => '200'
+        ]);
+
     }
 
     public function delete()

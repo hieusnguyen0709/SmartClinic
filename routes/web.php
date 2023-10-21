@@ -82,6 +82,8 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function 
 
     Route::prefix('schedule')->group(function () {
         Route::get('/', 'ScheduleController@index')->name('schedule.index');
+        Route::get('/calendar', 'ScheduleController@calendar')->name('schedule.calendar');
+        Route::post('/update-calendar', 'ScheduleController@updateCalendar')->name('schedule.update.calendar');
         Route::get('/get-edit', 'ScheduleController@getEdit')->name('schedule.get.edit');
         Route::post('/store', 'ScheduleController@store')->name('schedule.store');
         Route::post('/delete', 'ScheduleController@delete')->name('schedule.delete');
