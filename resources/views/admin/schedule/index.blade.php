@@ -95,7 +95,7 @@
                                             <p class="text-xs font-weight-bold mb-0">{{ $item->doctor  }}</p>
                                         </td>
                                         <td>
-                                            <p class="text-xs font-weight-bold mb-0">{{ $item->frame_ids }}</p>
+                                            <p class="text-xs font-weight-bold mb-0">{{ $frames[$key] }}</p>
                                         </td>
                                         <td>
                                             <p class="text-xs font-weight-bold mb-0">{{ $item->start_date }}</p>
@@ -187,7 +187,7 @@
             $('#frm-search').submit();
         });
         $("#modal-schedule").on("hidden.bs.modal", function() {
-            $('.frame .frame-body:gt(0)').remove();
+            // $('.frame .frame-body:gt(0)').remove();
             $('#but-create-schedule').off('click');
         });
         $('#create-schedule').on('click', function() {

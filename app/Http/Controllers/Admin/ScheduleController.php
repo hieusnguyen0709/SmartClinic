@@ -63,8 +63,9 @@ class ScheduleController extends BaseController
         $endDate = $this->request->input('select_end_date');
         $schedules = $this->scheduleRepo->getSchedules($search, $numPerPage, $sortColumn, $sortType, $doctorId,  $startDate, $endDate);
         $doctors = $this->userRepo->getDoctors();
+        $frames =  $this->scheduleService->parseToViewFrame($schedules);
 
-        return view('admin.schedule.index', compact('schedules', 'search', 'numPerPage', 'sortColumn', 'sortType', 'doctors', 'doctorId', 'startDate', 'endDate'));
+        return view('admin.schedule.index', compact('schedules', 'search', 'numPerPage', 'sortColumn', 'sortType', 'doctors', 'doctorId', 'startDate', 'endDate', 'frames'));
     }
 
     public function calendar()
@@ -125,7 +126,14 @@ class ScheduleController extends BaseController
         ];
 
         if (!empty($input['id'])) {
-            $this->scheduleRepo->update($input['id'], $data);
+            $schedule = $this->scheduleRepo->update($input['id'], $data);
+            $this->scheduleFrameRepo->updateByColumn('schedule_id', $schedule['id'], ['is_delete' => 1]);
+            foreach (explode(',', $schedule->frame_ids) as $frameId) {
+                $this->scheduleFrameRepo->create([
+                    'schedule_id' => $schedule['id'],
+                    'frame_id' => $frameId
+                ]);
+            }
         } else {
             $schedule = $this->scheduleRepo->create($data);
             foreach (explode(',', $schedule->frame_ids) as $frameId) {

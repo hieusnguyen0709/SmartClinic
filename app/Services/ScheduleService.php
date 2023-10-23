@@ -23,4 +23,18 @@ class ScheduleService
 
         return $result;
     }
+
+    public function parseToViewFrame($schedules)
+    {
+        $result = [];
+        foreach ($schedules as $schedule) {
+            $frames = [];
+            foreach ($schedule->scheduleFrames as $scheduleFrame) {    
+                array_push($frames, $scheduleFrame->frame->name);  
+            }
+            array_push($result, implode(', ', $frames));  
+        }
+
+        return $result;
+    }
 }
