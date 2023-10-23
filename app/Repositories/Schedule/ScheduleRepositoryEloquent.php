@@ -15,7 +15,7 @@ class ScheduleRepositoryEloquent extends BaseRepository implements ScheduleRepos
     return \App\Models\Schedule::class;
   }
 
-  public function getSchedules($search = null, $numPerPage = null, $sortColumn = null, $sortType = null)
+  public function getSchedules($search = null, $numPerPage = null, $sortColumn = null, $sortType = null, $doctorId = null, $startDate = null, $endDate = null)
   {
     return $this->model->join('users as doctors', 'doctors.id', '=', 'schedules.doctor_id')
     ->selectRaw('schedules.*, doctors.name as doctor')
@@ -24,6 +24,13 @@ class ScheduleRepositoryEloquent extends BaseRepository implements ScheduleRepos
         $query->where(function ($query)  use ($search) {
             $query->where('doctors.name', 'like', '%' . $search . '%');
         });
+    })
+    ->when(!empty($doctorId), function ($query) use ($doctorId) {
+      $query->where('doctor_id', $doctorId);
+    })
+    ->when(!empty($startDate) && !empty($endDate), function ($query) use ($startDate, $endDate) {
+      $query->whereDate('start_date', '>=', $startDate)
+            ->whereDate('end_date', '<=', $endDate);
     })
     ->orderBy($sortColumn, $sortType)
     ->paginate($numPerPage);

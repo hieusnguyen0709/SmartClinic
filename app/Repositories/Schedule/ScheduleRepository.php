@@ -10,6 +10,6 @@ use App\Repositories\RepositoryInterface;
  */
 interface ScheduleRepository extends RepositoryInterface
 {
-    public function getSchedules($search = null, $numPerPage = null, $sortColumn = null, $sortType = null);
+    public function getSchedules($search = null, $numPerPage = null, $sortColumn = null, $sortType = null, $doctorId = null, $startDate = null, $endDate = null);
     public function getSchedulesToCalendar();
 }

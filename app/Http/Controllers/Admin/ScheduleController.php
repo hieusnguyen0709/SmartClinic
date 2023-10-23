@@ -58,9 +58,13 @@ class ScheduleController extends BaseController
         if (!empty($this->request->input('sort_type'))) {
             $sortType = $this->request->input('sort_type');
         }
-        $schedules = $this->scheduleRepo->getSchedules($search, $numPerPage, $sortColumn, $sortType);
+        $doctorId = $this->request->input('select_doctor');
+        $startDate = $this->request->input('select_start_date');
+        $endDate = $this->request->input('select_end_date');
+        $schedules = $this->scheduleRepo->getSchedules($search, $numPerPage, $sortColumn, $sortType, $doctorId,  $startDate, $endDate);
+        $doctors = $this->userRepo->getDoctors();
 
-        return view('admin.schedule.index', compact('schedules', 'search', 'numPerPage', 'sortColumn', 'sortType'));
+        return view('admin.schedule.index', compact('schedules', 'search', 'numPerPage', 'sortColumn', 'sortType', 'doctors', 'doctorId', 'startDate', 'endDate'));
     }
 
     public function calendar()

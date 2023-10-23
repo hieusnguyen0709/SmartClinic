@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-    <div class="container-fluid container m-auto row justify-content-md-center py-4">
+    <div class="container-fluid py-4">
         <div class="row">
             <div class="col-12">
                 <div class="card mb-4">
@@ -15,6 +15,8 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="container-fluid container m-auto row justify-content-md-center py-4">
         <div class="row">
             <div class="col-9">
                 <div id="calendar" class="bg-white rounded px-4 pt-4">

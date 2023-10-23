@@ -6,23 +6,37 @@
                 <div class="card mb-4">
                     <div class="table-header">
                         <div class="card-header d-flex w-100 mb-0">
-                            <div class="w-50">
+                            <div class="w-30">
                                 <h5>Schedules</h5>
+                                <button class="text-uppercase btn bg-gradient-primary" onclick="location.href='{{ route('schedule.calendar') }}'">Calendar&nbsp;&nbsp;<i class="fas fa-calendar"></i></button>
                                 <!-- <button class="text-uppercase btn bg-gradient-success" id="create-schedule"  data-bs-toggle="modal" data-bs-target="#modal-schedule">Create&nbsp;&nbsp;<i class="fas fa-plus"></i></button> -->
                                 <button class="text-uppercase btn bg-gradient-danger" id="bulk-delete-schedule"  data-bs-toggle="modal" data-bs-target="#modal-delete">Bulk Delete&nbsp;&nbsp;<i class="fas fa-trash"></i></button>
-                                <button class="text-uppercase btn bg-gradient-primary" onclick="location.href='{{ route('schedule.calendar') }}'">Calendar&nbsp;&nbsp;<i class="fas fa-calendar"></i></button>
                             </div>
-                            <div class="w-50">
+                            <div class="w-70">
                                 <div class="float-end">
                                     <h5>&nbsp;</h5>
                                     <button class="text-uppercase btn bg-gradient-warning" onclick="location.href='{{ route('schedule.index') }}'">Clear&nbsp;&nbsp;<i class="fas fa-broom"></i></button>
+                                    <button class="text-uppercase btn bg-gradient-primary"><i class="fas fa-filter"></i></button>
                                     <div class="d-flex float-end mx-1">
+                                        <select class="form-control pe-md-4 w-100 mx-1" id="list-doctor">
+                                            <option value="">Doctors</option>
+                                            @foreach ($doctors as $key => $item)
+                                                <option value="{{ $item->id }}" {{ $item->id == app('request')->input('select_doctor') ? 'selected' : '' }}>{{ $item->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        <span class="mt-2">From</span>
+                                        <input type="date" id="from-start-date" class="form-control" value="{{ $startDate }}">
+                                        <span class="mt-2">To</span>
+                                        <input type="date" id="to-end-date" class="form-control" value="{{ $endDate }}">
                                         <form action="{{ route('schedule.index') }}" method="get" id="frm-search" class="w-100 mx-1 d-flex">
                                             <input type="text" class="form-control" placeholder="Search here..." name="search" id="search" value="{{ $search }}">
                                             <!-- <i class="fas fa-search" aria-hidden="true"></i> -->
                                             <input type="hidden" name="num_per_page" id="num-per-page" value="{{ $numPerPage }}">
                                             <input type="hidden" name="sort_column" id="sort-column" value="{{ $sortColumn }}">
                                             <input type="hidden" name="sort_type" id="sort-type" value="{{ $sortType }}">
+                                            <input type="hidden" name="select_doctor" id="select-doctor" value="{{ $doctorId }}">
+                                            <input type="hidden" name="select_start_date" id="select-start-date" value="{{ $startDate }}">
+                                            <input type="hidden" name="select_end_date" id="select-end-date" value="{{ $endDate }}">
                                         </form>
                                     </div>
                                 </div>
@@ -122,6 +136,18 @@
                 event.preventDefault();
                 $('#frm-search').submit();
             }
+        });
+        $('#from-start-date').on('change', function(){
+            $('#select-start-date').val($(this).val());
+            $('#frm-search').submit();
+        })
+        $('#to-end-date').on('change', function(){
+            $('#select-end-date').val($(this).val());
+            $('#frm-search').submit();
+        })
+        $('#list-doctor').change(function() {
+            $('#select-doctor').val($(this).val());
+            $('#frm-search').submit();
         });
         $('#sel-num-per-page').change(function() {
             $('#num-per-page').val($(this).val());
@@ -315,13 +341,13 @@
             $('#modal-delete').show();
         });
         function updateFrameIds() {
-        let frameIds = [];
-        $('.frame-id:checked').each(function() {
-            let frameId = $(this).val();
-            frameIds.push(frameId);
-        });
-        $('#frame-ids').val(frameIds.toString());
-    }
+            let frameIds = [];
+            $('.frame-id:checked').each(function() {
+                let frameId = $(this).val();
+                frameIds.push(frameId);
+            });
+            $('#frame-ids').val(frameIds.toString());
+        }
         $('#check-all-frame').click(function() {
             let checked = $(this).prop('checked');
             $('.frame-id').prop('checked', checked);
