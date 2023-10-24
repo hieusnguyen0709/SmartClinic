@@ -88,4 +88,12 @@ Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function 
         Route::post('/store', 'ScheduleController@store')->name('schedule.store');
         Route::post('/delete', 'ScheduleController@delete')->name('schedule.delete');
     });
+
+    Route::prefix('appointment')->group(function () {
+        Route::get('/', 'AppointmentController@index')->name('appointment.index');
+        Route::get('/get-edit', 'AppointmentController@getEdit')->name('appointment.get.edit');
+        Route::post('/store', 'AppointmentController@store')->name('appointment.store');
+        Route::post('/delete', 'AppointmentController@delete')->name('appointment.delete');
+        Route::post('/update-status', 'AppointmentController@updateStatus')->name('appointment.update.status');
+    });
 });

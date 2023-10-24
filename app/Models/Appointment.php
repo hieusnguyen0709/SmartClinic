@@ -4,11 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Config;
 
 class Appointment extends Model
 {
     use HasFactory;
+    const PENDING = 0;
+    const PROCESSED = 1;
+
     /**
      * The table associated with the model.
      *
@@ -33,11 +36,9 @@ class Appointment extends Model
         'doctor_id',
         'qr_id',
         'code', 
-        'time',
+        'date_time',
         'note',
-        'test_status',
         'status',
-        'slug',
         'is_delete',
     ];
 
@@ -46,6 +47,39 @@ class Appointment extends Model
      *
      * @var array
      */
-    protected $dates = ['date','deleted_at', 'created_at', 'updated_at'];
+    protected $dates = ['deleted_at', 'created_at', 'updated_at'];
 
+    public function patient()
+    {
+        return $this->belongsTo('App\Models\User', 'patient_id')
+        ->where('is_delete', 0)
+        ->where(function ($query) {
+            $query->whereHas('role', function ($roleQuery) {
+                $roleQuery->where('permission', Config::get('constants.PERMISSION_BY_ROLE.PATIENT'));
+            });
+        });
+    }
+
+    public function doctor()
+    {
+        return $this->belongsTo('App\Models\User', 'doctor_id')
+        ->where('is_delete', 0)
+        ->where(function ($query) {
+            $query->whereHas('role', function ($roleQuery) {
+                $roleQuery->where('permission', Config::get('constants.PERMISSION_BY_ROLE.DOCTOR'));
+            });
+        });
+    }
+
+    public function viewStatus()
+    {
+        $return = '';
+        if($this->status == self::PENDING) {
+            $return = 'Pending';
+        }
+        if($this->status == self::PROCESSED) {
+            $return = 'Processed';
+        }
+        return $return;
+    }
 }

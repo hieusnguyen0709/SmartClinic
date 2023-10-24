@@ -112,7 +112,7 @@
                                     @endforeach
                                     @else
                                         <tr>
-                                            <td colspan="8" class="text-center">{{ config('message.NO_DATA') }}</td>
+                                            <td colspan="6" class="text-center">{{ config('message.NO_DATA') }}</td>
                                         </tr>
                                     @endif
                                 </tbody>

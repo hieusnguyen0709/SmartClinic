@@ -1,13 +1,14 @@
 <?php
 
 namespace App\Repositories\Appointment;
+use App\Repositories\RepositoryInterface;
 
 /**
  * Interface AppointmentRepository.
  *
  * @package namespace App\Repositories;
  */
-interface AppointmentRepository
+interface AppointmentRepository extends RepositoryInterface
 {
-    public function getAll();
+    public function getAppointments($search = null, $numPerPage = null, $sortColumn = null, $sortType = null);
 }

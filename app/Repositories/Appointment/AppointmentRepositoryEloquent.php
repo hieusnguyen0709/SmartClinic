@@ -1,27 +1,34 @@
 <?php
 
 namespace App\Repositories\Appointment;
-
-use App\Models\Appointment;
+use App\Repositories\BaseRepository;
 
 /**
  * Class AppointmentRepositoryEloquent.
  *
  * @package App\Repositories\Appointment;
  */
-class AppointmentRepositoryEloquent implements AppointmentRepository
+class AppointmentRepositoryEloquent extends BaseRepository implements AppointmentRepository
 {
-    protected $model;
+  public function getModel()
+  {
+      return \App\Models\Appointment::class;
+  }
 
-    public function __construct(Appointment $model)
-    {
-      $this->model = $model;
-    }
-
-    public function getAll()
-    {
-        $model = $this->model->get();
-        return $model;
-    }
-
+  public function getAppointments($search = null, $numPerPage = null, $sortColumn = null, $sortType = null)
+  {
+    return $this->model->join('users as patients', 'patients.id', '=', 'appointments.patient_id')
+    ->join('users as doctors', 'doctors.id', '=', 'appointments.doctor_id')
+    ->selectRaw('appointments.*, patients.name as patient, doctors.name as doctor')
+    ->where('appointments.is_delete', 0)
+    ->when(!empty($search), function ($query) use ($search) {
+        $query->where(function ($query)  use ($search) {
+            $query->where('appointments.code', 'like', '%' . $search . '%')
+            ->orWhere('patients.name', 'like', '%' . $search . '%')
+            ->orWhere('doctors.name', 'like', '%' . $search . '%');
+        });
+    })
+    ->orderBy($sortColumn, $sortType)
+    ->paginate($numPerPage);
+  }
 }
