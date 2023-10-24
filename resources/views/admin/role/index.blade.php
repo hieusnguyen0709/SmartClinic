@@ -135,6 +135,7 @@
         });
         $('.delete-role').on('click', function() {
             $('#frm-delete').attr('action', '{{ route('role.delete') }}');
+            $('#but-confirm-delete').prop('disabled', false);
             let _this = $(this);
             let id = _this.data('id');
             $('#id-delete').val(id);
@@ -147,7 +148,9 @@
                 ids.push($(this).val());
             });
             if (ids.length == 0) {
-                return false;
+                $('#but-confirm-delete').prop('disabled', true);
+            } else {
+                $('#but-confirm-delete').prop('disabled', false);
             }
             $('#id-delete').val(ids.toString());
             $('#modal-delete').show();
