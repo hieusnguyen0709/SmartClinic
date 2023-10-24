@@ -15,7 +15,7 @@
           <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Account Pages</h6>
         </li> -->
         <li class="nav-item">
-          <a class="nav-link" href="{{ route('user.index') }}">
+          <a class="nav-link {{ $pageGroup == 1 ? 'active' : '' }}" href="{{ route('user.index') }}">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-circle-08 text-dark text-sm opacity-10"></i>
             </div>
@@ -23,7 +23,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="{{ route('role.index') }}">
+          <a class="nav-link {{ $pageGroup == 2 ? 'active' : '' }}" href="{{ route('role.index') }}">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-single-02 text-dark text-sm opacity-10"></i>
             </div>
@@ -32,7 +32,7 @@
         </li>
         <hr class="horizontal dark mt-0">
         <li class="nav-item">
-          <a class="nav-link" href="{{ route('category.index') }}">
+          <a class="nav-link {{ $pageGroup == 3 ? 'active' : '' }}" href="{{ route('category.index') }}">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-app text-success text-sm opacity-10"></i>
             </div>
@@ -40,7 +40,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{{ route('medicine.index') }}">
+          <a class="nav-link {{ $pageGroup == 4 ? 'active' : '' }}" href="{{ route('medicine.index') }}">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-ui-04 text-success text-sm opacity-10"></i>
             </div>
@@ -48,7 +48,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{{ route('prescription.index') }}">
+          <a class="nav-link {{ $pageGroup == 5 ? 'active' : '' }}" href="{{ route('prescription.index') }}">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-bullet-list-67 text-success text-sm opacity-10"></i>
             </div>
@@ -57,7 +57,7 @@
         </li>
         <hr class="horizontal dark mt-0">
         <li class="nav-item">
-          <a class="nav-link" href="{{ route('frame.index') }}">
+          <a class="nav-link {{ $pageGroup == 6 ? 'active' : '' }}" href="{{ route('frame.index') }}">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-time-alarm text-primary text-sm opacity-10"></i>
             </div>
@@ -65,7 +65,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{{ route('schedule.index') }}">
+          <a class="nav-link {{ $pageGroup == 7 ? 'active' : '' }}" href="{{ route('schedule.index') }}">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-calendar-grid-58 text-primary text-sm opacity-10"></i>
             </div>
@@ -73,7 +73,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{{ route('appointment.index') }}">
+          <a class="nav-link {{ $pageGroup == 8 ? 'active' : '' }}" href="{{ route('appointment.index') }}">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-book-bookmark text-primary text-sm opacity-10"></i>
             </div>
