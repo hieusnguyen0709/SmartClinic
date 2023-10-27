@@ -9,8 +9,8 @@
                         <div class="p-3" style="max-width: 900px;">
                             <h5 class="text-white text-uppercase mb-3 animated slideInDown">SmartClinic</h5>
                             <h1 class="display-1 text-white mb-md-4 animated zoomIn">Dedicated medical examination and consultation</h1>
-                            <a href="quote.html" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Booking By Day</a>
-                            <a href="" class="btn btn-outline-light py-md-3 px-md-5 animated slideInRight">Booking By Doctor</a>
+                            <a href="{{ route('frontend.booking.by_day') }}" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Booking By Day</a>
+                            <a href="{{ route('frontend.booking.by_doctor') }}" class="btn btn-outline-light py-md-3 px-md-5 animated slideInRight">Booking By Doctor</a>
                         </div>
                     </div>
                 </div>
@@ -20,8 +20,8 @@
                         <div class="p-3" style="max-width: 900px;">
                             <h5 class="text-white text-uppercase mb-3 animated slideInDown">SmartClinic</h5>
                             <h1 class="display-1 text-white mb-md-4 animated zoomIn">Dedicated medical examination and consultation</h1>
-                            <a href="quote.html" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Booking By Day</a>
-                            <a href="" class="btn btn-outline-light py-md-3 px-md-5 animated slideInRight">Booking By Doctor</a>
+                            <a href="{{ route('frontend.booking.by_day') }}" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Booking By Day</a>
+                            <a href="{{ route('frontend.booking.by_doctor') }}" class="btn btn-outline-light py-md-3 px-md-5 animated slideInRight">Booking By Doctor</a>
                         </div>
                     </div>
                 </div>
