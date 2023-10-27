@@ -25,11 +25,11 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         app('view')->composer('*', function ($view) {
-            $pageGroup = 0;
+            $pageGroupAdmin = $pageGroupFrontend = 0;
             if (app('request')->route()) {
                 $action = app('request')->route()->getAction();
                 $controller = class_basename($action['controller']);
-                $arrPageGroupByController = [
+                $arrPageGroupAdminByController = [
                     '1' => [
                         'UserController@index',
                     ],
@@ -60,13 +60,42 @@ class AppServiceProvider extends ServiceProvider
                         'AppointmentController@index',
                     ],
                 ];
+                $arrPageGroupFrontendByController = [
+                    '1' => [
+                        'IndexController@index',
+                    ],
+                    '2' => [
+                        'AboutController@index',
+                    ],
+                    '3' => [
+                        'ServiceController@index',
+                    ],
+                    '4' => [
+                        'DoctorController@index',
+                    ],
+                    '5' => [
+                        'BookingController@index',
+                        'BookingController@byDay',
+                        'BookingController@byDoctor',
+                    ],
+                    '6' => [
+                        'ContactController@index',
+                    ],
+                ];
             }
-            foreach ($arrPageGroupByController as $key => $item) {
+
+            foreach ($arrPageGroupAdminByController as $key => $item) {
                 if (in_array($controller, $item)) {
-                    $pageGroup = $key;
+                    $pageGroupAdmin = $key;
                 }
             }
-            $view->with(compact('pageGroup'));
+            foreach ($arrPageGroupFrontendByController as $key => $item) {
+                if (in_array($controller, $item)) {
+                    $pageGroupFrontend = $key;
+                }
+            }
+            
+            $view->with(compact('pageGroupAdmin', 'pageGroupFrontend'));
         });
     }
 }

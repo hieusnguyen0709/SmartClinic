@@ -11,4 +11,9 @@ class IndexController extends BaseController
     {
         return view('frontend.index');
     }
+
+    public function template()
+    {
+        return view('frontend.template.index');
+    }
 }

@@ -14,7 +14,19 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::namespace('App\Http\Controllers')->group(function () {
+    // Frontend //
     Route::get('/', 'Frontend\\IndexController@index')->name('frontend.index');
+    Route::get('/about', 'Frontend\\AboutController@index')->name('frontend.about.index');
+    Route::get('/service', 'Frontend\\ServiceController@index')->name('frontend.service.index');
+    Route::get('/doctor', 'Frontend\\DoctorController@index')->name('frontend.doctor.index');
+    Route::get('/booking', 'Frontend\\BookingController@index')->name('frontend.booking.index');
+    Route::get('/booking/by-day', 'Frontend\\BookingController@byDay')->name('frontend.booking.by_day');
+    Route::get('/booking/by-doctor', 'Frontend\\BookingController@byDoctor')->name('frontend.booking.by_doctor');
+    Route::get('/contact', 'Frontend\\ContactController@index')->name('frontend.contact.index');
+
+    Route::get('/template', 'Frontend\\IndexController@template')->name('frontend.template');
+
+    // Login //
     Route::get('/login', 'Auth\\AuthController@login')->name('auth.login');
     Route::post('/sign-in', 'Auth\\AuthController@signIn')->name('auth.sign_in');
     Route::get('/register', 'Auth\\AuthController@register')->name('auth.register');
