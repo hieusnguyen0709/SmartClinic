@@ -22,6 +22,9 @@ Route::namespace('App\Http\Controllers')->group(function () {
     Route::get('/booking', 'Frontend\\BookingController@index')->name('frontend.booking.index');
     Route::get('/booking/by-day', 'Frontend\\BookingController@byDay')->name('frontend.booking.by_day');
     Route::get('/booking/by-doctor', 'Frontend\\BookingController@byDoctor')->name('frontend.booking.by_doctor');
+    Route::get('/booking/get-by-day', 'Frontend\\BookingController@getByDay')->name('frontend.booking.get_by_day');
+    Route::get('/booking/get-by-doctor', 'Frontend\\BookingController@getByDoctor')->name('frontend.booking.get_by_doctor');
+    Route::get('/booking/get-frame-by-ids', 'Frontend\\BookingController@getFrameByIds')->name('frontend.booking.get_frame_by_ids');
     Route::get('/contact', 'Frontend\\ContactController@index')->name('frontend.contact.index');
 
     Route::get('/template', 'Frontend\\IndexController@template')->name('frontend.template');

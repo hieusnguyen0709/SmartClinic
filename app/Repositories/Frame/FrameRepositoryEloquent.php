@@ -26,4 +26,9 @@ class FrameRepositoryEloquent extends BaseRepository implements FrameRepository
     ->orderBy($sortColumn, $sortType)
     ->paginate($numPerPage);
   }
+
+  public function getFrameByIds($ids = []) 
+  {
+    return $this->model->where('is_delete', 0)->whereIn('id', $ids)->get();
+  }
 }

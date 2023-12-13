@@ -26,6 +26,8 @@ class AppServiceProvider extends ServiceProvider
     {
         app('view')->composer('*', function ($view) {
             $pageGroupAdmin = $pageGroupFrontend = 0;
+            $arrPageGroupAdminByController = [];
+            $arrPageGroupFrontendByController = [];
             if (app('request')->route()) {
                 $action = app('request')->route()->getAction();
                 $controller = class_basename($action['controller']);

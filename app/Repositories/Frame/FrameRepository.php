@@ -11,4 +11,5 @@ use App\Repositories\RepositoryInterface;
 interface FrameRepository extends RepositoryInterface
 {
     public function getFrames($search = null, $numPerPage = null, $sortColumn = null, $sortType = null);
+    public function getFrameByIds($ids = []) ;
 }

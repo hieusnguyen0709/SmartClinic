@@ -42,4 +42,24 @@ class ScheduleRepositoryEloquent extends BaseRepository implements ScheduleRepos
       ->with(['doctor', 'scheduleFrames', 'scheduleFrames.schedule', 'scheduleFrames.frame'])
       ->get();
   }
+
+  public function getSchedulesByStartDate($startDate = null)
+  {
+    return $this->model->where('is_delete', 0)
+    ->when(!empty($startDate), function ($query) use ($startDate) {
+      $query->where('start_date', $startDate);
+    })
+    ->with(['doctor', 'scheduleFrames', 'scheduleFrames.schedule', 'scheduleFrames.frame'])
+    ->get();
+  }
+
+  public function getSchedulesByDoctorId($doctorId = null)
+  {
+    return $this->model->where('is_delete', 0)
+    ->when(!empty($doctorId), function ($query) use ($doctorId) {
+      $query->where('doctor_id', $doctorId);
+    })
+    ->with(['doctor', 'scheduleFrames', 'scheduleFrames.schedule', 'scheduleFrames.frame'])
+    ->get();
+  }
 }
