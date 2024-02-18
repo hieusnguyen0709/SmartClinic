@@ -29,9 +29,9 @@ class AuthController extends BaseController
         return view('auth.login');
     }
 
-    public function signIn()
+    public function postLogin()
     {
-        return 'Sign in';
+        return redirect()->route('dashboard.index');
     }
 
     public function register()

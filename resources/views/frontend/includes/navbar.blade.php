@@ -23,7 +23,7 @@
                     <a href="{{ route('frontend.contact.index') }}" class="nav-item nav-link text-dark {{ $pageGroupFrontend == 6 ? 'active' : '' }}">Contact</a>
                 </div>
                 <butaton type="button" class="btn text-primary ms-3" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fa fa-search"></i></butaton>
-                <a href="{{ route('auth.login') }}" class="btn btn-primary py-2 px-4 ms-3">Login</a>
+                <a href="{{ route('login') }}" class="btn btn-primary py-2 px-4 ms-3">Login</a>
             </div>
         </nav>
     </div>

@@ -11,8 +11,9 @@
 				<div class="col-md-6 col-lg-4">
 					<div class="login-wrap p-0">
                         <h3 class="mb-4 text-center">Don't have an account?</h3>
-                        <h5 class="mb-4 text-center"><a href="{{ route('auth.register') }}" style="color: #fbceb5">Register Now!</a></h5>
-                        <form action="#" class="signin-form">
+                        <h5 class="mb-4 text-center"><a href="{{ route('register') }}" style="color: #fbceb5">Register Now!</a></h5>
+                        <form action="{{ route('post_login') }}" class="signin-form" method="POST">
+                            @csrf
                             <div class="form-group">
                                 <input type="text" class="form-control" placeholder="Username" required>
                             </div>

@@ -10,7 +10,7 @@
 			<div class="row justify-content-center">
 				<div class="col-md-6 col-lg-4">
 					<div class="login-wrap p-0">
-                        <form action="{{ route('auth.sign_up') }}" method="post" class="signin-form">
+                        <form action="{{ route('sign_up') }}" method="post" class="signin-form">
                             @if(Session::has('success'))
                                 <div class="alert alert-success">{{ Session::get('success') }}</div>
                             @endif
@@ -36,7 +36,7 @@
                                 <button type="submit" class="form-control btn btn-primary submit px-3" id="sign-up-btn">Sign Up</button>
                             </div>
                         </form>
-                        <h5 class="mb-4 text-center"><a href="{{ route('auth.login') }}" style="color: #fbceb5">Login Now!</a></h5>
+                        <h5 class="mb-4 text-center"><a href="{{ route('login') }}" style="color: #fbceb5">Login Now!</a></h5>
 		            </div>
 				</div>
 			</div>
