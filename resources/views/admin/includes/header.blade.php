@@ -14,10 +14,18 @@
             <li class="nav-item d-flex align-items-center">
               <a href="javascript:;" class="nav-link text-white font-weight-bold px-0">
                 <i class="fa fa-user me-sm-1"></i>
-                <span class="d-sm-inline d-none">Sign In</span>
+                <span class="d-sm-inline d-none">{{ Auth::user()->name }}</span>
               </a>
             </li>
-            <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
+            <li class="nav-item d-flex align-items-center mx-2">
+              <form action="{{ route('logout') }}" method="POST" id="frm-logout">
+                @csrf
+                <a href="javascript:;" class="nav-link text-white font-weight-bold px-0" id="but-logout">
+                  <i class="fa fa-sign-out fa-2x"></i>
+                </a>
+              </form>
+            </li>
+            <!-- <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
               <a href="javascript:;" class="nav-link text-white p-0" id="iconNavbarSidenav">
                 <div class="sidenav-toggler-inner">
                   <i class="sidenav-toggler-line bg-white"></i>
@@ -83,7 +91,7 @@
                       </div>
                     </div>
                   </a>
-                </li>
+                </li> -->
               </ul>
             </li>
           </ul>

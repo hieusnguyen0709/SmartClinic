@@ -24,3 +24,7 @@ for (var i = 0; i < header.length; i++) {
     }
   });
 }
+
+$('#but-logout').on('click', function() {
+ $('#frm-logout').submit();
+});

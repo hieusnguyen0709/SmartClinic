@@ -19,6 +19,7 @@ Route::namespace('App\Http\Controllers\\Auth')->group(function () {
     Route::post('/post-login', 'AuthController@postLogin')->name('post_login');
     Route::get('/register', 'AuthController@register')->name('register');
     Route::post('/sign-up', 'AuthController@signUp')->name('sign_up');
+    Route::post('/logout', 'AuthController@logout')->name('logout');
 });
 
 // Frontend //
@@ -39,7 +40,7 @@ Route::namespace('App\Http\Controllers\\Frontend')->group(function () {
 });
 
 // Admin //
-// Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => ['auth', 'admin.access']], function () {
     Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function () {
         Route::get('/', 'DashboardController@index')->name('dashboard.index');
         Route::get('/appointment', 'AppointmentController@index')->name('appointment.index');
@@ -116,4 +117,4 @@ Route::namespace('App\Http\Controllers\\Frontend')->group(function () {
             Route::post('/update-status', 'AppointmentController@updateStatus')->name('appointment.update.status');
         });
     });
-// });
+});

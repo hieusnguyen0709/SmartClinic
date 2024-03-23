@@ -9,6 +9,7 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
+use Session;
 
 class AuthController extends BaseController
 {   
@@ -31,7 +32,19 @@ class AuthController extends BaseController
 
     public function postLogin()
     {
-        return redirect()->route('dashboard.index');
+        $this->request->validate([
+            'email' => 'required',
+            'password' => 'required',
+        ]);
+        $credentials = $this->request->only('email', 'password');
+        if (Auth::attempt($credentials)) {
+            if (Auth::user()->role_id == 2) {
+                return redirect()->route('frontend.index'); 
+            } else {
+                return redirect()->route('dashboard.index');
+            }
+        }
+        return redirect("login")->withSuccess('Login details are not valid');
     }
 
     public function register()
@@ -76,5 +89,13 @@ class AuthController extends BaseController
         } else {
             return back()->with('fail', 'Wrong');
         }
+    }
+
+    public function logout()
+    {
+        Session::flush();
+        Auth::logout();
+
+        return redirect("login");
     }
 }
