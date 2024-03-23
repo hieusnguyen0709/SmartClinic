@@ -13,6 +13,12 @@
                         <h3 class="mb-4 text-center">Don't have an account?</h3>
                         <h5 class="mb-4 text-center"><a href="{{ route('register') }}" style="color: #fbceb5">Register Now!</a></h5>
                         <form action="{{ route('post_login') }}" class="signin-form" method="POST">
+                            @if(Session::has('success'))
+                                <div class="alert alert-success">{{ Session::get('success') }}</div>
+                            @endif
+                            @if(Session::has('fail'))
+                                <div class="alert alert-danger">{{ Session::get('fail') }}</div>
+                            @endif
                             @csrf
                             <div class="form-group">
                                 <input type="text" class="form-control" placeholder="Email" name="email" required>

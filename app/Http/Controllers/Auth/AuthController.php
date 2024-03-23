@@ -44,7 +44,7 @@ class AuthController extends BaseController
                 return redirect()->route('dashboard.index');
             }
         }
-        return redirect("login")->withSuccess('Login details are not valid');
+        return redirect("login")->with('fail', 'Email or Password are not correct!');
     }
 
     public function register()
@@ -85,9 +85,9 @@ class AuthController extends BaseController
         $result = $this->repository->create($data);
 
         if ($result) {
-            return back()->with('success', 'Successfully');
+            return back()->with('success', 'Successfully signup');
         } else {
-            return back()->with('fail', 'Wrong');
+            return back()->with('fail', 'Failed to signup');
         }
     }
 

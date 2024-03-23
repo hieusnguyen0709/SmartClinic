@@ -1,5 +1,8 @@
 @extends('layouts.admin')
 @section('content')
+@php 
+  $permissions = explode(',', Auth::user()->role->permission);
+@endphp
     <div class="container-fluid py-4">
         <div class="row">
             <div class="col-12">
@@ -8,8 +11,12 @@
                         <div class="card-header d-flex w-100 mb-0">
                             <div class="w-50">
                                 <h5>Appointments</h5>
+                                @if (in_array(config('constants.PERMISSION.CREATE_APPOINTMENT') , $permissions))
                                 <button class="text-uppercase btn bg-gradient-success" id="create-appointment"  data-bs-toggle="modal" data-bs-target="#modal-appointment">Create&nbsp;&nbsp;<i class="fas fa-plus"></i></button>
+                                @endif
+                                @if (in_array(config('constants.PERMISSION.DELETE_APPOINTMENT') , $permissions))
                                 <button class="text-uppercase btn bg-gradient-danger" id="bulk-delete-appointment"  data-bs-toggle="modal" data-bs-target="#modal-delete">Bulk Delete&nbsp;&nbsp;<i class="fas fa-trash"></i></button>
+                                @endif
                             </div>
                             <div class="w-50">
                                 <div class="float-end">
@@ -18,7 +25,6 @@
                                     <div class="d-flex float-end mx-1">
                                         <form action="{{ route('appointment.index') }}" method="get" id="frm-search" class="w-100 mx-1 d-flex">
                                             <input type="text" class="form-control" placeholder="Search here..." name="search" id="search" value="{{ $search }}">
-                                            <!-- <i class="fas fa-search" aria-hidden="true"></i> -->
                                             <input type="hidden" name="num_per_page" id="num-per-page" value="{{ $numPerPage }}">
                                             <input type="hidden" name="sort_column" id="sort-column" value="{{ $sortColumn }}">
                                             <input type="hidden" name="sort_type" id="sort-type" value="{{ $sortType }}">
@@ -106,8 +112,12 @@
                                         </td>
                                         <td class="align-middle">
                                             <i class="fas fa-solid fa-eye ms-auto text-primary cursor-pointer view-appointment" data-bs-placement="top" data-bs-toggle="modal" data-bs-target="#modal-appointment" data-id="{{ $item->id }}" title="View"></i>
+                                            @if (in_array(config('constants.PERMISSION.EDIT_APPOINTMENT') , $permissions))
                                             <i class="fas fa-pencil-alt ms-auto text-dark cursor-pointer edit-appointment" data-bs-placement="top" data-bs-toggle="modal" data-bs-target="#modal-appointment" data-id="{{ $item->id }}" title="Edit" ></i>
+                                            @endif
+                                            @if (in_array(config('constants.PERMISSION.DELETE_APPOINTMENT') , $permissions))
                                             <i class="fas fa-trash-alt ms-auto text-danger cursor-pointer delete-appointment" data-bs-placement="top" data-bs-toggle="modal" data-bs-target="#modal-delete" data-id="{{ $item->id }}" title="Delete"></i>
+                                            @endif
                                         </td>
                                     </tr>
                                     @endforeach

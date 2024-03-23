@@ -1,5 +1,8 @@
 @extends('layouts.admin')
 @section('content')
+@php 
+  $permissions = explode(',', Auth::user()->role->permission);
+@endphp
     <div class="container-fluid py-4">
         <div class="row">
             <div class="col-12">
@@ -8,8 +11,12 @@
                         <div class="card-header d-flex w-100 mb-0">
                             <div class="w-50">
                                 <h5>Prescriptions</h5>
+                                @if (in_array(config('constants.PERMISSION.CREATE_PRESCRIPTION'), $permissions))
                                 <button class="text-uppercase btn bg-gradient-success" onclick="location.href='{{ route('prescription.create') }}'">Create&nbsp;&nbsp;<i class="fas fa-plus"></i></button>
+                                @endif
+                                @if (in_array(config('constants.PERMISSION.DELETE_PRESCRIPTION'), $permissions))
                                 <button class="text-uppercase btn bg-gradient-danger" id="bulk-delete-prescription"  data-bs-toggle="modal" data-bs-target="#modal-delete">Bulk Delete&nbsp;&nbsp;<i class="fas fa-trash"></i></button>
+                                @endif
                             </div>
                             <div class="w-50">
                                 <div class="float-end">
@@ -96,8 +103,12 @@
                                         </td>
                                         <td class="align-middle">
                                             <i class="fas fa-solid fa-eye ms-auto text-primary cursor-pointer" onclick="location.href='{{ route('prescription.edit', [$item->slug, true]) }}'" data-bs-placement="top" data-id="{{ $item->id }}" title="View"></i>
+                                            @if (in_array(config('constants.PERMISSION.EDIT_PRESCRIPTION'), $permissions))
                                             <i class="fas fa-pencil-alt ms-auto text-dark cursor-pointer" onclick="location.href='{{ route('prescription.edit', [$item->slug, false]) }}'" data-bs-placement="top" data-id="{{ $item->id }}" title="Edit" ></i>
+                                            @endif
+                                            @if (in_array(config('constants.PERMISSION.DELETE_PRESCRIPTION'), $permissions))
                                             <i class="fas fa-trash-alt ms-auto text-danger cursor-pointer delete-prescription" data-bs-placement="top" data-bs-toggle="modal" data-bs-target="#modal-delete" data-id="{{ $item->id }}" title="Delete"></i>
+                                            @endif
                                         </td>
                                     </tr>
                                     @endforeach
