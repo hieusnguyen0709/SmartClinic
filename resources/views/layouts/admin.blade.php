@@ -18,7 +18,7 @@
         <link href="{{ asset('/assets/admin/css/nucleo-svg.css') }}" rel="stylesheet" />
         <link href="{{ asset('/assets/admin/css/custom.css') }}" rel="stylesheet" />
         <!-- Font Awesome Icons -->
-        <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
         <link href="{{ asset('/assets/admin/css/nucleo-svg.css') }}" rel="stylesheet" />
         <!-- CSS Files -->
         <link id="pagestyle" href="{{ asset('/assets/admin/css/argon-dashboard.css?v=2.0.4') }}" rel="stylesheet" />

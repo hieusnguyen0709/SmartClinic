@@ -100,7 +100,7 @@ class CategoryController extends BaseController
     {
         $result = '<ul>';
         foreach ($categories as $category) {
-            $result .= '<li class="dropdown-item" value="'. $category['id'] .'">' . $category['name'] . '</li>';
+            $result .= '<li class="dropdown-item" value="'. $category['id'] .'">' . '---- ' . $category['name'] . '</li>';
             if (count($category->children) > 0) {
                 $result .= $this->buildTreeCategory($category->children);
             } 
