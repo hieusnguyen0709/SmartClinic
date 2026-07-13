@@ -38,7 +38,7 @@ class AuthController extends BaseController
         ]);
         $credentials = $this->request->only('email', 'password');
         if (Auth::attempt($credentials)) {
-            if (Auth::user()->role_id == 2) {
+            if (Auth::user()->role_id == config('constants.ROLE.PATIENT')) {
                 return redirect()->route('frontend.index'); 
             } else {
                 return redirect()->route('dashboard.index');
@@ -73,12 +73,13 @@ class AuthController extends BaseController
                 'code' => '422',
                 'errors' => $validator->messages()->toArray()
             ];
+            return response()->json($response);
         }
 
         $data = [
             'name' => $input['name'],
             'email' => $input['email'],
-            'role_id' => 2,
+            'role_id' => config('constants.ROLE.PATIENT'),
             'password' => Hash::make($input['password']),
         ];
 

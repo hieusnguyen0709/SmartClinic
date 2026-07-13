@@ -40,7 +40,7 @@ Route::namespace('App\Http\Controllers\\Frontend')->group(function () {
 });
 
 // Admin //
-Route::group(['middleware' => ['auth', 'admin.access']], function () {
+Route::group(['middleware' => ['auth', 'admin.access', 'permission']], function () {
     Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function () {
         Route::get('/', 'DashboardController@index')->name('dashboard.index');
         Route::get('/appointment', 'AppointmentController@index')->name('appointment.index');

@@ -17,10 +17,8 @@ class AdminAccess
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::check()) {
-            if (Auth::user()->role_id != 2) {
-                return $next($request);
-            }
+        if (Auth::check() && in_array(Auth::user()->role_id, config('constants.ACCESS_ADMIN_ROLE'))) {
+            return $next($request);
         }
 
         return abort(404, 'Not Found');
