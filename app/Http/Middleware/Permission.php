@@ -7,9 +7,9 @@ use Illuminate\Http\Request;
 use Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Config;
- 
+
 class Permission
-{
+{    
     /**
      * Handle an incoming request.
      *
@@ -34,7 +34,11 @@ class Permission
         $route = Route::getRoutes()->match($request);
         $currentRoute = $route->getName();
         if (!in_array($currentRoute, $listUserActions)) {
-            abort(403, 'Forbidden');
+            $currentModule = explode('.', $currentRoute)[0];
+            $storeAction = $currentModule . '.store';
+            if (!in_array($storeAction, $listUserActions)) {
+                abort(403, 'Forbidden');
+            }
         }
 
         return $next($request);
