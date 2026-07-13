@@ -93,7 +93,7 @@ return [
             'id' => config('constants.PERMISSION.CREATE_ROLE'),
             'menu_id' => 3,
             'name' => 'Create role',
-            'action' => 'role.create',
+            'action' => 'role.store',
             'is_view' => false
         ],
         [
@@ -121,7 +121,7 @@ return [
             'id' => config('constants.PERMISSION.CREATE_CATEGORY'),
             'menu_id' => 4,
             'name' => 'Create category',
-            'action' => 'category.create',
+            'action' => 'category.store',
             'is_view' => false
         ],
         [
@@ -149,7 +149,7 @@ return [
             'id' => config('constants.PERMISSION.CREATE_MEDICINE'),
             'menu_id' => 5,
             'name' => 'Create medicine',
-            'action' => 'medicine.create',
+            'action' => 'medicine.store',
             'is_view' => false
         ],
         [
@@ -177,7 +177,7 @@ return [
             'id' => config('constants.PERMISSION.CREATE_PRESCRIPTION'),
             'menu_id' => 6,
             'name' => 'Create prescription',
-            'action' => 'prescription.create',
+            'action' => 'prescription.store',
             'is_view' => false
         ],
         [
@@ -205,7 +205,7 @@ return [
             'id' => config('constants.PERMISSION.CREATE_SCHEDULE'),
             'menu_id' => 7,
             'name' => 'Create schedule',
-            'action' => 'schedule.create',
+            'action' => 'schedule.store',
             'is_view' => false
         ],
         [
@@ -233,7 +233,7 @@ return [
             'id' => config('constants.PERMISSION.CREATE_FRAME'),
             'menu_id' => 8,
             'name' => 'Create frame',
-            'action' => 'frame.create',
+            'action' => 'frame.store',
             'is_view' => false
         ],
         [
@@ -261,7 +261,7 @@ return [
             'id' => config('constants.PERMISSION.CREATE_APPOINTMENT'),
             'menu_id' => 9,
             'name' => 'Create appointment',
-            'action' => 'appointment.create',
+            'action' => 'appointment.store',
             'is_view' => false
         ],
         [
