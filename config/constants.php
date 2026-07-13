@@ -64,6 +64,8 @@ return [
         'PHAMARCIST' => 5,
     ],
 
+    'ACCESS_ADMIN_ROLE' => [1, 3, 4, 5],
+
     'UNIT_BOTTLE' => 0,
     'UNIT_TUBE' => 1,
     'UNIT_PILL' => 2,
