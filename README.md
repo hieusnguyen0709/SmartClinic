@@ -373,4 +373,4 @@ The repository currently contains the standard Laravel application structure tog
 
 ## Project Status
 
-This is an earlier Laravel project and does not currently include a dedicated CI/CD pipeline, Docker-based deployment workflow, or deployed live demo. The repository does include Laravel's PHPUnit development dependency and the standard `tests` directory, but this README intentionally does not present testing as a project capability unless application-specific tests are added. citeturn2view0turn0view0
+This is an earlier Laravel project and does not currently include a dedicated CI/CD pipeline, Docker-based deployment workflow, or deployed live demo. The repository does include Laravel's PHPUnit development dependency and the standard `tests` directory, but this README intentionally does not present testing as a project capability unless application-specific tests are added.
